@@ -125,6 +125,8 @@ code {
   text-decoration: none;
   transition: color 0.25s ease;
   white-space: nowrap;
+  padding: 10px 0;
+  margin: -10px 0;
 }
 .site-nav-links a:hover { color: #f5f2eb; text-decoration: none; }
 
@@ -424,6 +426,11 @@ h2 {
   font-size: 0.88rem;
   border-bottom: 1px solid var(--slate-200);
 }
+/* Unbreakable *_version field names and /.well-known/... paths otherwise
+   force each cell to its full monospace width, inflating the table's real
+   minimum width well past what overflow-x:auto on .spec-table can shrink
+   it to on a phone. Let long tokens wrap inside their own cell instead. */
+.spec-table td code { overflow-wrap: anywhere; }
 .spec-table th {
   background: var(--slate-50);
   font-size: 0.7rem;
@@ -721,12 +728,28 @@ h2 { color: var(--head); }
 @keyframes fx-pulse-a{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--fx-accent) 22%,transparent)}
   60%{box-shadow:0 0 0 6px transparent}}
 
-/* ---- fx-prism : Prism Beam (expressive — hero/feature only) ---- */
+/* ---- fx-prism : Prism Beam (expressive — hero/feature only) ----
+   Fixed 2026-08-07: every other oversized, position-animated fx-* gradient
+   (fx-sweep, fx-halo, fx-shine) starts AND ends on transparent, so the
+   default background-repeat:repeat tiling is seamless — one transparent
+   edge butts against the next tile's transparent edge. fx-prism alone broke
+   that convention: its gradient started on a solid color-mix stop and only
+   went transparent at 75%, held flat to 100%. Once the 7s animation pushed
+   background-position past ~100%, the browser painted a second repeated
+   tile to fill the box, and the seam between "held transparent" and "next
+   tile's solid color" landed inside the visible hero, i.e. exactly the
+   abrupt vertical/horizontal cut the screenshot showed. Two independent
+   fixes so a future edit to one doesn't reopen the bug: bookend the
+   gradient with transparent like its siblings, AND stop the tile from
+   repeating at all. */
 .fx-prism::before{
   background:linear-gradient(120deg,
-    color-mix(in srgb,var(--fx-accent) 22%,transparent),
-    color-mix(in srgb,#7c5cff 16%,transparent),
-    color-mix(in srgb,var(--fx-accent2) 20%,transparent),transparent 75%);
+    transparent,
+    color-mix(in srgb,var(--fx-accent) 22%,transparent) 30%,
+    color-mix(in srgb,#7c5cff 16%,transparent) 50%,
+    color-mix(in srgb,var(--fx-accent2) 20%,transparent) 70%,
+    transparent 92%);
+  background-repeat:no-repeat;
   background-size:220% 100%;opacity:.6;animation:fx-prism-a 7s ease-in-out infinite}
 @keyframes fx-prism-a{0%,100%{background-position:0 0;opacity:.45}50%{background-position:120% 0;opacity:.75}}
 
@@ -821,9 +844,10 @@ a.card-feature-link:hover { color: var(--accent); text-decoration: none; }
 }
 .section-nav-toggle {
   display: none; align-items: center; gap: 8px;
-  width: 100%; padding: 6px 2px; background: none; border: 0; cursor: pointer;
+  width: 100%; min-height: 44px; padding: 6px 2px; background: none; border: 0; cursor: pointer;
   font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em;
   text-transform: uppercase; color: var(--muted);
+  -webkit-tap-highlight-color: transparent;
 }
 .section-nav-caret { transition: transform 0.2s ease; }
 .section-nav.open .section-nav-caret { transform: rotate(180deg); }
@@ -1051,5 +1075,580 @@ a.persona-card:hover { text-decoration: none; }
 
 @media (max-width: 820px) {
   .persona-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================================
+   Hero chooser deep-links + relocated at-a-glance stat band (2026-08-07)
+   ----------------------------------------------------------------------------
+   1) Persona card 3 ("Building an agent or MCP integration?") is the only
+      card that gains an in-page affordance: a second, independently-
+      clickable link to the MCP server card in #tooling, on top of its
+      existing external link to /mcp/. Implemented as a "stretched link" —
+      .persona-link-primary::after covers the whole card (containing block =
+      .persona-card, already position:relative via .fx-layer) so the
+      big-click-target UX from cards 1/2 is preserved, while
+      .persona-link-secondary sits above that overlay at a higher z-index so
+      it stays its own click/keyboard target. Cards 1 ("Evaluating a vendor's
+      AI?") and 2 ("Publishing your own specs?") are UNCHANGED: both hand the
+      visitor straight to the external tool that IS the task — a same-page
+      detour there is a hop with no payoff.
+   2) .at-a-glance relocates from inside #map to its own slim band directly
+      under the persona chooser (new .stat-band wrapper). #map keeps its
+      heading, intro paragraph, and the layers diagram — only the stat band
+      itself moved. Count-up is IntersectionObserver-driven progressive
+      enhancement in suite-nav.js; the real numbers (12/11/75/172) already
+      sit in the DOM, so no-JS and prefers-reduced-motion both just show the
+      static final numbers with zero extra work.
+   ============================================================================ */
+
+/* ---- Relocated stat band: sits flush under the persona grid, same gutter ---- */
+.stat-band { padding: 0 var(--gutter, 1.25rem) 2.75rem; }
+.stat-band .at-a-glance { margin-top: 0; }
+
+/* ---- Persona card 3: primary (stretched, whole-card) + secondary in-page link ---- */
+.persona-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.65rem 0.9rem;
+  margin-top: auto;
+}
+.persona-link-primary,
+.persona-link-secondary {
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+.persona-link-primary { color: var(--accent); }
+.persona-link-primary:hover { text-decoration: underline; }
+/* Stretched hit-area: containing block is .persona-card (position:relative
+   from .fx-layer), so inset:0 covers the whole card, not just the anchor text. */
+.persona-link-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+/* Secondary link stacks above the stretched overlay (z-index 4 > 3) so it
+   stays its own clickable/focusable target instead of being swallowed by it.
+   display:inline-block + vertical padding/negative margin grows the actual
+   tap box toward a comfortable touch target without shifting its visual
+   position in the flex row (it sits right next to the larger stretched-link
+   overlay, so a thin hit area risks the whole-card link swallowing mis-taps). */
+.persona-link-secondary {
+  display: inline-block;
+  position: relative;
+  z-index: 4;
+  color: var(--muted);
+  border-bottom: 1px dashed var(--border);
+  padding: 0.65rem 0.4rem;
+  margin: -0.65rem -0.4rem;
+}
+.persona-link-secondary:hover { color: var(--accent); border-bottom-color: var(--accent); text-decoration: none; }
+
+/* Deep-link target clears the sticky header + sticky section-nav on jump */
+#mcp-server-card { scroll-margin-top: calc(var(--header-h) + var(--nav-h) + 12px); }
+
+/* Momentary highlight pulse on the deep-link target, added/removed by JS */
+.chooser-highlight { animation: chooser-highlight-pulse 1.8s ease-out; }
+@keyframes chooser-highlight-pulse {
+  0%   { box-shadow: 0 0 0 2px var(--accent), 0 0 32px 4px color-mix(in srgb, var(--accent) 45%, transparent); }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chooser-highlight { animation: none; box-shadow: 0 0 0 2px var(--accent); }
+}
+
+/* ============================================================================
+   #specs filter chips (2026-08-07) — vertical filter for "All twelve specs"
+   Progressive enhancement only: suite-nav.js toggles inline display:none on
+   <tr> via data-vertical. No row is ever removed from the DOM, so with JS
+   disabled every row stays visible (the "All" baseline) and print / find-in-
+   page always see the full table. Chips wrap on narrow screens — never a
+   horizontal-scroll pill row (estate rule).
+   ============================================================================ */
+.spec-filter { margin: 0.25rem 0 0; }
+.spec-filter-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 0.65rem;
+}
+.spec-filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.spec-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+  min-height: 44px;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  -webkit-tap-highlight-color: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.spec-filter-chip:hover {
+  color: var(--head);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+.spec-filter-chip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.spec-filter-chip[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #06231f;
+}
+.spec-filter-count {
+  font-size: 0.68rem;
+  line-height: 1.4;
+  background: rgba(102, 252, 241, 0.1);
+  border-radius: 999px;
+  padding: 0.05rem 0.42rem;
+}
+.spec-filter-chip[aria-pressed="true"] .spec-filter-count {
+  background: rgba(6, 35, 31, 0.18);
+}
+/* Tightened now that the filter bar sits directly above the table
+   (was 2rem when the table followed the h2 with no chips between). */
+.spec-table { margin-top: 1.1rem; }
+
+/* ============================================================================
+   VAULT CONTRACT ACCORDION (2026-08-07)
+   Converts the four Vault Contract Pattern surface cards into a native
+   <details>/<summary> accordion. Native semantics only: keyboard-operable
+   and correctly exposed to assistive tech with zero ARIA and zero JS.
+   Surface 1 (rag-sentinel) ships open by default via the `open` attribute.
+   `name="vault-surface"` makes the four mutually exclusive in browsers that
+   support details-name-grouping (Chrome 120+, Firefox 125+, Safari 17.4+)
+   and degrades to independently-toggleable panels everywhere else, no
+   errors either way. Reuses .card-feature / .fx-layer / .fx-glow /
+   .layer-note as-is; only the layout rules below are new.
+   ============================================================================ */
+
+.vault-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 800px;
+  margin-top: 2rem;
+}
+
+/* A <details> can carry the .card-feature visual language, but must not
+   inherit the equal-height flex/grid rules from LAYOUT SYSTEM section 4
+   above, those were written for cards in a stretch-aligned grid row, not
+   a stacked accordion. Two-class specificity wins regardless of source
+   order. */
+.vault-surface.card-feature {
+  display: block;
+  height: auto;
+}
+
+.vault-surface > summary.vault-surface-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+  list-style: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.vault-surface > summary.vault-surface-summary::-webkit-details-marker { display: none; }
+.vault-surface > summary.vault-surface-summary::marker { content: ""; }
+
+.vault-surface-caret {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--muted);
+  transition: transform 0.2s ease;
+}
+.vault-surface[open] .vault-surface-caret { transform: rotate(180deg); }
+
+.vault-surface-body {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+/* .card-feature-link normally sits at the bottom of a flex column via
+   margin-top: auto (LAYOUT SYSTEM section 4). That rule is a no-op once
+   the card is block-level, so restate the gap here at higher specificity. */
+.vault-surface-body .card-feature-link {
+  margin-top: 0.75rem;
+  display: inline-block;
+}
+
+/* <summary> is the interactive control; the base stylesheet has no default
+   focus style, so give it one (WCAG 2.4.7). var(--accent) against
+   var(--panel-2)/var(--bg) clears 3:1 for a UI-component outline. */
+.vault-surface > summary.vault-surface-summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Short "why these four matter together" note, visible without expanding
+   anything. Reuses the existing .layer-note callout treatment as-is. */
+.vault-compose-note {
+  max-width: var(--read, 70ch);
+  margin-top: 1.25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vault-surface-caret { transition: none !important; }
+}
+
+/* ============================================================================
+   Constellation: featured + show-all disclosure (2026-08-07)
+   Collapses the two 11/10-link "full constellation" columns to 4 curated
+   links each by default; the remaining links sit behind a native
+   <details>/<summary> per column. No JS — <summary> is keyboard-operable
+   and correctly ARIA'd out of the box. All 21 links stay in the DOM
+   unconditionally; this only changes default visibility.
+   ============================================================================ */
+
+.cluster-expander {
+  margin-top: 0.35rem;
+}
+
+.cluster-expander-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  padding: 0.65rem 0;
+  border-top: 1px dashed var(--border);
+  margin-top: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--accent);
+  cursor: pointer;
+  list-style: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.cluster-expander-summary::-webkit-details-marker { display: none; }
+.cluster-expander-summary::marker { content: ""; }
+
+.cluster-expander-summary:hover { color: #8ffdf5; }
+.cluster-expander-summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.cluster-expander-caret {
+  display: inline-block;
+  font-size: 0.7em;
+  color: var(--accent);
+  transition: transform 0.18s ease;
+}
+.cluster-expander[open] > .cluster-expander-summary .cluster-expander-caret {
+  transform: rotate(90deg);
+}
+
+.cluster-expander-count {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.cluster-expander[open] > .cluster-list,
+.cluster-expander > .cluster-list {
+  margin-top: 0.15rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cluster-expander-caret { transition: none; }
+}
+
+/* ============================================================================
+   VISUAL RHYTHM SYSTEM (2026-08-07) — section-bg alternation, kicker + icon
+   component, scroll-in reveal. Appended last so it wins by source order.
+   Two-shade rule: alternation uses ONLY --bg (#0B0C10) and --panel-2 (#161d26)
+   — no third dark value is introduced anywhere in this block.
+   ============================================================================ */
+
+/* ---- 1 · Alternating section backgrounds (strictly --bg / --panel-2) ----
+   .block-tinted and .block-dark both resolve to shade B — same slot, either
+   class name lands a section on the same background. Replaces the earlier
+   one-off #10161f / #0d131c values with the two canonical tokens. Pairs with
+   5 class-attribute edits on #audit-stream, #constellation, "Author",
+   "Distribution", and "Across the rest of the estate" — see index.html. */
+.block         { background: var(--bg); }
+.block-tinted  { background: var(--panel-2); }
+.block-dark    { background: var(--panel-2); }
+
+/* ---- 2 · Section kicker: eyebrow label + monoline icon above each h2 ---- */
+.section-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 0.75rem;
+}
+.kicker-icon {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  color: var(--accent2);
+}
+.kicker-text {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent2);
+}
+
+/* ---- 3 · Scroll-in reveal (opacity + rise), reduced-motion safe ----
+   `.reveal-on-scroll` and `.js-reveal` are added to the DOM by JS only (see
+   suite-nav.js) — neither ever exists in the raw HTML, so with JS disabled
+   these selectors match nothing and every element renders at full opacity in
+   its normal position from first paint. The revealed resting state is
+   wrapped in :where() (zero specificity) so it can never outrank a real
+   interaction state — e.g. .fx-layer:hover's translateY(-2px) lift — once a
+   card has already revealed. */
+@media (prefers-reduced-motion: no-preference) {
+  body.js-reveal .reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  :where(body.js-reveal .reveal-on-scroll.in-view) {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================================
+   Audit-stream fan-in — measured SVG connector overlay (2026-08-07)
+   Progressive enhancement only. audit-connectors.js measures the real,
+   already-rendered .ad-node / .ad-spine / .ad-cnode boxes with
+   getBoundingClientRect() and injects the <svg class="ad-connectors"> below
+   at runtime. With JS off this block styles nothing that exists in the DOM;
+   the .ad-grid / .ad-spine / .ad-consumers markup plus the "hash-chained
+   fan-in ↓" / "verifiable replay ↓" text stay the complete no-JS diagram.
+
+   Stacking: .audit-diagram gets its own isolated stacking context (same
+   isolation:isolate idiom as .fx-layer, above) so the connector <svg>'s
+   z-index:-1 is guaranteed LOCAL — it paints behind the opaque .ad-node /
+   .ad-spine / .ad-cnode backgrounds (lines only show in the gaps between
+   them) regardless of how any ancestor element is positioned elsewhere on
+   the page.
+   ============================================================================ */
+.audit-diagram { position: relative; isolation: isolate; }
+
+.ad-connectors {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: visible;
+}
+.ad-connector-line {
+  fill: none;
+  stroke: url(#ad-connector-grad);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+.ad-connector-dot { fill: var(--accent); }
+.ad-connector-dot--hub {
+  fill: var(--accent2);
+  stroke: var(--accent);
+  stroke-width: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ad-connector-line { transition: none !important; }
+}
+
+/* ============================================================================
+   Suite × Implementations — buyer-persona accordion (2026-08-07)
+   Appended last so it wins by source order. Native <details>/<summary>:
+   keyboard-operable and correctly ARIA'd with zero JS, works with JS off.
+   Group containers reuse .fx-layer/.fx-corner (content-dense, non-interactive
+   surfaces per the FX doctrine — fx-glow's cursor-follow is reserved for
+   clickable feature cards, not disclosure widgets). All colors are existing
+   tokens only; text-on-panel pairings below are chosen to clear WCAG AA
+   (4.5:1) against the specific background each rule paints on.
+   ============================================================================ */
+
+.impl-count-note {
+  margin: 1.25rem 0 0;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent2);
+  border-radius: 8px;
+  background: var(--panel-2);
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  max-width: var(--read, 70ch);
+}
+.impl-count-note strong { color: var(--head); }
+
+.impl-accordion {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.impl-group summary {
+  list-style: none;
+  cursor: pointer;
+  position: relative;
+  padding: 1.1rem 2.75rem 1.1rem 1.35rem;
+  -webkit-tap-highlight-color: transparent;
+}
+.impl-group summary::-webkit-details-marker { display: none; }
+.impl-group summary::after {
+  content: "\25B8"; /* ▸ */
+  position: absolute;
+  right: 1.35rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent2);
+  font-size: 0.9rem;
+  transition: transform 0.2s ease;
+}
+.impl-group[open] > summary::after { transform: translateY(-50%) rotate(90deg); }
+.impl-group summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+  border-radius: var(--radius, 14px);
+}
+.impl-group h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--head);
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.impl-count {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--accent2);
+  background: rgba(69, 162, 158, 0.12);
+  border: 1px solid rgba(69, 162, 158, 0.3);
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+
+.impl-group-body {
+  padding: 1.1rem 1.35rem 1.35rem;
+  border-top: 1px solid var(--border);
+}
+.impl-group-intro {
+  margin: 0 0 0.9rem;
+  padding: 0.75rem 0.9rem;
+  border-left: 2px solid var(--accent2);
+  border-radius: 4px;
+  background: rgba(102, 252, 241, 0.04);
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.impl-group-intro code { background: rgba(0, 0, 0, 0.35); }
+
+.impl-repo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.85rem;
+}
+.impl-repo {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.95rem 1.05rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.impl-repo--grouped { border-color: color-mix(in srgb, var(--accent2) 45%, var(--border)); }
+
+.impl-repo-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.impl-repo-name {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--head);
+  overflow-wrap: anywhere;
+}
+.impl-lang {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  color: var(--accent2);
+  background: rgba(69, 162, 158, 0.12);
+  border: 1px solid rgba(69, 162, 158, 0.3);
+  border-radius: 5px;
+  padding: 2px 7px;
+  white-space: nowrap;
+}
+.impl-repo-desc {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+.impl-repo-desc code { background: rgba(0, 0, 0, 0.35); }
+.impl-repo-companions {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+.impl-repo-companions strong { color: var(--head); }
+
+.impl-repo-link {
+  align-self: flex-start;
+  margin-top: 0.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+.impl-repo-link:hover { text-decoration: underline; }
+
+.impl-repo-links { display: flex; flex-wrap: wrap; gap: 0.6rem 1rem; margin-top: 0.2rem; }
+.impl-repo-links a {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+.impl-repo-links a:hover { text-decoration: underline; }
+
+@media (prefers-reduced-motion: reduce) {
+  .impl-group summary::after { transition: none; }
 }
 
