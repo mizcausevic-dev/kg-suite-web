@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kinetic Gain Protocol Suite — twelve JSON governance specs for the answer-engine and agent era</title>
+  <meta name="description" content="Twelve JSON governance specs the MCP server implements, for the answer-engine and agent era — agent cards, evidence bundles, tool cards, classroom AUPs, clinical-AI and procurement disclosure, attestation, and more. Plus eleven regulated-vertical 6-packs (HealthTech, EdTech, PropTech, InsurTech, HR Tech, FinTech, GovTech, LegalTech, EnergyTech, DefenseTech, RetailTech) — 66 sibling spec repos. One unified MCP server (mcp-kinetic-gain v0.9.1, 75 tools, on npm), one hosted validator, one audit-stream spine. Specs MIT, reference implementations AGPL-3.0." />
+  <meta name="theme-color" content="#0B0C10" />
+  <link rel="canonical" href="https://suite.kineticgain.com/" />
+
+  <!-- Security headers — canonical source is .htaccess; these <meta> tags are -->
+  <!-- fallbacks so file:// and offline-mirror previews carry the same posture. -->
+  <!-- HSTS, X-Frame, X-Content-Type-Options, Permissions-Policy, COOP, CORP    -->
+  <!-- CANNOT be set via <meta> — they MUST be response headers in .htaccess.   -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Kinetic Gain Protocol Suite — twelve JSON governance specs the MCP server implements" />
+  <meta property="og:description" content="Open governance protocols for the answer-engine and agent era. Twelve JSON governance specs · eleven regulated-vertical 6-packs (66 sibling spec repos) · shared audit-stream spine · one unified MCP server (75 tools) · one hosted validator." />
+  <meta property="og:url" content="https://suite.kineticgain.com/" />
+
+  <link rel="stylesheet" href="/assets/fonts.css" />
+
+  <link rel="stylesheet" href="style.css?v=20260806-align" />
+
+  <!-- Site icons (matches apex Kinetic Gain mark — onyx square + cream bars
+       + bluegray-bright anchor — so suite hub renders the same brand mark
+       in tabs, bookmarks, PWA installs, and iOS Add-to-Home-Screen). -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="/" class="kg-logo" aria-label="Kinetic Gain Protocol Suite home">
+        <svg class="kg-mark" viewBox="-8 -8 188 88" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kinetic Gain mark">
+          <rect class="kg-anchor" x="0" y="0" width="14" height="72"/>
+          <polygon class="kg-bar" points="32,0 83,0 77,18 26,18"/>
+          <polygon class="kg-bar" points="32,27 127,27 121,45 26,45"/>
+          <polygon class="kg-bar" points="32,54 172,54 166,72 26,72"/>
+        </svg>
+        <span class="kg-word">Kinetic Gain <span class="kg-word-dim">/ Protocol Suite</span></span>
+      </a>
+      <nav class="site-nav-links" aria-label="Primary">
+        <a href="#specs">Specs</a>
+        <a href="/verticals/">Verticals</a>
+        <a href="/mcp/">MCP</a>
+        <a href="#implementations">Implementations</a>
+        <a href="#audit-stream">Audit spine</a>
+        <a href="#nist">NIST</a>
+      </nav>
+      <a class="btn-start" href="https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite" target="_blank" rel="noreferrer">GitHub <span class="ar">↗</span></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner fx-layer fx-prism">
+        <span class="pill">v0.1 draft · open source · MIT-licensed specs</span>
+        <h1>Prove what your AI actually does.<br /><em>Before a buyer, regulator, or agent has to guess.</em></h1>
+        <p class="lede">
+          Kinetic Gain is a set of open JSON specs that let an AI vendor declare what a system is, what it refuses,
+          what evidence backs its claims, and what happens when it fails, so procurement teams, compliance reviewers,
+          and other AI agents can verify it automatically instead of taking your word for it.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="https://validator.kineticgain.com/" target="_blank" rel="noreferrer">See it validate a real doc →</a>
+          <a class="btn btn-secondary" href="#specs">Browse the specs</a>
+        </div>
+        <p class="proof-bar">Open source · validated against JSON Schema 2020-12 · works with Claude Desktop, Cursor, and any MCP client</p>
+      </div>
+    </section>
+
+    <section class="personas" aria-label="Where to start">
+      <div class="block-inner">
+        <div class="persona-grid">
+          <a class="persona-card fx-layer fx-glow" href="https://validator.kineticgain.com/" target="_blank" rel="noreferrer">
+            <div class="persona-eyebrow">Evaluating a vendor's AI?</div>
+            <p>Paste their disclosure into the validator and get a pass / fail in seconds. No signup.</p>
+            <span class="persona-link">Open the validator →</span>
+          </a>
+          <a class="persona-card fx-layer fx-glow" href="https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite" target="_blank" rel="noreferrer">
+            <div class="persona-eyebrow">Publishing your own specs?</div>
+            <p>Fork a spec template, validate against the schema, serve it at the well-known URL.</p>
+            <span class="persona-link">Get the spec templates →</span>
+          </a>
+          <a class="persona-card fx-layer fx-glow" href="/mcp/">
+            <div class="persona-eyebrow">Building an agent or MCP integration?</div>
+            <p>One config entry gives your agent the full governance toolset.</p>
+            <code class="persona-code">npx -y mcp-kinetic-gain</code>
+            <span class="persona-link">Read the MCP docs →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <nav class="section-nav" id="section-nav" aria-label="On this page">
+      <div class="section-nav-inner">
+        <button class="section-nav-toggle" id="section-nav-toggle" type="button" aria-expanded="false" aria-controls="section-nav-links">
+          <span>On this page</span>
+          <span class="section-nav-caret" aria-hidden="true">▾</span>
+        </button>
+        <div class="section-nav-links" id="section-nav-links">
+          <a href="#map">Overview</a>
+          <a href="#specs">Specs</a>
+          <a href="#tooling">Front doors</a>
+          <a href="#implementations">Implementations</a>
+          <a href="#vault-contract">Vault contract</a>
+          <a href="#audit-stream">Audit spine</a>
+          <a href="#nist">NIST crosswalk</a>
+          <a href="#properties">Properties</a>
+          <a href="#constellation">Constellation</a>
+        </div>
+      </div>
+    </nav>
+
+    <section id="map" class="block">
+      <div class="block-inner">
+        <h2>The suite at a glance</h2>
+        <p class="prose">
+          Each spec carries a top-level <code>&lt;name&gt;_version</code> field. The unified visualizer
+          auto-detects which spec a document is in by inspecting that field. The MCP server exposes
+          fetch / validate / inspect / cross-spec-join tools for all twelve specs.
+        </p>
+        <div class="at-a-glance">
+          <div class="stat fx-layer fx-corner"><span class="stat-num">12</span><span class="stat-label">Governance specs</span></div>
+          <div class="stat fx-layer fx-corner"><span class="stat-num">11</span><span class="stat-label">Vertical 6-packs</span></div>
+          <div class="stat fx-layer fx-corner"><span class="stat-num">75</span><span class="stat-label">MCP tools</span></div>
+          <div class="stat fx-layer fx-corner"><span class="stat-num">172</span><span class="stat-label">Tests passing</span></div>
+        </div>
+        <p class="prose" style="margin-top: 1.25rem;">
+          The eleven regulated-vertical 6-packs fan the same six canonical artifact shapes across 66 sibling spec
+          repos: HealthTech, EdTech, PropTech, InsurTech, HR&nbsp;Tech, FinTech, GovTech, LegalTech, EnergyTech,
+          DefenseTech, and RetailTech.
+        </p>
+
+        <div class="layers">
+          <div class="layer">
+            <div class="layer-label">Core · Answer engine + agent layer</div>
+            <div class="layer-cards">
+              <a class="layer-card fx-layer fx-glow layer-card--blue" href="https://github.com/mizcausevic-dev/aeo-protocol-spec" target="_blank" rel="noreferrer">
+                <h4>AEO Protocol</h4>
+                <p>Entity declaration at <code>/.well-known/aeo.json</code></p>
+              </a>
+              <a class="layer-card fx-layer fx-glow layer-card--emerald" href="https://github.com/mizcausevic-dev/prompt-provenance-spec" target="_blank" rel="noreferrer">
+                <h4>Prompt Provenance</h4>
+                <p>Versioned, lineaged, reviewable LLM prompts</p>
+              </a>
+              <a class="layer-card fx-layer fx-glow layer-card--violet" href="https://github.com/mizcausevic-dev/agent-cards-spec" target="_blank" rel="noreferrer">
+                <h4>Agent Cards</h4>
+                <p>Capability + refusal disclosure for AI agents</p>
+              </a>
+              <a class="layer-card fx-layer fx-glow layer-card--amber" href="https://github.com/mizcausevic-dev/ai-evidence-format-spec" target="_blank" rel="noreferrer">
+                <h4>AI Evidence Format</h4>
+                <p>Structured citations for LLM-generated claims</p>
+              </a>
+              <a class="layer-card fx-layer fx-glow layer-card--rose" href="https://github.com/mizcausevic-dev/mcp-tool-card-spec" target="_blank" rel="noreferrer">
+                <h4>MCP Tool Cards</h4>
+                <p>Per-tool disclosure for MCP servers</p>
+              </a>
+            </div>
+          </div>
+
+          <div class="layer-arrow">↓ vertical extensions ↓</div>
+
+          <div class="layer">
+            <div class="layer-label">EdTech trio · vendor / district / student</div>
+            <div class="layer-cards">
+              <a class="layer-card fx-layer fx-glow layer-card--teal" href="https://github.com/mizcausevic-dev/ai-tutor-card-spec" target="_blank" rel="noreferrer">
+                <h4>AI Tutor Cards</h4>
+                <p>What an AI tutor does <em>(vendor-side)</em></p>
+              </a>
+              <a class="layer-card fx-layer fx-glow layer-card--fuchsia" href="https://github.com/mizcausevic-dev/classroom-ai-aup-spec" target="_blank" rel="noreferrer">
+                <h4>Classroom AI AUP</h4>
+                <p>What AI use is permitted <em>(district / school / course)</em></p>
+              </a>
+              <a class="layer-card fx-layer fx-glow layer-card--indigo" href="https://github.com/mizcausevic-dev/student-ai-disclosure-spec" target="_blank" rel="noreferrer">
+                <h4>Student AI Disclosure</h4>
+                <p>What the student actually did <em>(per artifact)</em></p>
+              </a>
+            </div>
+            <p class="layer-note">A grader, LMS, or compliance checker joins all three: <em>"Is this submission allowed?"</em> → O(1) lookup.</p>
+          </div>
+
+          <div class="layer">
+            <div class="layer-label">HealthTech extension · vendor-side disclosure</div>
+            <div class="layer-cards">
+              <a class="layer-card fx-layer fx-glow layer-card--cyan" href="https://github.com/mizcausevic-dev/clinical-ai-disclosure-spec" target="_blank" rel="noreferrer">
+                <h4>Clinical AI Disclosure</h4>
+                <p>HIPAA / FDA / SaMD posture · bias audits · EHR (FHIR / CDS Hooks)</p>
+              </a>
+            </div>
+          </div>
+
+          <div class="layer-arrow">↓ when things break ↓</div>
+
+          <div class="layer">
+            <div class="layer-label">Cross-cutting · vendor- and buyer-side · references all</div>
+            <div class="layer-cards">
+              <a class="layer-card fx-layer fx-glow layer-card--red" href="https://github.com/mizcausevic-dev/ai-incident-card-spec" target="_blank" rel="noreferrer">
+                <h4>AI Incident Card</h4>
+                <p>Post-incident disclosure — the <em>"CVE for AI agents"</em>. References every other affected document. <strong>Vendor-published.</strong></p>
+              </a>
+              <a class="layer-card fx-layer fx-glow layer-card--violet" href="https://github.com/mizcausevic-dev/ai-procurement-decision-spec" target="_blank" rel="noreferrer">
+                <h4>AI Procurement Decision Card</h4>
+                <p>Buyer-side artifact — records a buyer's procurement review of vendor declarations. Closes the loop. <strong>Buyer-published.</strong></p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="specs" class="block block-tinted">
+      <div class="block-inner">
+        <h2>All twelve specs</h2>
+        <div class="spec-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Spec</th>
+                <th>What it declares</th>
+                <th>Detect via</th>
+                <th>Well-known path</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="https://github.com/mizcausevic-dev/aeo-protocol-spec">AEO Protocol</a></td>
+                <td>Entity declaration · authoritative claims · citation preferences</td>
+                <td><code>aeo_version</code></td>
+                <td><code>/.well-known/aeo.json</code></td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/mizcausevic-dev/prompt-provenance-spec">Prompt Provenance</a></td>
+                <td>Versioned, lineaged, reviewable LLM prompt records</td>
+                <td><code>provenance_version</code></td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/mizcausevic-dev/agent-cards-spec">Agent Cards</a></td>
+                <td>Declarative agent capability + refusal disclosure</td>
+                <td><code>agent_card_version</code></td>
+                <td><code>/.well-known/agents/&lt;id&gt;.json</code></td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/mizcausevic-dev/ai-evidence-format-spec">AI Evidence Format</a></td>
+                <td>Structured citations for LLM-generated claims</td>
+                <td><code>evidence_version</code></td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/mizcausevic-dev/mcp-tool-card-spec">MCP Tool Cards</a></td>
+                <td>Per-tool disclosure for MCP servers</td>
+                <td><code>tool_card_version</code></td>
+                <td><code>/.well-known/mcp-tools/&lt;name&gt;.json</code></td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/mizcausevic-dev/ai-tutor-card-spec">AI Tutor Cards</a> <span class="tag tag-edu">EdTech</span></td>
+                <td>EdTech vendor-side · pedagogy · FERPA/COPPA/GDPR posture</td>
+                <td><code>tutor_card_version</code></td>
+                <td><code>/.well-known/tutors/&lt;id&gt;.json</code></td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/mizcausevic-dev/student-ai-disclosure-spec">Student AI Disclosure</a> <span class="tag tag-edu">EdTech</span></td>
+                <td>Student-side · roles · prompt evidence · artifact-hash binding</td>
+                <td><code>disclosure_version</code></td>
+                <td>— (travels with artifact)</td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/mizcausevic-dev/classroom-ai-aup-spec">Classroom AI AUP</a> <span class="tag tag-edu">EdTech</span></td>
+                <td>District / school / course AI policy</td>
+                <td><code>aup_version</code></td>
+                <td><code>/.well-known/ai-aup.json</code></td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/mizcausevic-dev/clinical-ai-disclosure-spec">Clinical AI Disclosure</a> <span class="tag tag-health">HealthTech</span></td>
+                <td>HIPAA / FDA / SaMD posture · bias audits · EHR integration</td>
+                <td><code>clinical_ai_card_version</code></td>
+                <td><code>/.well-known/clinical-ai/&lt;id&gt;.json</code></td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/mizcausevic-dev/ai-incident-card-spec">AI Incident Card</a> <span class="tag tag-x">cross-cutting · vendor-side</span></td>
+                <td>"CVE for AI agents" · references every other document</td>
+                <td><code>incident_card_version</code></td>
+                <td><code>/.well-known/ai-incidents/&lt;id&gt;.json</code></td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/mizcausevic-dev/ai-procurement-decision-spec">AI Procurement Decision Card</a> <span class="tag tag-x">cross-cutting · buyer-side</span></td>
+                <td>Buyer's procurement review outcome · documents reviewed · conditions · rationale · <strong>v0.2 adds <code>data_vault_targets[]</code></strong> (Skyyflow-shaped field-level vault contract) powering <a href="https://github.com/mizcausevic-dev/rag-sentinel">rag-sentinel</a>, <a href="https://github.com/mizcausevic-dev/deal-desk-workspace">deal-desk-workspace</a>, <a href="https://github.com/mizcausevic-dev/kg-skyyflow-klaviyo-bridge">kg-skyyflow-klaviyo-bridge</a>, and the <a href="https://github.com/mizcausevic-dev/skyyflow-klaviyo-bridge-console">bridge console</a> · <strong>v0.3 adds <code>retention_envelope[]</code></strong> — per-field TTL + redaction action + ed25519-signed deletion-proof endpoint</td>
+                <td><code>decision_card_version</code></td>
+                <td><code>/.well-known/decisions/&lt;id&gt;.json</code></td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/mizcausevic-dev/ai-claims-decision-card-spec">AI Claims Decision Card</a> <span class="tag tag-x">InsurTech · insurer-side</span></td>
+                <td>Insurer/adjudicator record that an AI system decided an insurance claim · outcome · underwriting rules applied · content-hashed evidence bundle · human-in-loop · ed25519-signed, hash-chained</td>
+                <td><code>claims_card_version</code></td>
+                <td>— (document-embedded)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="tooling" class="block">
+      <div class="block-inner">
+        <h2>Two front doors</h2>
+        <p class="prose">
+          The hosted validator is the <strong>buyer-side</strong> entry point — paste a vendor's JSON, get a procurement-grade report. The unified MCP server is the <strong>agent-side</strong> entry point — every spec becomes a callable tool. Twelve specs, two front doors.
+        </p>
+        <div class="grid grid-2">
+          <div class="card-feature fx-layer fx-glow card-feature--blue">
+            <div class="card-feature-eyebrow">VALIDATOR · web</div>
+            <h3>validator.kineticgain.com</h3>
+            <p>Paste any Suite JSON in the browser and get a procurement-grade validation report. Auto-detects which of the twelve specs the document belongs to via its <code>*_version</code> field, then validates against the canonical JSON Schema 2020-12. Errors surface as inline markers in a Monaco editor with line numbers.</p>
+            <pre style="background: rgba(0,0,0,.4); padding: 10px 14px; border-radius: 8px; margin: 12px 0; overflow-x: auto; font-size: 13px; line-height: 1.5;"><code>open https://validator.kineticgain.com</code></pre>
+            <ul class="card-feature-list">
+              <li><strong>10 schemas bundled</strong> — no network at validation time</li>
+              <li><strong>Inline error markers</strong> with jump-to-line</li>
+              <li><strong>Companion</strong>: full <a href="https://github.com/mizcausevic-dev/kinetic-gain-visualizer" style="color:inherit;">React visualizer</a> with 10 procurement-grade renderers</li>
+            </ul>
+            <a class="card-feature-link" href="https://validator.kineticgain.com/" target="_blank" rel="noreferrer">Open validator →</a>
+          </div>
+          <div class="card-feature fx-layer fx-glow card-feature--emerald">
+            <div class="card-feature-eyebrow">MCP SERVER · stdio</div>
+            <h3>mcp-kinetic-gain</h3>
+            <p><strong>75 tools across all 12 specs + DefenseTech 8-tool pack + 5 cross-cutting operation categories</strong>, v0.9.1, published on npm with provenance and on the official MCP Registry. One Claude Desktop / Cursor / MCP-client config entry. Headline cross-spec tools: <code>aup_check_compliance</code> (AUP + Student AI Disclosure → allow/deny), <code>decision_card_to_policy_bundle</code> (Decision Card → runtime PolicyBundle preview), <code>attestation_verify</code> (ed25519 signatures over canonical hashes), <code>audit_chain_verify</code> (walks a hash-chained governance event log), <code>suite_doc_drift</code> (structural diff between two doc versions). v0.6.0 adds 13 implementation-tooling preview tools that wrap the 15-repo implementation stack at preview scale — read-only, deterministic, no HTTP round trip. v0.7.0 adds live audit-stream tools so an agent can emit, query, and verify governance events from chat. v0.8.0 adds the DefenseTech 8-tool pack: 3-axis vault resolver (CUI tier × export-control × foreign-person), CUI distribution-statement / ITAR us-person / DFARS 72-hour-clock invariants, CMMC evidence-bundle summarizer, and Incident Card event-type classifier.</p>
+            <pre style="background: rgba(0,0,0,.4); padding: 10px 14px; border-radius: 8px; margin: 12px 0; overflow-x: auto; font-size: 13px; line-height: 1.5;"><code>npx -y mcp-kinetic-gain validate &lt;files...&gt;</code></pre>
+            <ul class="card-feature-list">
+              <li><strong>172 tests pass</strong> · typecheck clean · build clean</li>
+              <li>Live on npm + Official MCP Registry + mcp.so · auto-published on tag</li>
+              <li>Sibling MCP servers: <code>mcp-reliability-toolkit</code> · <code>mcp-decision-intelligence</code></li>
+            </ul>
+            <a class="card-feature-link" href="/mcp/">Tool inventory + registry status →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="implementations" class="block block-tinted">
+      <div class="block-inner">
+        <h2>Suite × Implementations — the 15-repo stack</h2>
+        <p class="prose">
+          The Suite is a set of specs. <strong>The implementation stack is the software that consumes them.</strong> Open-source repos across Tiers A–E, all CI-green, semver-tagged at v0.1.0, MIT-licensed. Five cross-ecosystem hooks chain them into one composable system: procurement-decision-api drafts Decision Cards from Suite docs → policy-as-code-engine turns conditions into runtime gates → data-contract-registry extracts owners from the same Decision Card → csv-data-quality-rs validates produced CSVs row-by-row → sql-contract-enforcer compiles the same contract into cross-dialect table DDL. And the Decision Card now enforces at three runtime layers: the MCP tool call (<code>mcp-permission-broker</code>), the Azure OpenAI call (<code>azure-openai-governance-bridge</code>), and the database table (<code>sql-contract-enforcer</code>).
+        </p>
+        <div class="grid grid-2">
+          <a class="card-feature fx-layer fx-glow card-feature--blue" href="https://github.com/mizcausevic-dev/procurement-decision-api" target="_blank" rel="noreferrer">
+            <div class="card-feature-eyebrow">DECISION INTELLIGENCE · Python</div>
+            <h3>procurement-decision-api</h3>
+            <p>FastAPI service that drafts AI Procurement Decision Cards from a buyer rubric and a set of vendor Suite documents (AEO + agent-card + tool-card + ai-evidence + …). <strong>The first cross-ecosystem bridge in the portfolio</strong> — Suite × Decision Intelligence.</p>
+            <ul class="card-feature-list">
+              <li>Companions: <code>policy-as-code-engine</code> (runtime enforcement) · <code>data-contract-registry</code> (owner extraction)</li>
+              <li>NIST RMF: GOVERN 5.1, MAP 3.1, MEASURE 2.5, MANAGE 1.2 (Full)</li>
+            </ul>
+            <span class="card-feature-link">View on GitHub →</span>
+          </a>
+          <a class="card-feature fx-layer fx-glow card-feature--emerald" href="https://github.com/mizcausevic-dev/audit-stream-py" target="_blank" rel="noreferrer">
+            <div class="card-feature-eyebrow">GOVERNANCE EVENT STREAM · Python · SSE</div>
+            <h3>audit-stream-py</h3>
+            <p>Append-only governance event stream for the whole portfolio. Hash-chained for tamper-evidence; Server-Sent Events for live tailing; REST for queries. <strong>Every other portfolio repo is a producer</strong> — decision_card_drafted, policy_bundle_registered, watch_drifted, attestation_verified, contract_promoted, incident_filed.</p>
+            <ul class="card-feature-list">
+              <li>18 event kinds across 8 producer repos · GET /verify walks the chain end-to-end</li>
+              <li>Platform Reliability Stack repo #10 — the 10+ target hit</li>
+            </ul>
+            <span class="card-feature-link">View on GitHub →</span>
+          </a>
+        </div>
+        <div class="grid grid-2" style="margin-top: 20px;">
+          <a class="card-feature fx-layer fx-glow card-feature--blue" href="https://github.com/mizcausevic-dev/aeo-graph-explorer-rs" target="_blank" rel="noreferrer">
+            <div class="card-feature-eyebrow">AEO REFERENCE STACK LAYER 5 · Rust</div>
+            <h3>aeo-graph-explorer-rs</h3>
+            <p>HTTP graph-query service over <code>aeo-crawler</code> JSON-Lines output. axum + petgraph, atomic <code>POST /ingest</code>, exposes <code>/nodes</code> · <code>/neighbors</code> · <code>/shortest-path</code> · <code>/find-by-claim</code>. <strong>The fifth layer of the AEO Reference Stack — 3→5 layers gap closed.</strong></p>
+            <ul class="card-feature-list">
+              <li>SDKs → CLI → Crawler → Validator service → Graph explorer</li>
+              <li>Companion: <code>aeo-validator-service</code> (drift detection across watches)</li>
+            </ul>
+            <span class="card-feature-link">View on GitHub →</span>
+          </a>
+          <a class="card-feature fx-layer fx-glow card-feature--emerald" href="https://github.com/mizcausevic-dev/hash-attestation-rs" target="_blank" rel="noreferrer">
+            <div class="card-feature-eyebrow">SUITE PRIMITIVE · Rust · ed25519</div>
+            <h3>hash-attestation-rs</h3>
+            <p>Sign + verify Suite documents with ed25519 over the same canonical-hash convention every other Suite repo uses. <strong>The missing "this AEO actually came from the vendor" layer.</strong> Vendors sign, publish a well-known public key URL, consumers verify before they trust the document.</p>
+            <ul class="card-feature-list">
+              <li>Composes with <code>aeo-validator-service</code> (tamper events) and <code>procurement-decision-api</code> (signed Decision Cards)</li>
+              <li>NIST RMF: MAP 2.2 (provenance), MEASURE 2.8 (transparency)</li>
+            </ul>
+            <span class="card-feature-link">View on GitHub →</span>
+          </a>
+        </div>
+        <p class="prose" style="margin-top: 24px;">
+          Full catalog of all 15 repos — grouped by buyer (procurement reviewer · AEO consumer · data team · SRE · MCP integrator) — is in the <a href="https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite#-suite--implementations">Suite × Implementations</a> section of the meta-repo README.
+        </p>
+      </div>
+    </section>
+
+    <section id="vault-contract" class="block">
+      <div class="block-inner">
+        <h2>The Vault Contract Pattern — one Decision Card field, four runtime surfaces</h2>
+        <p class="prose">
+          The AI Procurement Decision Card v0.2 added a single field — <code>data_vault_targets[]</code> — that names the fields a buyer authorizes a vendor to read, the protection level required at rest, and the roles permitted to reveal them. That one field is the spine of a complete <strong>vault contract</strong>: the buyer signs it as part of procurement, four open-source reference surfaces enforce it at runtime, and every read/reveal/transform event lands on the same hash-chained <a href="#audit-stream" style="color: inherit; text-decoration: underline;">audit-stream</a> the rest of the Suite uses.
+        </p>
+        <p class="prose">
+          The pattern is <strong>vault-vendor-shaped but vendor-neutral</strong> — the field names match Skyflow's vault-contract vocabulary, but the runtime targets work against any tokenization vault (Skyflow, Privacera, Very Good Security, in-house). What buyers get is a single procurement signature that travels into the retrieval index, the deal-desk UI, the marketing connector, and the operator console — without any of them learning a raw PII value they aren't authorized to see.
+        </p>
+        <div class="grid grid-2">
+          <a class="card-feature fx-layer fx-glow card-feature--blue" href="https://github.com/mizcausevic-dev/rag-sentinel" target="_blank" rel="noreferrer">
+            <div class="card-feature-eyebrow">SURFACE 1 · TOKENIZE-BEFORE-INDEX</div>
+            <h3>rag-sentinel</h3>
+            <p>The retrieval-layer enforcer. Intercepts documents on the way into a vector store, tokenizes every <code>data_vault_targets[]</code> field per the Decision Card's protection level (None · Masked · Tokenized · Encrypted), and stamps the chunk with the vault-token reference. Embeddings index the token, never the raw value — so the index is procurement-clean even if the LLM is compromised.</p>
+            <ul class="card-feature-list">
+              <li><strong>Where it sits:</strong> between your ingest pipeline and your vector DB</li>
+              <li><strong>Buyer outcome:</strong> a RAG corpus that can't leak fields procurement didn't authorize</li>
+            </ul>
+            <span class="card-feature-link">View on GitHub →</span>
+          </a>
+          <a class="card-feature fx-layer fx-glow card-feature--emerald" href="https://github.com/mizcausevic-dev/deal-desk-workspace" target="_blank" rel="noreferrer">
+            <div class="card-feature-eyebrow">SURFACE 2 · RBAC-AWARE REVEAL</div>
+            <h3>deal-desk-workspace</h3>
+            <p>The seat-of-work enforcer. A deal-desk operator UI that reads the Decision Card's <code>reveal_roles</code> for each vault field and renders accordingly — a sales engineer sees a token, a compliance officer sees the masked tail, a principal sees the unredacted value. Every reveal click writes a <code>vault_field_revealed</code> event into the audit-stream with the role, the field, and the token reference.</p>
+            <ul class="card-feature-list">
+              <li><strong>Where it sits:</strong> the human-in-the-loop surface for vault data</li>
+              <li><strong>Buyer outcome:</strong> a reveal log that survives an audit without a SIEM lift</li>
+            </ul>
+            <span class="card-feature-link">View on GitHub →</span>
+          </a>
+        </div>
+        <div class="grid grid-2" style="margin-top: 20px;">
+          <a class="card-feature fx-layer fx-glow card-feature--blue" href="https://github.com/mizcausevic-dev/kg-skyyflow-klaviyo-bridge" target="_blank" rel="noreferrer">
+            <div class="card-feature-eyebrow">SURFACE 3 · TRANSFORM PIPELINE LIB</div>
+            <h3>kg-skyyflow-klaviyo-bridge</h3>
+            <p>The marketing-connector enforcer. A TypeScript bridge library that sits between a vault and an outbound marketing platform (Klaviyo) — the buyer's Decision Card describes which fields can flow through to which downstream lists, in which protection state (raw / masked / tokenized). Every transform is a typed pipeline step with a reversible test fixture; nothing leaves the bridge that wasn't authorized in writing.</p>
+            <ul class="card-feature-list">
+              <li><strong>Where it sits:</strong> the egress edge of your marketing stack</li>
+              <li><strong>Buyer outcome:</strong> a connector that ships a contract change in PR, not a hot deploy</li>
+            </ul>
+            <span class="card-feature-link">View on GitHub →</span>
+          </a>
+          <a class="card-feature fx-layer fx-glow card-feature--emerald" href="https://github.com/mizcausevic-dev/skyyflow-klaviyo-bridge-console" target="_blank" rel="noreferrer">
+            <div class="card-feature-eyebrow">SURFACE 4 · VISUAL OPERATOR CONSOLE</div>
+            <h3>skyyflow-klaviyo-bridge-console</h3>
+            <p>The operator-readable companion to the bridge library. React 19 + slate-indigo Bento dashboard: live sync log of each transform run, dead-letter queue with retry semantics, a Schema Mapper page that diffs the active Decision Card's <code>data_vault_targets[]</code> against the connector configuration, and a Security Assets page that lists what's tokenized vs. what's still raw. The operator console for a contract, not just a connector.</p>
+            <ul class="card-feature-list">
+              <li><strong>Where it sits:</strong> alongside the bridge for ops + procurement review</li>
+              <li><strong>Buyer outcome:</strong> a single screen procurement can audit between renewals</li>
+            </ul>
+            <span class="card-feature-link">View on GitHub →</span>
+          </a>
+        </div>
+        <p class="prose" style="margin-top: 24px;">
+          <strong>How it composes.</strong> The four surfaces don't share a runtime — they share <em>the same JSON field on the same procurement document.</em> A vendor accepts the Decision Card; <code>rag-sentinel</code> reads <code>data_vault_targets[]</code> to decide what tokenizes on ingest; <code>deal-desk-workspace</code> reads <code>reveal_roles</code> to decide who sees what at the UI; <code>kg-skyyflow-klaviyo-bridge</code> reads the protection levels to decide what propagates to Klaviyo; and the bridge console reads all of the above to render the live posture. <strong>One signature, four enforcement layers, one audit trail</strong> — and any of the four is opt-in. Buyers can adopt the pattern incrementally without committing to a fifth vendor.
+        </p>
+        <div class="hero-cta" style="margin-top: 24px;">
+          <a class="btn btn-primary" href="https://mizcausevic-dev.github.io/kinetic-gain-visualizer/?view=editor&amp;spec=decision-card" target="_blank" rel="noreferrer">See the v0.2 example in the visualizer →</a>
+          <a class="btn btn-secondary" href="https://github.com/mizcausevic-dev/ai-procurement-decision-spec" target="_blank" rel="noreferrer">Decision Card spec on GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="audit-stream" class="block">
+      <div class="block-inner">
+        <h2>The audit-stream spine — one log, ten producers, five runtimes</h2>
+        <p class="prose">
+          Every governance moment in the portfolio writes to the same hash-chained log. Decision Cards drafted, AEO watches drifted, policy bundles deployed, requests denied at runtime, MCP + Azure OpenAI tool invocations gated, Postgres rows changed, WordPress content published, data contracts broken in CI, signatures verified or tampered, AEO graphs ingested, incidents correlated to remediation plans — <strong>one tamper-evident narrative</strong> an auditor can replay end-to-end. Producers fail safely: if <code>audit-stream-py</code> is down, governance still happens, the event is just logged to stderr instead of the chain. Same opt-in env-var contract (<code>AUDIT_STREAM_URL</code>) across all ten, spanning Python, Rust, PL/pgSQL, PHP, and Azure Functions.
+        </p>
+        <div class="mermaid-frame">
+          <div class="audit-diagram" role="img" aria-label="Audit-stream fan-in. Ten governance producers emit hash-chained events into the audit-stream-py spine, which feeds governance dashboards, compliance evidence, and SRE alerting.">
+            <div class="ad-coltitle">Producers &middot; emit governance events</div>
+            <div class="ad-grid">
+              <div class="ad-node">
+                <div class="ad-name">procurement-decision-api</div>
+                <div class="ad-tech">Python · FastAPI</div>
+                <div class="ad-events"><span>decision_card_drafted</span></div>
+              </div>
+              <div class="ad-node">
+                <div class="ad-name">aeo-validator-service</div>
+                <div class="ad-tech">Python · FastAPI</div>
+                <div class="ad-events"><span>watch_created</span><span>watch_drifted</span><span>watch_validity_flipped</span></div>
+              </div>
+              <div class="ad-node">
+                <div class="ad-name">policy-as-code-engine</div>
+                <div class="ad-tech">Python · FastAPI</div>
+                <div class="ad-events"><span>policy_bundle_registered</span><span>request_allowed</span><span>request_denied</span></div>
+              </div>
+              <div class="ad-node">
+                <div class="ad-name">data-contract-registry</div>
+                <div class="ad-tech">Python · FastAPI</div>
+                <div class="ad-events"><span>contract_promoted</span><span>contract_deprecated</span><span>contract_compatibility_failed</span></div>
+              </div>
+              <div class="ad-node">
+                <div class="ad-name">hash-attestation</div>
+                <div class="ad-tech">Rust · crypto library</div>
+                <div class="ad-events"><span>attestation_signed</span><span>attestation_verified</span><span>attestation_failed</span></div>
+              </div>
+              <div class="ad-node">
+                <div class="ad-name">incident-correlation</div>
+                <div class="ad-tech">Rust · graph library</div>
+                <div class="ad-events"><span>incident_correlated</span><span>incident_correlation_failed</span></div>
+              </div>
+              <div class="ad-node">
+                <div class="ad-name">aeo-graph-explorer</div>
+                <div class="ad-tech">Rust · axum service</div>
+                <div class="ad-events"><span>graph_ingested</span><span>graph_ingest_failed</span></div>
+              </div>
+              <div class="ad-node">
+                <div class="ad-name">mcp-permission-broker + azure-openai-governance-bridge</div>
+                <div class="ad-tech">Python · runtime gates</div>
+                <div class="ad-events"><span>tool_invocation_allowed</span><span>tool_invocation_denied</span><span>tool_invocation_required_approval</span></div>
+              </div>
+              <div class="ad-node">
+                <div class="ad-name">pg-audit-stream-extension</div>
+                <div class="ad-tech">PL/pgSQL · pg_notify</div>
+                <div class="ad-events"><span>table CRUD events</span></div>
+              </div>
+              <div class="ad-node">
+                <div class="ad-name">wp-kinetic-gain-audit</div>
+                <div class="ad-tech">PHP · WordPress/MySQL</div>
+                <div class="ad-events"><span>content_published</span><span>plugin_activated</span><span>user_role_changed</span></div>
+              </div>
+            </div>
+
+            <div class="ad-flow">hash-chained fan-in ↓</div>
+
+            <div class="ad-spine">
+              <div class="ad-spine-name">audit-stream-py</div>
+              <div class="ad-spine-sub">hash-chained · tamper-evident · SSE live tail · REST query · <code>GET /verify</code></div>
+            </div>
+
+            <div class="ad-flow">verifiable replay ↓</div>
+
+            <div class="ad-consumers">
+              <div class="ad-cnode">governance dashboards</div>
+              <div class="ad-cnode">compliance evidence</div>
+              <div class="ad-cnode">SRE alerting</div>
+            </div>
+          </div>
+        </div>
+        <p class="prose" style="margin-top: 24px;">
+          <strong>20+ event kinds across 10 producers</strong>, all funneling into one verifiable chain. The Rust libraries ship behind a Cargo feature (<code>--features audit-stream</code>) so consumers who don't need emission can strip out the HTTP dep. The data-tier producers prove the reach: <code>pg-audit-stream-extension</code> catches direct DML the app path would miss, and <code>wp-kinetic-gain-audit</code> brings the same tamper-evident chain to any WordPress estate. Adding the next producer is a ~60-line module: copy the pattern, pick your event kinds, point at <code>AUDIT_STREAM_URL</code>.
+        </p>
+      </div>
+    </section>
+
+    <section id="nist" class="block">
+      <div class="block-inner">
+        <h2>NIST AI RMF crosswalk</h2>
+        <p class="prose">
+          Federal and enterprise procurement teams operating under <a href="https://www.whitehouse.gov/wp-content/uploads/2024/03/M-24-10-Advancing-Governance-Innovation-and-Risk-Management-for-Agency-Use-of-Artificial-Intelligence.pdf" target="_blank" rel="noreferrer">OMB Memorandum M-24-10</a> can use this crosswalk to map every Suite spec — <strong>and the 15-repo implementation stack</strong> — to specific <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noreferrer">NIST AI RMF</a> subcategories. The <strong>AI Procurement Decision Card</strong> (spec #11) is the natural carrier for RMF-aligned procurement outcomes — its <code>criteria.rubric</code> field can record per-subcategory pass / partial / fail results for any vendor review. <strong>Crosswalk v0.2</strong> (2026-05-15) adds Section 7 mapping the implementation tooling to NIST subcategories it actively operationalizes — <code>policy-as-code-engine</code> converts MANAGE 1.3 from policy text to runtime gate; <code>audit-stream-py</code> closes the GOVERN 1.5 record-keeping leg; <code>aeo-validator-service</code> + <code>slo-budget-tracker</code> close MEASURE 3.1 continuous-monitoring.
+        </p>
+        <div class="hero-cta" style="margin-top: 24px;">
+          <a class="btn btn-primary" href="https://github.com/mizcausevic-dev/kinetic-gain-suite-landing/blob/main/docs/nist-rmf-crosswalk.md" target="_blank" rel="noreferrer">Read the crosswalk →</a>
+          <a class="btn btn-secondary" href="https://suite.kineticgain.com/docs/nist-rmf-crosswalk.md" target="_blank" rel="noreferrer">Raw Markdown</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="properties" class="block block-dark">
+      <div class="block-inner">
+        <h2>Featured properties</h2>
+        <p class="prose">
+          A selected slice of the <strong>107 live properties</strong> under kineticgain.com. Every property is React 19 + TypeScript, Rust, Python, Julia, Kotlin, Flutter, C#, PHP, R, Shell, or hand-written static HTML, MIT/AGPL/Apache-2.0, push-to-deploy via GitHub Actions or FTPS to Hostinger. The full grouped index lives at <a href="https://kineticgain.com/constellation/" style="color: inherit; text-decoration: underline;">kineticgain.com/constellation</a>; the source-of-truth catalog is the <a href="https://github.com/mizcausevic-dev" style="color: inherit; text-decoration: underline;">mizcausevic-dev Industry Atlas</a>.
+        </p>
+        <a href="https://console.kineticgain.com" target="_blank" rel="noreferrer" style="display:block; margin: 0 0 1rem; border:1px solid var(--border); border-radius:12px; overflow:hidden;">
+          <img src="operator-console.png" alt="Kinetic Gain Operator Console — mission-control dashboard" loading="lazy" style="display:block; width:100%; height:auto;" />
+        </a>
+        <a href="https://console.kineticgain.com" target="_blank" rel="noreferrer" style="display:block; margin: 0 0 1.5rem; border:1px solid var(--border); border-radius:12px; overflow:hidden;">
+          <img src="console-topology.png" alt="Operator Console — Active Topology Mesh v0.2 with runtime-gate overlays, ed25519 signature posture, and blast-radius tracing" loading="lazy" style="display:block; width:100%; height:auto;" />
+        </a>
+        <p class="prose" style="margin: -0.75rem 0 1.75rem; font-size: 0.9rem; opacity: 0.8;">
+          The console's <strong>Active Topology Mesh (v0.2)</strong> maps the Suite's producers, consumers, and the three runtime gates — MCP Permission Broker, Azure OpenAI Governance Bridge, SQL Contract Enforcer — onto the hash-chained AuditStream spine, with ed25519 signature posture and click-to-trace blast-radius.
+        </p>
+        <div class="grid grid-2">
+          <a class="card card-dark fx-layer fx-glow" href="https://aeo.kineticgain.com" target="_blank" rel="noreferrer">
+            <div class="card-eyebrow">aeo.kineticgain.com</div>
+            <h3>AEO Visualizer</h3>
+            <p>Dedicated visualizer for AEO Protocol declarations. The original Kinetic Gain property.</p>
+            <span class="link">Open ↗</span>
+          </a>
+          <a class="card card-dark fx-layer fx-glow" href="https://tutor.kineticgain.com" target="_blank" rel="noreferrer">
+            <div class="card-eyebrow">tutor.kineticgain.com</div>
+            <h3>AI Tutor Cards</h3>
+            <p>EdTech vertical landing — vendor disclosure for AI tutors with FERPA/COPPA/GDPR posture.</p>
+            <span class="link">Open ↗</span>
+          </a>
+          <a class="card card-dark fx-layer fx-glow" href="https://clinical.kineticgain.com" target="_blank" rel="noreferrer">
+            <div class="card-eyebrow">clinical.kineticgain.com</div>
+            <h3>Clinical AI Disclosure</h3>
+            <p>HealthTech vertical landing — HIPAA / FDA / SaMD posture, bias audits, EHR integration.</p>
+            <span class="link">Open ↗</span>
+          </a>
+          <a class="card card-dark fx-layer fx-glow" href="https://bench.kineticgain.com" target="_blank" rel="noreferrer">
+            <div class="card-eyebrow">bench.kineticgain.com</div>
+            <h3>prompt-injection-bench</h3>
+            <p>Visual harness: paste a JSONL transcript, see pass rates by category and severity. Agent-Card refusal-taxonomy back-references.</p>
+            <span class="link">Open ↗</span>
+          </a>
+          <a class="card card-dark fx-layer fx-glow" href="https://pulse.kineticgain.com" target="_blank" rel="noreferrer">
+            <div class="card-eyebrow">pulse.kineticgain.com</div>
+            <h3>AI Procurement Pulse</h3>
+            <p>Quarterly research index of vendor AI governance disclosure. Issues #1-#4 live — universe scaled from dozens to thousands of domains, kineticgain.com flipped to <strong>verified=11/11</strong> (ed25519), engine v0.4 per-spec discriminator landed. Issue #5 = the first true quarterly delta (August 2026).</p>
+            <span class="link">Open ↗</span>
+          </a>
+          <a class="card card-dark fx-layer fx-glow" href="https://console.kineticgain.com" target="_blank" rel="noreferrer">
+            <div class="card-eyebrow">console.kineticgain.com</div>
+            <h3>Operator Console</h3>
+            <p>Mission-control for the Suite: a v0.2 topology mesh with runtime-gate overlays, ed25519 signature posture, and blast-radius tracing, plus a configurable SRE operator dashboard, live audit-stream visualization, and PDF export.</p>
+            <span class="link">Open ↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="constellation" class="block block-tinted">
+      <div class="block-inner">
+        <h2>The full constellation</h2>
+        <p class="prose">Every live property in the Kinetic Gain Protocol Suite. The eleven spec surfaces declare and render the protocol; the tools validate, visualize, govern, and measure adoption across the open web.</p>
+        <div class="constellation">
+          <div>
+            <h3>Specification surfaces</h3>
+            <ul class="cluster-list">
+              <li><a href="https://aeo.kineticgain.com">AEO Protocol visualizer</a><span class="sub">aeo.kineticgain.com</span></li>
+              <li><a href="https://prompts.kineticgain.com">Prompt Provenance</a><span class="sub">prompts.kineticgain.com</span></li>
+              <li><a href="https://agents.kineticgain.com">Agent Cards</a><span class="sub">agents.kineticgain.com</span></li>
+              <li><a href="https://evidence.kineticgain.com">AI Evidence Format</a><span class="sub">evidence.kineticgain.com</span></li>
+              <li><a href="https://toolcards.kineticgain.com">MCP Tool Cards</a><span class="sub">toolcards.kineticgain.com</span></li>
+              <li><a href="https://tutor.kineticgain.com">AI Tutor Cards <span class="tag tag-edu">EdTech</span></a><span class="sub">tutor.kineticgain.com</span></li>
+              <li><a href="https://student.kineticgain.com">Student AI Disclosure <span class="tag tag-edu">EdTech</span></a><span class="sub">student.kineticgain.com</span></li>
+              <li><a href="https://aup.kineticgain.com">Classroom AI AUP <span class="tag tag-edu">EdTech</span></a><span class="sub">aup.kineticgain.com</span></li>
+              <li><a href="https://clinical.kineticgain.com">Clinical AI Disclosure <span class="tag tag-health">HealthTech</span></a><span class="sub">clinical.kineticgain.com</span></li>
+              <li><a href="https://incidents.kineticgain.com">AI Incident Card <span class="tag tag-x">cross-cutting</span></a><span class="sub">incidents.kineticgain.com</span></li>
+              <li><a href="https://decisions.kineticgain.com">AI Procurement Decision Card <span class="tag tag-x">cross-cutting</span></a><span class="sub">decisions.kineticgain.com</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Tools, dashboards &amp; research</h3>
+            <ul class="cluster-list">
+              <li><a href="https://console.kineticgain.com">Operator Console</a><span class="sub">console.kineticgain.com</span></li>
+              <li><a href="https://pulse.kineticgain.com">AI Procurement Pulse</a><span class="sub">pulse.kineticgain.com</span></li>
+              <li><a href="https://validator.kineticgain.com">Suite JSON Validator</a><span class="sub">validator.kineticgain.com</span></li>
+              <li><a href="https://mizcausevic-dev.github.io/kinetic-gain-visualizer/">Unified Suite Visualizer</a><span class="sub">all twelve specs, one renderer</span></li>
+              <li><a href="https://gv.kineticgain.com">GitVisualizer</a><span class="sub">gv.kineticgain.com</span></li>
+              <li><a href="https://mcp.kineticgain.com">MCP Sentinel</a><span class="sub">mcp.kineticgain.com</span></li>
+              <li><a href="https://rag.kineticgain.com">RAG Sentinel</a><span class="sub">rag.kineticgain.com</span></li>
+              <li><a href="https://observe.kineticgain.com">AgentObserve</a><span class="sub">observe.kineticgain.com</span></li>
+              <li><a href="https://walker.kineticgain.com">well-known-walker</a><span class="sub">walker.kineticgain.com</span></li>
+              <li><a href="https://bench.kineticgain.com">prompt-injection-bench</a><span class="sub">bench.kineticgain.com</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="block-inner block-narrow">
+        <h2>Author</h2>
+        <p class="prose">
+          <strong>Miz Causevic</strong> — Boston Enterprise Technologist, Boston, MA. ~30 years across IBM, CyberArk, Alteryx, Digital.ai, Gryphon.ai. The entire suite is authored under <a href="https://github.com/mizcausevic-dev" target="_blank" rel="noreferrer">github.com/mizcausevic-dev</a> in the open. All twelve specs are MIT-licensed for maximum implementation freedom; reference implementations like the unified MCP server (<a href="https://github.com/mizcausevic-dev/mcp-kinetic-gain" target="_blank" rel="noreferrer">mcp-kinetic-gain</a>) are AGPL-3.0. Issues and pull requests welcome on any individual spec repo; cross-spec concerns happen on the <a href="https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite" target="_blank" rel="noreferrer">meta-repo</a>.
+        </p>
+      </div>
+    </section>
+    <section class="block block-tinted" aria-label="Distribution and pinning">
+      <div class="block-inner block-narrow">
+        <h2>Distribution — pin from your own CI</h2>
+        <p class="prose">
+          The Suite ships through three consumer-pinnable channels. Code can sit on GitHub all day;
+          if consumers can't pin from their own CI / package manager, it doesn't move.
+        </p>
+        <p class="prose">
+          <strong>🛍️ <a href="https://github.com/marketplace?type=actions&amp;query=Kinetic+Gain" target="_blank" rel="noreferrer">GitHub Marketplace</a>.</strong>
+          21 protocol PR-gate + governance Actions, each with <code>v0.1.0</code> exact-pin + floating <code>v0.1</code> major tags:
+        </p>
+        <pre style="background: rgba(0,0,0,.4); padding: 10px 14px; border-radius: 8px; margin: 12px 0; overflow-x: auto; font-size: 13px; line-height: 1.5;"><code>uses: mizcausevic-dev/agent-card-diff-action@v0.1      # floating major
+uses: mizcausevic-dev/agent-card-diff-action@v0.1.0    # exact pin</code></pre>
+        <p class="prose">
+          <strong>📦 npm registry.</strong>
+          <a href="https://www.npmjs.com/package/kinetic-gain-embedded" target="_blank" rel="noreferrer"><code>kinetic-gain-embedded@0.1.1</code></a>
+          (Apache-2.0, dual ESM/CJS, zero runtime deps, Node 20+, npm provenance-stamped) — drop-in
+          audit-stream + Decision Card vault contract SDK. Plus
+          <a href="https://www.npmjs.com/package/mcp-kinetic-gain" target="_blank" rel="noreferrer"><code>mcp-kinetic-gain@0.9.1</code></a>
+          (75 tools, on the official MCP Registry).
+        </p>
+        <p class="prose">
+          <strong>🌐 MCP Registry.</strong>
+          <code>mcp-kinetic-gain</code> is also published on the official <a href="https://registry.modelcontextprotocol.io" target="_blank" rel="noreferrer">MCP Registry</a>, on
+          <a href="https://mcp.so" target="_blank" rel="noreferrer">mcp.so</a>, and indexed by the Cline marketplace.
+          One Claude Desktop / Cursor / MCP-client config entry covers all 12 specs.
+        </p>
+      </div>
+    </section>
+
+    <section class="block" aria-label="Across the kineticgain.com estate">
+      <div class="block-inner block-narrow">
+        <h2>Across the rest of the estate</h2>
+        <p class="prose">
+          The Suite is one of several product lanes under <a href="https://kineticgain.com/" target="_blank" rel="noreferrer">kineticgain.com</a>.
+          The full grouped index — <strong><!-- BEGIN GENERATED live-properties-count --><span class="kg-live-properties" data-measured="2026-06-04">107</span><!-- END GENERATED live-properties-count --> live properties across 17 verticals</strong> — is at
+          <a href="https://kineticgain.com/constellation/" target="_blank" rel="noreferrer">kineticgain.com/constellation/</a>.
+          Adjacent surfaces buyers reach for alongside the Suite specs:
+          <a href="https://kineticgain.com/calculators/" target="_blank" rel="noreferrer">/calculators/</a> (decision math),
+          <a href="https://kineticgain.com/trust/" target="_blank" rel="noreferrer">/trust/</a> (Trust Pack — 10 buyer-facing tools),
+          <a href="https://kineticgain.com/policies/" target="_blank" rel="noreferrer">/policies/</a> (the 11-vertical readiness aggregator),
+          <a href="https://pulse.kineticgain.com/" target="_blank" rel="noreferrer">pulse.kineticgain.com</a> (quarterly procurement telemetry over a <!-- BEGIN GENERATED pulse-universe-count --><span class="kg-pulse-universe" data-measured="2026-06-04">2,044</span><!-- END GENERATED pulse-universe-count -->-domain universe),
+          <a href="https://provenance-lab.kineticgain.com/" target="_blank" rel="noreferrer">provenance-lab.kineticgain.com</a> (interactive watermark stress test + the case for C2PA),
+          and <a href="https://portfolio.kineticgain.com/" target="_blank" rel="noreferrer">portfolio.kineticgain.com</a> (programmatic dashboard over 683 public repos).
+          The six governance guides that anchor the estate's topical clusters:
+          <a href="https://kineticgain.com/identity-lifecycle-management/" target="_blank" rel="noreferrer">Identity Lifecycle Management</a>,
+          <a href="https://kineticgain.com/cloud-cost-optimization/" target="_blank" rel="noreferrer">Cloud Cost Optimization</a>,
+          <a href="https://kineticgain.com/data-governance/" target="_blank" rel="noreferrer">Data Governance</a>,
+          <a href="https://kineticgain.com/rag-security/" target="_blank" rel="noreferrer">RAG Security</a>,
+          <a href="https://kineticgain.com/deprovisioning/" target="_blank" rel="noreferrer">Deprovisioning</a>, and
+          <a href="https://kineticgain.com/entitlement-management/" target="_blank" rel="noreferrer">Entitlement Management</a> &mdash;
+          each mapped to the <a href="https://kineticgain.com/protocol/" target="_blank" rel="noreferrer">Kinetic Gain Protocol</a> standard.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <small>© 2026 Miz Causevic · <a href="https://kineticgain.com" target="_blank" rel="noreferrer">kineticgain.com</a> · <a href="https://github.com/mizcausevic-dev" target="_blank" rel="noreferrer">GitHub</a> · <a href="https://www.linkedin.com/in/mirzacausevic/" target="_blank" rel="noreferrer">LinkedIn</a> · <a href="https://medium.com/@mizcausevic/" target="_blank" rel="noreferrer">Medium</a></small>
+      <small class="code">suite.kineticgain.com · Kinetic Gain Protocol Suite</small>
+    </div>
+  </footer>
+
+  <!-- On-this-page sticky section nav + scrollspy. External same-origin script
+       (CSP is script-src 'self': no inline JS, no third-party CDN). The
+       audit-stream diagram is now static HTML/CSS, so no diagram library loads. -->
+  <script src="suite-nav.js?v=20260806-qa2" defer></script>
+</body>
+</html>

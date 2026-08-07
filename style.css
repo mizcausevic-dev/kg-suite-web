@@ -1,0 +1,1055 @@
+:root {
+  /* --- BERT dark-cyan palette (retheme from emerald/slate) --- */
+  --bg:      #0B0C10;
+  --panel:   #1F2833;
+  --panel-2: #161d26;
+  --text:    #C5C6C7;
+  --head:    #eaf6f5;
+  --muted:   #7d8a94;
+  --accent:  #66FCF1;
+  --accent2: #45A29E;
+  --border:  #2b3a46;
+
+  /* Emerald ramp remapped to cyan/teal so every emerald reference re-themes */
+  --emerald-50:  #e6fffd;
+  --emerald-100: #c9fbf8;
+  --emerald-200: #9bf6f1;
+  --emerald-400: #66FCF1;   /* primary cyan accent */
+  --emerald-500: #45A29E;   /* teal accent */
+  --emerald-600: #45A29E;
+  --emerald-700: #66FCF1;
+  --emerald-800: #9bf6f1;
+  --emerald-900: #0b2e2c;
+
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --slate-950: #020617;
+
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-head: "Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Headings use Space Grotesk (falls back to Inter — never serif). */
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-head); }
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  color: var(--slate-800);
+  background: var(--slate-50);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--emerald-700); text-decoration: none; }
+a:hover { color: var(--emerald-800); text-decoration: underline; }
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  padding: 0.08em 0.32em;
+  background: var(--slate-100);
+  color: var(--slate-800);
+  border-radius: 4px;
+}
+
+.code { font-family: var(--font-mono); }
+
+/* ------- Site header (apex-aligned visual language) ------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(10, 11, 17, 0.72);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.site-header-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  height: 68px;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+/* KG logo — mirror of apex .kg-logo / .kg-mark / .kg-word */
+.kg-logo {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  text-decoration: none;
+  color: #fff;
+  flex-shrink: 0;
+}
+.kg-mark { height: 22px; width: auto; display: block; flex: none; }
+.kg-mark .kg-anchor { fill: var(--emerald-400); }
+.kg-mark .kg-bar { fill: #f5f2eb; }
+.kg-word {
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: -0.025em;
+  color: #f5f2eb;
+  white-space: nowrap;
+}
+.kg-word-dim { color: var(--slate-400); font-weight: 400; }
+
+/* Primary nav links — mono uppercase, 12px (apex parity) */
+.site-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: nowrap;
+}
+.site-nav-links a {
+  font-family: var(--font-mono, ui-monospace, "SFMono-Regular", Menlo, monospace);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--slate-400);
+  text-decoration: none;
+  transition: color 0.25s ease;
+  white-space: nowrap;
+}
+.site-nav-links a:hover { color: #f5f2eb; text-decoration: none; }
+
+/* Pill CTA — rounded outline with emerald-aware hover, akin to apex .btn-start */
+.btn-start {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono, ui-monospace, "SFMono-Regular", Menlo, monospace);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f5f2eb;
+  text-decoration: none;
+  background: transparent;
+  transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  flex-shrink: 0;
+}
+.btn-start:hover {
+  color: var(--slate-900);
+  background: var(--emerald-400);
+  border-color: var(--emerald-400);
+  text-decoration: none;
+}
+.btn-start .ar { transition: transform 0.25s ease; display: inline-block; }
+.btn-start:hover .ar { transform: translate(2px, -2px); }
+
+@media (max-width: 920px) {
+  .site-nav-links { gap: 16px; }
+  .site-nav-links a { font-size: 11px; }
+  .kg-word-dim { display: none; }
+}
+@media (max-width: 720px) {
+  .site-nav-links { display: none; }
+  .site-header-inner { padding: 0 18px; }
+}
+
+.hero {
+  background: radial-gradient(ellipse at top, #1F2833 0%, #0B0C10 60%);
+  color: var(--text);
+  padding: 5rem 1.25rem 5rem;
+  text-align: center;
+}
+.hero-inner {
+  max-width: 920px;
+  margin: 0 auto;
+}
+.pill {
+  display: inline-block;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--emerald-500);
+  background: rgba(102, 252, 241, 0.08);
+  color: var(--emerald-400);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  margin-bottom: 1.5rem;
+}
+.hero h1 {
+  font-size: clamp(2.2rem, 5.5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 1.5rem;
+}
+.hero h1 em {
+  color: var(--emerald-400);
+  font-style: italic;
+  font-weight: 400;
+}
+.lede {
+  font-size: 1.1rem;
+  color: var(--slate-300);
+  max-width: 760px;
+  margin: 0 auto 2rem;
+  line-height: 1.65;
+}
+.hero-cta {
+  display: flex; gap: 0.75rem; justify-content: center;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+.btn {
+  display: inline-block;
+  padding: 0.85rem 1.6rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: transform 80ms ease, background 120ms ease, color 120ms ease;
+}
+.btn:hover { text-decoration: none; transform: translateY(-1px); }
+.btn-primary {
+  background: var(--emerald-500);
+  color: var(--slate-900);
+}
+.btn-primary:hover { background: var(--emerald-400); color: var(--slate-900); }
+.btn-secondary {
+  background: transparent;
+  color: var(--slate-100);
+  border-color: var(--slate-600);
+}
+.btn-secondary:hover { background: var(--slate-800); color: #fff; }
+
+.stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--slate-800);
+  max-width: 700px;
+  margin: 0 auto;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.stat-num {
+  font-family: var(--font-mono);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--emerald-400);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.stat-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate-500);
+  font-family: var(--font-mono);
+  margin-top: 0.5rem;
+}
+
+.block { padding: 4rem 1.25rem; }
+.block-tinted { background: var(--slate-100); }
+.block-dark {
+  background: #0d131c;
+  color: var(--text);
+}
+.block-dark h2 { color: var(--head); }
+.block-dark .prose { color: var(--muted); }
+.block-dark .card { background: var(--panel-2); border-color: var(--border); color: var(--text); }
+.block-dark code { background: var(--panel-2); color: var(--text); }
+
+.block-inner { max-width: 1200px; margin: 0 auto; }
+.block-narrow { max-width: 800px; }
+
+/* Mermaid host: dark frame so the emerald spine pops, centered, scrolls
+   horizontally on small viewports rather than overflowing. */
+.mermaid-frame {
+  margin: 2rem 0 1rem;
+  padding: 1.75rem 1.25rem;
+  background: #0d131c;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.mermaid-frame .mermaid {
+  background: transparent;
+  margin: 0 auto;
+  min-width: 600px;
+  text-align: center;
+}
+.mermaid-frame .mermaid svg { max-width: 100%; height: auto; }
+
+h2 {
+  font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin: 0 0 1.5rem;
+  color: var(--slate-900);
+}
+
+.prose {
+  font-size: 1rem;
+  color: var(--slate-600);
+  max-width: 760px;
+  line-height: 1.7;
+}
+.prose + .prose { margin-top: 1rem; }
+
+.layers {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.layer {
+  border: 1px solid var(--slate-200);
+  border-radius: 16px;
+  padding: 1.5rem;
+  background: #fff;
+}
+.layer-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate-500);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.layer-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+}
+.layer-card {
+  display: block;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  text-decoration: none;
+  border: 1px solid var(--slate-200);
+  background: var(--slate-50);
+  transition: transform 100ms ease, border-color 100ms ease, box-shadow 100ms ease;
+}
+.layer-card:hover {
+  transform: translateY(-2px);
+  text-decoration: none;
+  box-shadow: 0 6px 14px -8px rgba(0, 0, 0, 0.15);
+}
+.layer-card h4 {
+  margin: 0 0 0.3rem;
+  font-size: 0.95rem;
+  color: var(--slate-900);
+}
+.layer-card p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--slate-600);
+  line-height: 1.45;
+}
+.layer-card p em { color: var(--slate-500); font-style: italic; }
+.layer-card--blue    { border-color: #93c5fd; }
+.layer-card--blue:hover    { border-color: #3b82f6; }
+.layer-card--emerald { border-color: #45A29E; }
+.layer-card--emerald:hover { border-color: #66FCF1; }
+.layer-card--violet  { border-color: #c4b5fd; }
+.layer-card--violet:hover  { border-color: #8b5cf6; }
+.layer-card--amber   { border-color: #fcd34d; }
+.layer-card--amber:hover   { border-color: #f59e0b; }
+.layer-card--rose    { border-color: #fda4af; }
+.layer-card--rose:hover    { border-color: #f43f5e; }
+.layer-card--teal    { border-color: #5eead4; }
+.layer-card--teal:hover    { border-color: #14b8a6; }
+.layer-card--fuchsia { border-color: #f0abfc; }
+.layer-card--fuchsia:hover { border-color: #d946ef; }
+.layer-card--indigo  { border-color: #a5b4fc; }
+.layer-card--indigo:hover  { border-color: #6366f1; }
+.layer-card--cyan    { border-color: #67e8f9; }
+.layer-card--cyan:hover    { border-color: #06b6d4; }
+.layer-card--red     { border-color: #fca5a5; }
+.layer-card--red:hover     { border-color: #ef4444; }
+
+.layer-arrow {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate-500);
+}
+.layer-note {
+  margin-top: 0.85rem;
+  font-size: 0.85rem;
+  color: var(--slate-600);
+  padding: 0.6rem 0.9rem;
+  background: var(--slate-50);
+  border-left: 2px solid var(--emerald-500);
+  border-radius: 4px;
+}
+
+.spec-table {
+  overflow-x: auto;
+  margin-top: 2rem;
+  border-radius: 14px;
+  border: 1px solid var(--slate-200);
+  background: #fff;
+}
+.spec-table table { width: 100%; border-collapse: collapse; }
+.spec-table th,
+.spec-table td {
+  text-align: left;
+  padding: 0.85rem 1rem;
+  font-size: 0.88rem;
+  border-bottom: 1px solid var(--slate-200);
+}
+.spec-table th {
+  background: var(--slate-50);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--slate-600);
+  font-weight: 700;
+}
+.spec-table tbody tr:last-child td { border-bottom: none; }
+.spec-table tbody tr:hover { background: var(--slate-50); }
+.tag {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+.tag-edu    { background: #ccfbf1; color: #115e59; }
+.tag-health { background: #cffafe; color: #155e75; }
+.tag-x      { background: #fee2e2; color: #991b1b; }
+
+.grid { display: grid; gap: 1rem; margin-top: 2rem; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 800px) { .grid-2 { grid-template-columns: 1fr; } }
+
+.card-feature {
+  display: block;
+  background: #fff;
+  border: 1px solid var(--slate-200);
+  border-radius: 16px;
+  padding: 2rem;
+  text-decoration: none;
+  color: var(--slate-800);
+  transition: transform 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+}
+.card-feature:hover {
+  transform: translateY(-2px);
+  text-decoration: none;
+  color: var(--slate-800);
+  box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.15);
+}
+.card-feature--blue:hover    { border-color: #3b82f6; }
+.card-feature--emerald:hover { border-color: var(--emerald-500); }
+.card-feature h3 {
+  font-size: 1.3rem;
+  margin: 0 0 0.6rem;
+  color: var(--slate-900);
+  font-family: var(--font-mono);
+}
+.card-feature p {
+  font-size: 0.95rem;
+  color: var(--slate-600);
+  margin: 0 0 1rem;
+  line-height: 1.6;
+}
+.card-feature-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--emerald-600);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+.card-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+  color: var(--slate-700);
+}
+.card-feature-list li {
+  padding: 0.2rem 0 0.2rem 1.2rem;
+  position: relative;
+}
+.card-feature-list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--emerald-500);
+  font-weight: 700;
+}
+.card-feature-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: var(--emerald-700);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--slate-200);
+  border-radius: 14px;
+  padding: 1.5rem;
+  transition: transform 120ms ease, border-color 120ms ease;
+}
+.card h3 { font-size: 1.05rem; margin: 0 0 0.6rem; color: var(--slate-900); font-weight: 600; }
+.card p { font-size: 0.9rem; color: var(--slate-600); margin: 0; }
+.card-dark {
+  text-decoration: none;
+  color: var(--slate-100);
+  cursor: pointer;
+}
+.card-dark:hover {
+  border-color: var(--emerald-500);
+  transform: translateY(-2px);
+  text-decoration: none;
+  color: var(--slate-100);
+}
+.card-dark h3 { color: #fff; }
+.card-dark p { color: var(--slate-400); }
+.card-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--emerald-400);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--emerald-400);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.footer {
+  border-top: 1px solid var(--slate-200);
+  background: #fff;
+  padding: 2rem 1.25rem;
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: var(--slate-500);
+}
+.footer-inner small { font-size: 0.8rem; }
+.footer-inner a { color: var(--slate-600); }
+.footer-inner a:hover { color: var(--slate-900); }
+
+/* ============================================================
+   BERT dark-cyan theme (retheme) — the shipped rendering
+   ============================================================ */
+html, body { background: var(--bg); color: var(--text); }
+a { color: var(--accent); }
+a:hover { color: #8ffdf5; }
+code { background: var(--panel-2); color: var(--text); }
+h2 { color: var(--head); }
+.prose { color: var(--muted); }
+.block-tinted { background: #10161f; }
+.layer { background: var(--panel-2); border-color: var(--border); }
+.layer-card { background: #12181f; color: var(--text); }
+.layer-card h4 { color: var(--head); }
+.layer-card p { color: var(--muted); }
+.layer-note { background: #12181f; color: var(--muted); }
+.spec-table { background: var(--panel-2); border-color: var(--border); }
+.spec-table th { background: #12181f; color: var(--muted); }
+.spec-table th, .spec-table td { border-bottom-color: var(--border); }
+.spec-table td { color: var(--text); }
+.spec-table tbody tr:hover { background: rgba(102, 252, 241, 0.05); }
+.card-feature { background: var(--panel-2); border-color: var(--border); color: var(--text); }
+.card-feature h3 { color: var(--head); }
+.card-feature p { color: var(--muted); }
+.card-feature-list { color: var(--text); }
+.card { background: var(--panel-2); border-color: var(--border); }
+.card h3 { color: var(--head); }
+.card p { color: var(--muted); }
+.footer { background: #10161f; border-top-color: var(--border); }
+.footer-inner { color: var(--muted); }
+.footer-inner a { color: var(--text); }
+.footer-inner a:hover { color: var(--head); }
+.tag-edu    { background: rgba(69, 162, 158, 0.16); color: #7fded9; }
+.tag-health { background: rgba(102, 252, 241, 0.14); color: #8ffdf5; }
+.tag-x      { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
+
+/* Full-constellation link cluster (pillar → all spokes) */
+.constellation { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 2rem; }
+@media (max-width: 800px) { .constellation { grid-template-columns: 1fr; } }
+.constellation h3 { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--emerald-400); font-family: var(--font-mono); margin: 0 0 1rem; }
+.cluster-list { list-style: none; padding: 0; margin: 0; }
+.cluster-list li { padding: 0.55rem 0; border-bottom: 1px solid var(--slate-800); }
+.cluster-list li:last-child { border-bottom: none; }
+.cluster-list a { color: var(--slate-200); font-weight: 600; font-size: 0.95rem; }
+.cluster-list a:hover { color: #fff; text-decoration: none; }
+.cluster-list .sub { display: block; color: var(--slate-500); font-size: 0.78rem; font-family: var(--font-mono); margin-top: 0.15rem; }
+
+
+/* ============================================================
+   Kinetic Gain FX library (appended for suite retheme)
+   ============================================================ */
+/* ============================================================================
+   Kinetic Gain FX library (canonical) — BERT dark-cyan
+   Architecture (per doctrine):
+     .fx-layer         card element; establishes stacking + clips effects
+     .fx-layer::before OUTER visual layer (beams/glows/sweeps/halos/shine/motion)
+     .fx-layer::after  INNER panel (readable surface, depth, tint, contrast)
+     .fx-layer > *     content, always ABOVE both pseudo-elements
+   Rules: one primary effect per card; subtle for content-heavy, expressive for
+   hero/feature/decorative; decorative motion away from text; readable contrast
+   always; honor prefers-reduced-motion. Canonical effects:
+     fx-corner Corner Beam · fx-radial Radial Pulse · fx-glow Soft Glow
+     fx-sweep Edge Sweep · fx-grid Grid Overlay · fx-vignette Inner Vignette
+     fx-shine Diagonal Shine · fx-pulse Bass Pulse · fx-halo Halo Ring
+     fx-prism Prism Beam
+   ============================================================================ */
+
+:root{
+  --fx-accent:#66FCF1;   /* cyan  */
+  --fx-accent2:#45A29E;  /* teal  */
+  --fx-panel:#161d26;    /* inner panel base */
+  --fx-border:#2b3a46;
+}
+
+/* ---- base: stacking + clip + content lift ---- */
+.fx-layer{position:relative;isolation:isolate;overflow:hidden;
+  border:1px solid var(--fx-border);border-radius:var(--radius,14px);
+  background:var(--panel2,var(--fx-panel));transition:transform .2s ease,box-shadow .2s ease}
+.fx-layer > *{position:relative;z-index:2}
+.fx-layer::before,.fx-layer::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit}
+.fx-layer::before{z-index:0}   /* outer visual */
+.fx-layer::after{z-index:1;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent 40%)} /* inner panel default */
+.fx-layer:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.32)}
+
+/* ---- fx-glow : Soft Glow (default-safe, content-heavy cards) ---- */
+.fx-glow::before{opacity:0;transition:opacity .3s ease;
+  background:radial-gradient(340px circle at var(--mx,50%) var(--my,0%),
+    color-mix(in srgb,var(--fx-accent) 14%,transparent),transparent 62%)}
+.fx-glow:hover::before{opacity:1}
+
+/* ---- fx-corner : Corner Beam ---- */
+.fx-corner::before{
+  background:
+    linear-gradient(135deg,color-mix(in srgb,var(--fx-accent) 20%,transparent),transparent 38%),
+    linear-gradient(315deg,color-mix(in srgb,var(--fx-accent2) 14%,transparent),transparent 42%);
+  opacity:.55;transition:opacity .3s ease}
+.fx-corner:hover::before{opacity:1}
+
+/* ---- fx-sweep : Edge Sweep (animated light along top edge) ---- */
+.fx-sweep::before{
+  background:linear-gradient(90deg,transparent,var(--fx-accent),transparent);
+  height:2px;bottom:auto;background-size:200% 100%;opacity:.85;
+  animation:fx-sweep-a 3.6s linear infinite}
+@keyframes fx-sweep-a{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ---- fx-radial : Radial Pulse ---- */
+.fx-radial::before{
+  background:radial-gradient(120px circle at 50% 50%,
+    color-mix(in srgb,var(--fx-accent) 16%,transparent),transparent 60%);
+  animation:fx-radial-a 4.5s ease-in-out infinite}
+@keyframes fx-radial-a{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:.7;transform:scale(1.12)}}
+
+/* ---- fx-vignette : Inner Vignette (quiet, great behind text) ---- */
+.fx-vignette::after{
+  background:
+    radial-gradient(120% 120% at 50% 0%,transparent 55%,rgba(0,0,0,.28)),
+    linear-gradient(180deg,rgba(255,255,255,.02),transparent 40%)}
+
+/* ---- fx-shine : Diagonal Shine (hover sweep) ---- */
+.fx-shine::before{
+  background:linear-gradient(115deg,transparent 30%,color-mix(in srgb,var(--fx-accent) 22%,transparent) 46%,transparent 62%);
+  background-size:250% 250%;background-position:150% 150%;transition:background-position .6s ease}
+.fx-shine:hover::before{background-position:-30% -30%}
+
+/* ---- fx-grid : Grid Overlay (technical texture) ---- */
+.fx-grid::before{
+  background-image:
+    linear-gradient(color-mix(in srgb,var(--fx-accent) 8%,transparent) 1px,transparent 1px),
+    linear-gradient(90deg,color-mix(in srgb,var(--fx-accent) 8%,transparent) 1px,transparent 1px);
+  background-size:26px 26px;opacity:.5;
+  -webkit-mask-image:radial-gradient(120% 90% at 50% 0%,#000,transparent 75%);
+          mask-image:radial-gradient(120% 90% at 50% 0%,#000,transparent 75%)}
+
+/* ---- fx-halo : Halo Ring (glowing border) ---- */
+.fx-halo::before{
+  padding:1.5px;
+  background:linear-gradient(120deg,transparent 20%,var(--fx-accent),var(--fx-accent2),transparent 80%);
+  background-size:200% 100%;animation:fx-halo-a 5s linear infinite;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude}
+@keyframes fx-halo-a{0%{background-position:0 0}100%{background-position:200% 0}}
+
+/* ---- fx-pulse : Bass Pulse (subtle breathing lift) ---- */
+.fx-pulse{animation:fx-pulse-a 5s ease-in-out infinite}
+@keyframes fx-pulse-a{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--fx-accent) 22%,transparent)}
+  60%{box-shadow:0 0 0 6px transparent}}
+
+/* ---- fx-prism : Prism Beam (expressive — hero/feature only) ---- */
+.fx-prism::before{
+  background:linear-gradient(120deg,
+    color-mix(in srgb,var(--fx-accent) 22%,transparent),
+    color-mix(in srgb,#7c5cff 16%,transparent),
+    color-mix(in srgb,var(--fx-accent2) 20%,transparent),transparent 75%);
+  background-size:220% 100%;opacity:.6;animation:fx-prism-a 7s ease-in-out infinite}
+@keyframes fx-prism-a{0%,100%{background-position:0 0;opacity:.45}50%{background-position:120% 0;opacity:.75}}
+
+/* ---- accessibility: kill motion, keep the static tint ---- */
+@media (prefers-reduced-motion: reduce){
+  .fx-sweep::before,.fx-radial::before,.fx-halo::before,.fx-prism::before,.fx-pulse{animation:none !important}
+  .fx-shine::before{transition:none !important}
+}
+
+/* ---- FX glue: fit the canonical effects to this page's surfaces ---- */
+.hero-inner.fx-layer { background: transparent; border: none; }
+.stats { border-top: none; padding-top: 0; gap: 1rem; }
+.stat.fx-layer { padding: 1rem 1.4rem; border-radius: 12px; min-width: 130px; }
+
+
+/* ============================================================================
+   LAYOUT SYSTEM (structure pass, 2026-08-06)
+   Appended last so it wins by source order. Palette + FX untouched — this
+   layer only fixes container alignment, spacing scale, type hierarchy,
+   equal-height cards, section rhythm, the sticky scrollspy nav, and the
+   static audit-stream diagram.
+   ============================================================================ */
+:root {
+  --maxw: 1180px;                         /* one container width, header→footer */
+  --gutter: clamp(20px, 4vw, 28px);       /* one gutter, header→content aligned */
+  --section-py: clamp(3.5rem, 6vw, 5rem); /* one vertical section rhythm */
+  --read: 70ch;                           /* readable prose line-length */
+  --header-h: 68px;                       /* site-header height (sticky top) */
+  --nav-h: 49px;                           /* section-nav height (sticky under header) */
+}
+
+/* ---- 1 · Unified container + gutters (header, sections, footer align) ---- */
+.site-header-inner { max-width: var(--maxw); padding: 0 var(--gutter); }
+.block-inner { max-width: var(--maxw); }
+.footer-inner { max-width: var(--maxw); padding: 0 var(--gutter); }
+.block { padding: var(--section-py) var(--gutter); }
+.hero { padding: clamp(3.75rem, 7vw, 5.5rem) var(--gutter); }
+.footer { padding: 2.25rem var(--gutter); }
+
+/* anchor jumps clear the two sticky bars (header + section-nav) */
+main section[id] { scroll-margin-top: calc(var(--header-h) + var(--nav-h) + 12px); }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* ---- 2 · Type scale + prose readability ---- */
+.hero h1 { font-size: clamp(2.25rem, 5vw, 3.75rem); line-height: 1.06; }
+.lede { font-size: clamp(1.05rem, 1.6vw, 1.18rem); line-height: 1.65; max-width: 66ch; }
+h2 { font-size: clamp(1.65rem, 3vw, 2.15rem); line-height: 1.18; margin: 0 0 1.15rem; }
+.prose { max-width: var(--read); font-size: 1rem; line-height: 1.72; }
+.card-feature h3 { font-size: 1.2rem; line-height: 1.3; overflow-wrap: anywhere; }
+.card h3 { font-size: 1.08rem; line-height: 1.32; }
+.layer-card h4 { font-size: 0.98rem; line-height: 1.3; }
+
+/* consistent cyan section-start marker above every section heading */
+.block-inner > h2 { position: relative; }
+.block-inner > h2::before {
+  content: ""; display: block; width: 44px; height: 3px; border-radius: 2px;
+  margin: 0 0 1.1rem;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+}
+
+/* ---- 3 · Hero stats: three equal, aligned tiles ---- */
+.stats {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem; max-width: 560px; margin: 0 auto; padding-top: 0; border-top: none;
+}
+.stat.fx-layer { min-width: 0; padding: 1.1rem 0.75rem; text-align: center; }
+
+/* ---- 4 · Equal-height cards with bottom-aligned CTAs ---- */
+.grid { align-items: stretch; }
+.card-feature { display: flex; flex-direction: column; height: 100%; }
+.card-feature > p:first-of-type { flex: 0 0 auto; }
+.card-feature-link { margin-top: auto; padding-top: 0.35rem; align-self: flex-start; }
+a.card-feature-link { text-decoration: none; }
+a.card-feature-link:hover { color: var(--accent); text-decoration: none; }
+.card { display: flex; flex-direction: column; height: 100%; }
+.card .link { margin-top: auto; }
+.layer-card { display: flex; flex-direction: column; height: 100%; }
+.layer-cards { align-items: stretch; }
+
+/* ---- 5 · Sticky on-this-page section nav + scrollspy ---- */
+.section-nav {
+  position: sticky; top: var(--header-h); z-index: 9;
+  background: rgba(11, 12, 16, 0.86);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+}
+.section-nav-inner {
+  max-width: var(--maxw); margin: 0 auto; padding: 8px var(--gutter);
+  display: flex; align-items: center; gap: 12px;
+}
+.section-nav-toggle {
+  display: none; align-items: center; gap: 8px;
+  width: 100%; padding: 6px 2px; background: none; border: 0; cursor: pointer;
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted);
+}
+.section-nav-caret { transition: transform 0.2s ease; }
+.section-nav.open .section-nav-caret { transform: rotate(180deg); }
+.section-nav-links { display: flex; flex-wrap: wrap; gap: 5px 6px; }
+.section-nav-links a {
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.03em;
+  padding: 5px 11px; border-radius: 999px; white-space: nowrap;
+  color: var(--muted); border: 1px solid transparent;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.section-nav-links a:hover { color: var(--head); background: rgba(102, 252, 241, 0.06); text-decoration: none; }
+.section-nav-links a.active {
+  color: var(--head);
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 38%, transparent);
+}
+@media (max-width: 820px) {
+  .section-nav-inner { flex-direction: column; align-items: stretch; gap: 0; }
+  .section-nav-toggle { display: flex; }
+  .section-nav-links { display: none; flex-direction: column; gap: 2px; padding: 4px 0 8px; }
+  .section-nav.open .section-nav-links { display: flex; }
+  .section-nav-links a { white-space: normal; padding: 8px 10px; }
+}
+
+/* ---- 6 · Static audit-stream diagram (replaces CSP-blocked mermaid) ---- */
+.mermaid-frame { padding: clamp(1.25rem, 3vw, 2rem); }
+.audit-diagram { display: flex; flex-direction: column; gap: 0.9rem; }
+.ad-coltitle {
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted); text-align: center;
+}
+.ad-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(228px, 1fr));
+  gap: 0.7rem; align-items: stretch;
+}
+.ad-node {
+  background: var(--panel-2); border: 1px solid var(--border);
+  border-left: 3px solid var(--accent2); border-radius: 10px;
+  padding: 0.75rem 0.85rem; display: flex; flex-direction: column; gap: 0.35rem;
+}
+.ad-name {
+  font-family: var(--font-mono); font-size: 0.82rem; font-weight: 600;
+  color: var(--head); overflow-wrap: anywhere; line-height: 1.3;
+}
+.ad-tech {
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.03em;
+  color: var(--muted);
+}
+.ad-events { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 0.15rem; }
+.ad-events span {
+  font-family: var(--font-mono); font-size: 0.66rem; line-height: 1.4;
+  padding: 2px 7px; border-radius: 5px;
+  background: rgba(102, 252, 241, 0.08); color: var(--accent2);
+  border: 1px solid rgba(69, 162, 158, 0.28); overflow-wrap: anywhere;
+}
+.ad-flow {
+  text-align: center; font-family: var(--font-mono); font-size: 0.7rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+}
+.ad-spine {
+  margin: 0 auto; max-width: 560px; width: 100%; text-align: center;
+  padding: 1.1rem 1.25rem; border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent2), #2f7d78);
+  border: 1.5px solid var(--accent);
+  box-shadow: 0 0 0 1px rgba(102, 252, 241, 0.2), 0 14px 40px -18px rgba(102, 252, 241, 0.5);
+}
+.ad-spine-name {
+  font-family: var(--font-mono); font-weight: 700; font-size: 1.02rem;
+  color: #0B0C10; letter-spacing: -0.01em;
+}
+.ad-spine-sub {
+  font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.5;
+  color: #06231f; margin-top: 0.3rem;
+}
+.ad-spine-sub code { background: rgba(11, 12, 16, 0.18); color: #041a17; }
+.ad-consumers {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem;
+}
+.ad-cnode {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  padding: 0.8rem 0.75rem; text-align: center; color: var(--text);
+  font-family: var(--font-mono); font-size: 0.8rem;
+}
+@media (max-width: 560px) {
+  .ad-consumers { grid-template-columns: 1fr; }
+}
+
+/* ---- 7 · Guard against horizontal overflow on small screens ----
+   NOTE: intentionally NOT setting overflow-x on html/body — that would make
+   them a scroll container and break the sticky section-nav. Overflow is
+   instead contained at the source (wrappers below already scroll internally). */
+img, pre, table { max-width: 100%; }
+.spec-table, .mermaid-frame { max-width: 100%; }
+.card-feature pre { max-width: 100%; overflow-x: auto; }
+
+/* ============================================================================
+   QA remediation 2026-08-06 (owner review): hero left-aligned with the vertical
+   6-packs broken onto their own bulleted block; hero stats left-aligned; prose-
+   only sections narrowed to a readable measure so there is no wide empty right
+   column. (FX shine -> glow swap for the feature cards is in the markup.)
+   ============================================================================ */
+
+/* ---- Hero: left-aligned, wider, verticals as a bulleted grid ---- */
+.hero { text-align: left; }
+.hero-inner { max-width: var(--maxw, 1180px); }
+.hero .pill { white-space: normal; max-width: 100%; }
+.hero .lede { margin: 0 0 1.5rem; max-width: 900px; }
+.hero-cta { justify-content: flex-start; }
+
+.hero-verticals { max-width: 940px; margin: 0 0 1.75rem; }
+.hero-verticals-head {
+  font-size: 1.02rem; color: var(--slate-300);
+  line-height: 1.6; margin: 0 0 0.9rem;
+}
+.hero-vertical-list {
+  list-style: none; padding: 0; margin: 0;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.5rem 1.25rem;
+}
+.hero-vertical-list li {
+  position: relative; padding-left: 1.15rem;
+  font-family: var(--font-mono); font-size: 0.9rem; color: var(--slate-200);
+}
+.hero-vertical-list li::before {
+  content: "\25B8"; position: absolute; left: 0; color: var(--emerald-400);
+}
+.hero-closing {
+  color: var(--slate-400); font-size: 0.98rem;
+  line-height: 1.6; margin: 0 0 2.25rem; max-width: 900px;
+}
+
+/* ---- Hero stats: left-aligned row of three ---- */
+.stats { justify-content: flex-start; margin: 0; max-width: 560px; }
+.stat { align-items: flex-start; }
+.stat.fx-layer { text-align: left; }
+
+/* ---- Prose-only sections: narrow to a readable measure AND let the prose fill
+        the column edge-to-edge, so there is no empty right (QA void). ---- */
+#audit-stream .block-inner,
+#nist .block-inner { max-width: 760px; }
+#audit-stream .block-inner .prose,
+#nist .block-inner .prose { max-width: 100%; }
+
+@media (max-width: 720px) {
+  .hero-vertical-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stats { max-width: 100%; }
+}
+
+/* ============================================================================
+   Phase 0 (2026-08-06 owner redirect): problem-first hero + persona cards +
+   relocated "at a glance" numbers (moved out of the hero to cut density).
+   ============================================================================ */
+.proof-bar {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  color: var(--slate-500);
+  margin: 1.5rem 0 0;
+  max-width: 820px;
+  line-height: 1.5;
+}
+
+/* Persona cards: one primary action per audience, right under the hero */
+.personas { padding: 0.5rem var(--gutter, 1.25rem) 3.25rem; }
+.persona-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+.persona-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--text);
+}
+a.persona-card:hover { text-decoration: none; }
+.persona-eyebrow {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--head);
+  margin-bottom: 0.6rem;
+}
+.persona-card p {
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  margin: 0 0 1rem;
+  flex: 1 1 auto;
+}
+.persona-code {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  background: var(--panel-2, #161d26);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.45rem 0.6rem;
+  margin: 0 0 0.9rem;
+  overflow-x: auto;
+}
+.persona-link {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: auto;
+}
+
+/* Relocated "at a glance" numbers (were the hero stat wall) */
+.at-a-glance {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.75rem;
+  max-width: 680px;
+}
+.at-a-glance .stat.fx-layer {
+  flex: 1 1 130px;
+  min-width: 130px;
+  padding: 1.1rem 0.9rem;
+  border-radius: 12px;
+}
+
+@media (max-width: 820px) {
+  .persona-grid { grid-template-columns: 1fr; }
+}
+
