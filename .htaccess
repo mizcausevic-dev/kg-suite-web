@@ -35,3 +35,15 @@
   RewriteCond %{HTTPS} !=on
   RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
+
+# Block backup/editor/junk files from ever being served, regardless of how
+# they end up in the doc root (stray .bak from a manual edit, editor swap
+# files, etc.). Found index.html.bak-20260806-8pack publicly fetchable
+# 2026-08-08 (audit finding) — removed the file itself; this rule stops the
+# class of mistake from recurring rather than relying on remembering to
+# delete the next one by hand.
+<FilesMatch "(\.bak|\.old|\.orig|~|\.swp)(-.*)?$">
+  Require all denied
+</FilesMatch>
+
+ErrorDocument 404 /404.html

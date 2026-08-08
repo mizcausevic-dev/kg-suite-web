@@ -12,17 +12,53 @@
   <!-- fallbacks so file:// and offline-mirror previews carry the same posture. -->
   <!-- HSTS, X-Frame, X-Content-Type-Options, Permissions-Policy, COOP, CORP    -->
   <!-- CANNOT be set via <meta> — they MUST be response headers in .htaccess.   -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests" />
+  <!-- frame-ancestors is deliberately omitted here: browsers log a console    -->
+  <!-- warning when it's delivered via <meta> since it has no effect that way  -->
+  <!-- (spec-mandated meta-CSP restriction), and it's already correctly        -->
+  <!-- enforced as a real response header in .htaccess. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Kinetic Gain Protocol Suite — twelve JSON governance specs the MCP server implements" />
   <meta property="og:description" content="Open governance protocols for the answer-engine and agent era. Twelve JSON governance specs · eleven regulated-vertical 6-packs (66 sibling spec repos) · shared audit-stream spine · one unified MCP server (75 tools) · one hosted validator." />
   <meta property="og:url" content="https://suite.kineticgain.com/" />
+  <meta property="og:image" content="https://suite.kineticgain.com/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Kinetic Gain Protocol Suite — prove what your AI actually does, before a buyer has to guess." />
+  <meta property="og:site_name" content="Kinetic Gain Protocol Suite" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kinetic Gain Protocol Suite — twelve JSON governance specs the MCP server implements" />
+  <meta name="twitter:description" content="Open governance protocols for the answer-engine and agent era. Twelve JSON governance specs · eleven regulated-vertical 6-packs · one unified MCP server · one hosted validator." />
+  <meta name="twitter:image" content="https://suite.kineticgain.com/og-image.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "name": "Kinetic Gain Protocol Suite",
+        "url": "https://suite.kineticgain.com/",
+        "description": "Twelve open JSON governance specs for the answer-engine and agent era, one unified MCP server, one hosted validator, one shared audit-stream spine.",
+        "publisher": { "@id": "https://kineticgain.com/#organization" },
+        "inLanguage": "en"
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://kineticgain.com/#organization",
+        "name": "Kinetic Gain",
+        "url": "https://kineticgain.com/",
+        "sameAs": ["https://github.com/mizcausevic-dev"]
+      }
+    ]
+  }
+  </script>
 
   <link rel="stylesheet" href="/assets/fonts.css" />
 
-  <link rel="stylesheet" href="style.css?v=20260807-redesign" />
+  <link rel="stylesheet" href="style.css?v=20260808-fixes" />
 
   <!-- Site icons (matches apex Kinetic Gain mark — onyx square + cream bars
        + bluegray-bright anchor — so suite hub renders the same brand mark
@@ -36,7 +72,7 @@
 <body>
   <header class="site-header">
     <div class="site-header-inner">
-      <a href="/" class="kg-logo" aria-label="Kinetic Gain Protocol Suite home">
+      <a href="/" class="kg-logo">
         <svg class="kg-mark" viewBox="-8 -8 188 88" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kinetic Gain mark">
           <rect class="kg-anchor" x="0" y="0" width="14" height="72"/>
           <polygon class="kg-bar" points="32,0 83,0 77,18 26,18"/>
@@ -158,23 +194,23 @@
             <div class="layer-label">Core · Answer engine + agent layer</div>
             <div class="layer-cards">
               <a class="layer-card fx-layer fx-glow layer-card--blue" href="https://github.com/mizcausevic-dev/aeo-protocol-spec" target="_blank" rel="noreferrer">
-                <h4>AEO Protocol</h4>
+                <h3>AEO Protocol</h3>
                 <p>Entity declaration at <code>/.well-known/aeo.json</code></p>
               </a>
               <a class="layer-card fx-layer fx-glow layer-card--emerald" href="https://github.com/mizcausevic-dev/prompt-provenance-spec" target="_blank" rel="noreferrer">
-                <h4>Prompt Provenance</h4>
+                <h3>Prompt Provenance</h3>
                 <p>Versioned, lineaged, reviewable LLM prompts</p>
               </a>
               <a class="layer-card fx-layer fx-glow layer-card--violet" href="https://github.com/mizcausevic-dev/agent-cards-spec" target="_blank" rel="noreferrer">
-                <h4>Agent Cards</h4>
+                <h3>Agent Cards</h3>
                 <p>Capability + refusal disclosure for AI agents</p>
               </a>
               <a class="layer-card fx-layer fx-glow layer-card--amber" href="https://github.com/mizcausevic-dev/ai-evidence-format-spec" target="_blank" rel="noreferrer">
-                <h4>AI Evidence Format</h4>
+                <h3>AI Evidence Format</h3>
                 <p>Structured citations for LLM-generated claims</p>
               </a>
               <a class="layer-card fx-layer fx-glow layer-card--rose" href="https://github.com/mizcausevic-dev/mcp-tool-card-spec" target="_blank" rel="noreferrer">
-                <h4>MCP Tool Cards</h4>
+                <h3>MCP Tool Cards</h3>
                 <p>Per-tool disclosure for MCP servers</p>
               </a>
             </div>
@@ -186,15 +222,15 @@
             <div class="layer-label">EdTech trio · vendor / district / student</div>
             <div class="layer-cards">
               <a class="layer-card fx-layer fx-glow layer-card--teal" href="https://github.com/mizcausevic-dev/ai-tutor-card-spec" target="_blank" rel="noreferrer">
-                <h4>AI Tutor Cards</h4>
+                <h3>AI Tutor Cards</h3>
                 <p>What an AI tutor does <em>(vendor-side)</em></p>
               </a>
               <a class="layer-card fx-layer fx-glow layer-card--fuchsia" href="https://github.com/mizcausevic-dev/classroom-ai-aup-spec" target="_blank" rel="noreferrer">
-                <h4>Classroom AI AUP</h4>
+                <h3>Classroom AI AUP</h3>
                 <p>What AI use is permitted <em>(district / school / course)</em></p>
               </a>
               <a class="layer-card fx-layer fx-glow layer-card--indigo" href="https://github.com/mizcausevic-dev/student-ai-disclosure-spec" target="_blank" rel="noreferrer">
-                <h4>Student AI Disclosure</h4>
+                <h3>Student AI Disclosure</h3>
                 <p>What the student actually did <em>(per artifact)</em></p>
               </a>
             </div>
@@ -205,7 +241,7 @@
             <div class="layer-label">HealthTech extension · vendor-side disclosure</div>
             <div class="layer-cards">
               <a class="layer-card fx-layer fx-glow layer-card--cyan" href="https://github.com/mizcausevic-dev/clinical-ai-disclosure-spec" target="_blank" rel="noreferrer">
-                <h4>Clinical AI Disclosure</h4>
+                <h3>Clinical AI Disclosure</h3>
                 <p>HIPAA / FDA / SaMD posture · bias audits · EHR (FHIR / CDS Hooks)</p>
               </a>
             </div>
@@ -217,11 +253,11 @@
             <div class="layer-label">Cross-cutting · vendor- and buyer-side · references all</div>
             <div class="layer-cards">
               <a class="layer-card fx-layer fx-glow layer-card--red" href="https://github.com/mizcausevic-dev/ai-incident-card-spec" target="_blank" rel="noreferrer">
-                <h4>AI Incident Card</h4>
+                <h3>AI Incident Card</h3>
                 <p>Post-incident disclosure — the <em>"CVE for AI agents"</em>. References every other affected document. <strong>Vendor-published.</strong></p>
               </a>
               <a class="layer-card fx-layer fx-glow layer-card--violet" href="https://github.com/mizcausevic-dev/ai-procurement-decision-spec" target="_blank" rel="noreferrer">
-                <h4>AI Procurement Decision Card</h4>
+                <h3>AI Procurement Decision Card</h3>
                 <p>Buyer-side artifact — records a buyer's procurement review of vendor declarations. Closes the loop. <strong>Buyer-published.</strong></p>
               </a>
             </div>
@@ -854,7 +890,7 @@
             </div>
           </div>
         </div>
-        <p class="prose" style="margin-top: 12px; font-size: 0.9rem; opacity: 0.8;">
+        <p class="prose" style="margin-top: 12px; font-size: 0.9rem; color: var(--muted);">
           Same opt-in env-var contract (<code>AUDIT_STREAM_URL</code>) across all ten, spanning Python, Rust, PL/pgSQL, PHP, and Azure Functions.
         </p>
         <p class="prose" style="margin-top: 24px;">
@@ -910,7 +946,7 @@
         <a href="https://console.kineticgain.com" target="_blank" rel="noreferrer" style="display:block; margin: 0 0 1.5rem; border:1px solid var(--border); border-radius:12px; overflow:hidden;">
           <img src="console-topology.png" alt="Operator Console — Active Topology Mesh v0.2 with runtime-gate overlays, ed25519 signature posture, and blast-radius tracing" loading="lazy" style="display:block; width:100%; height:auto;" />
         </a>
-        <p class="prose" style="margin: -0.75rem 0 1.75rem; font-size: 0.9rem; opacity: 0.8;">
+        <p class="prose" style="margin: -0.75rem 0 1.75rem; font-size: 0.9rem; color: var(--muted);">
           The console's <strong>Active Topology Mesh (v0.2)</strong> maps the Suite's producers, consumers, and the three runtime gates — MCP Permission Broker, Azure OpenAI Governance Bridge, SQL Contract Enforcer — onto the hash-chained AuditStream spine, with ed25519 signature posture and click-to-trace blast-radius.
         </p>
         <div class="grid grid-2">
