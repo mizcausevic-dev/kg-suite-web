@@ -199,9 +199,16 @@ code {
   color: #fff;
   margin: 0 0 1.5rem;
 }
+/* No italics anywhere on the page, per explicit instruction — <em> still
+   carries whatever inline-emphasis meaning it was marked up for, it just
+   doesn't render slanted. Global rule covers every existing <em> use (hero
+   subhead, inline asides in body copy), not only the one most recently
+   flagged. */
+em {
+  font-style: normal;
+}
 .hero h1 em {
   color: var(--emerald-400);
-  font-style: italic;
   font-weight: 400;
 }
 .lede {
@@ -1420,19 +1427,31 @@ a.persona-card:hover { text-decoration: none; }
    `.reveal-on-scroll` and `.js-reveal` are added to the DOM by JS only (see
    suite-nav.js) — neither ever exists in the raw HTML, so with JS disabled
    these selectors match nothing and every element renders at full opacity in
-   its normal position from first paint. The revealed resting state is
-   wrapped in :where() (zero specificity) so it can never outrank a real
-   interaction state — e.g. .fx-layer:hover's translateY(-2px) lift — once a
-   card has already revealed. */
+   its normal position from first paint.
+
+   FIXED 2026-08-08: the revealed state was previously wrapped in :where(),
+   which has ZERO specificity by definition — it could never outrank the
+   plain `body.js-reveal .reveal-on-scroll` hide rule above it, regardless of
+   .in-view being added. Every reveal-target element (every card, heading,
+   kicker, stat) was permanently stuck at opacity:0 in production; only
+   plain text (never a reveal target) rendered. Fixed by giving .in-view
+   normal, sufficient specificity to win outright. That reintroduces a real
+   conflict with `.fx-layer:hover`'s translateY(-2px) lift (both rules touch
+   `transform`) once a card has revealed, so a dedicated higher-specificity
+   rule below restores the hover lift specifically for that combined state,
+   instead of zeroing out the half of the cascade that actually needed to win. */
 @media (prefers-reduced-motion: no-preference) {
   body.js-reveal .reveal-on-scroll {
     opacity: 0;
     transform: translateY(18px);
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
-  :where(body.js-reveal .reveal-on-scroll.in-view) {
+  body.js-reveal .reveal-on-scroll.in-view {
     opacity: 1;
     transform: translateY(0);
+  }
+  .reveal-on-scroll.in-view.fx-layer:hover {
+    transform: translateY(-2px);
   }
 }
 
