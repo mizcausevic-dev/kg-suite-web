@@ -9,7 +9,7 @@
   <link rel="canonical" href="https://suite.kineticgain.com/properties/" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests" />
   <link rel="stylesheet" href="/assets/fonts.css" />
-  <link rel="stylesheet" href="/style.css?v=20260809-flow" />
+  <link rel="stylesheet" href="/style.css?v=20260809-explain" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -55,8 +55,26 @@
           <span class="kicker-text">05 &middot; In production</span>
         </div>
         <h2>Featured properties</h2>
-        <p class="prose">
+        <div class="explain-toggle" role="group" aria-label="Explain this page">
+          <span class="explain-toggle-label">Explain this page:</span>
+          <button type="button" class="spec-filter-chip explain-chip" data-register="tech" aria-pressed="true">Tech</button>
+          <button type="button" class="spec-filter-chip explain-chip" data-register="nontech" aria-pressed="false">Non-Tech</button>
+          <button type="button" class="spec-filter-chip explain-chip" data-register="layman" aria-pressed="false">Layman</button>
+        </div>
+        <p class="prose explain-text" data-register-text="tech">
           A selected slice of the <strong>107 live properties</strong> under kineticgain.com. Every property is React 19 + TypeScript, Rust, Python, Julia, Kotlin, Flutter, C#, PHP, R, Shell, or hand-written static HTML, MIT/AGPL/Apache-2.0, push-to-deploy via GitHub Actions or FTPS to Hostinger.
+        </p>
+        <p class="prose explain-text" data-register-text="nontech" hidden>
+          A sample of the 107 live tools and sites that make up the Kinetic Gain product line. Each one is built
+          with a mainstream, well-supported technology, not a fragile one-off, is openly licensed, and ships
+          through an automated deploy pipeline rather than manual file uploads, so updates go out reliably and
+          consistently.
+        </p>
+        <p class="prose explain-text" data-register-text="layman" hidden>
+          This is a small sample of the 107 real, working websites and tools that make up this project, out of
+          many more behind the scenes. None of them are thrown together with duct tape; they're built the way
+          professional software is normally built, and every update happens through an automatic, repeatable
+          process instead of someone manually copying files onto a server.
         </p>
         <div class="grid grid-2">
           <a class="card card-dark fx-layer fx-glow" href="https://aeo.kineticgain.com" target="_blank" rel="noreferrer">
@@ -185,7 +203,7 @@
       <small class="code">suite.kineticgain.com &middot; Kinetic Gain Protocol Suite</small>
     </div>
   </footer>
-  <script src="/suite-nav.js?v=20260809-flow" defer></script>
+  <script src="/suite-nav.js?v=20260809-explain" defer></script>
   <script src="/nav-toggle.js" defer></script>
 </body>
 </html>

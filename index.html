@@ -9,7 +9,7 @@
   <link rel="canonical" href="https://suite.kineticgain.com/" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests" />
   <link rel="stylesheet" href="/assets/fonts.css" />
-  <link rel="stylesheet" href="/style.css?v=20260809-flow" />
+  <link rel="stylesheet" href="/style.css?v=20260809-explain" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -48,10 +48,28 @@
       <div class="hero-inner">
         <span class="pill">v0.1 draft - open source - MIT-licensed specs</span>
         <h1>Prove what your AI actually does.<br />Before a buyer, regulator, or agent has to guess.</h1>
-        <p class="lede">
+        <div class="explain-toggle" role="group" aria-label="Explain this page">
+          <span class="explain-toggle-label">Explain this page:</span>
+          <button type="button" class="spec-filter-chip explain-chip" data-register="tech" aria-pressed="true">Tech</button>
+          <button type="button" class="spec-filter-chip explain-chip" data-register="nontech" aria-pressed="false">Non-Tech</button>
+          <button type="button" class="spec-filter-chip explain-chip" data-register="layman" aria-pressed="false">Layman</button>
+        </div>
+        <p class="lede explain-text" data-register-text="tech">
           Kinetic Gain is a set of open JSON specs that let an AI vendor declare what a system is, what it refuses,
           what evidence backs its claims, and what happens when it fails, so procurement teams, compliance reviewers,
           and other AI agents can verify it automatically instead of taking your word for it.
+        </p>
+        <p class="lede explain-text" data-register-text="nontech" hidden>
+          Kinetic Gain gives AI vendors a standard, written way to state what their system actually does, what it
+          won't do, what proof backs up its claims, and what happens if it breaks. That means the people who have to
+          sign off on using it, procurement, compliance, security, can check those claims themselves instead of just
+          trusting a sales pitch.
+        </p>
+        <p class="lede explain-text" data-register-text="layman" hidden>
+          Think of it like a nutrition label, but for AI. Instead of a company just telling you "our AI is safe and
+          accurate," Kinetic Gain gives them a standard form to fill out that says exactly what the AI can do, what
+          it refuses to do, and what proof they have for their claims. Anyone can check that form against the real
+          AI and see if the company was telling the truth.
         </p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="https://validator.kineticgain.com/" target="_blank" rel="noreferrer">See it validate a real doc &#8594;</a>
@@ -296,7 +314,7 @@ uses: mizcausevic-dev/agent-card-diff-action@v0.1.0    # exact pin</code></pre>
       <small class="code">suite.kineticgain.com &middot; Kinetic Gain Protocol Suite</small>
     </div>
   </footer>
-  <script src="/suite-nav.js?v=20260809-flow" defer></script>
+  <script src="/suite-nav.js?v=20260809-explain" defer></script>
   <script src="/nav-toggle.js" defer></script>
 </body>
 </html>

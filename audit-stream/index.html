@@ -9,7 +9,7 @@
   <link rel="canonical" href="https://suite.kineticgain.com/audit-stream/" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests" />
   <link rel="stylesheet" href="/assets/fonts.css" />
-  <link rel="stylesheet" href="/style.css?v=20260809-flow" />
+  <link rel="stylesheet" href="/style.css?v=20260809-explain" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -137,8 +137,30 @@
           <span class="kicker-text">04 &middot; Governance events</span>
         </div>
         <h2>The audit-stream spine — one log, ten producers, five runtimes</h2>
-        <p class="prose">
+        <div class="explain-toggle" role="group" aria-label="Explain this page">
+          <span class="explain-toggle-label">Explain this page:</span>
+          <button type="button" class="spec-filter-chip explain-chip" data-register="tech" aria-pressed="true">Tech</button>
+          <button type="button" class="spec-filter-chip explain-chip" data-register="nontech" aria-pressed="false">Non-Tech</button>
+          <button type="button" class="spec-filter-chip explain-chip" data-register="layman" aria-pressed="false">Layman</button>
+        </div>
+        <p class="prose explain-text" data-register-text="tech">
           Every governance moment in the portfolio writes to the same hash-chained log. Decision Cards drafted, AEO watches drifted, policy bundles deployed, requests denied at runtime, MCP + Azure OpenAI tool invocations gated, Postgres rows changed, WordPress content published, data contracts broken in CI, signatures verified or tampered, AEO graphs ingested, incidents correlated to remediation plans — <strong>one tamper-evident narrative</strong> an auditor can replay end-to-end.
+        </p>
+        <p class="prose explain-text" data-register-text="nontech" hidden>
+          Every governance action across the whole product line, big or small, gets written to one shared,
+          tamper-evident log instead of scattered across ten different systems' own records. If a Decision Card
+          gets drafted, a policy gets deployed, an AI tool call gets blocked, or a database row changes, it all
+          lands in the same chain. An auditor doesn't have to reconstruct a timeline from ten different sources by
+          hand; they can replay the whole story from one place and trust that nothing in it was quietly edited
+          afterward.
+        </p>
+        <p class="prose explain-text" data-register-text="layman" hidden>
+          Imagine every important thing that happens across a whole company's software, an approval, a blocked
+          request, a change to a webpage, gets written down in one shared notebook instead of ten separate ones.
+          This notebook has a special property: once something is written in it, it can't be secretly erased or
+          changed without leaving obvious evidence. So if someone later asks "what actually happened, and can you
+          prove it wasn't tampered with," there's one place to look, and the answer is verifiable, not just
+          someone's word.
         </p>
         <div class="ad-status">
           <span class="ad-status-dot" aria-hidden="true"></span>
@@ -356,7 +378,7 @@
     </div>
   </footer>
 
-  <script src="/suite-nav.js?v=20260809-flow" defer></script>
+  <script src="/suite-nav.js?v=20260809-explain" defer></script>
   <script src="/audit-connectors.js?v=20260809-flow" defer></script>
   <script src="/nav-toggle.js" defer></script>
 </body>

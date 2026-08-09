@@ -1711,6 +1711,27 @@ a.persona-card:hover { text-decoration: none; }
   .ad-flow-hub-node { animation: none; }
 }
 
+/* "Explain this page" register toggle (2026-08-09). Reuses .spec-filter-chip
+   for the buttons themselves (same visual language, zero new chip CSS) --
+   only the wrapper layout and the small label are new. Progressive
+   enhancement: the raw HTML ships with the tech register visible and the
+   other two hidden, so a no-JS visitor sees exactly the same real content
+   this page always had; the toggle simply never appears without its script. */
+.explain-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.9rem 0 1.1rem;
+}
+.explain-toggle-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+
 /* ============================================================================
    Suite × Implementations — buyer-persona accordion (2026-08-07)
    Appended last so it wins by source order. Native <details>/<summary>:

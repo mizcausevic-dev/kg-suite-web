@@ -9,7 +9,7 @@
   <link rel="canonical" href="https://suite.kineticgain.com/implementations/" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests" />
   <link rel="stylesheet" href="/assets/fonts.css" />
-  <link rel="stylesheet" href="/style.css?v=20260809-flow" />
+  <link rel="stylesheet" href="/style.css?v=20260809-explain" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -55,8 +55,28 @@
           <span class="kicker-text">03 &middot; Runtime enforcement</span>
         </div>
         <h2>The Vault Contract Pattern &mdash; one Decision Card field, four runtime surfaces</h2>
-        <p class="prose">
+        <div class="explain-toggle" role="group" aria-label="Explain this page">
+          <span class="explain-toggle-label">Explain this page:</span>
+          <button type="button" class="spec-filter-chip explain-chip" data-register="tech" aria-pressed="true">Tech</button>
+          <button type="button" class="spec-filter-chip explain-chip" data-register="nontech" aria-pressed="false">Non-Tech</button>
+          <button type="button" class="spec-filter-chip explain-chip" data-register="layman" aria-pressed="false">Layman</button>
+        </div>
+        <p class="prose explain-text" data-register-text="tech">
           The AI Procurement Decision Card v0.2 added a single field, <code>data_vault_targets[]</code>, that names the fields a buyer authorizes a vendor to read, the protection level required at rest, and the roles permitted to reveal them. Four open-source reference surfaces enforce that field at runtime, vendor-neutral by design; expand one below for how it works, or read the note beneath for why all four matter together.
+        </p>
+        <p class="prose explain-text" data-register-text="nontech" hidden>
+          When a buyer signs off on a vendor's AI system, that approval now includes exactly which sensitive data
+          fields the vendor is allowed to touch, how strongly each one has to be protected, and who's allowed to
+          see the real value versus a masked version. Four separate open-source tools enforce that agreement
+          automatically wherever the data actually flows, rather than relying on the vendor to remember and honor
+          it.
+        </p>
+        <p class="prose explain-text" data-register-text="layman" hidden>
+          Say a company approves a vendor to use certain customer data, but only some of it, and only in certain
+          protected ways. Normally that agreement just lives in a contract that nobody checks against what the
+          software is actually doing. Here, that same agreement is written into a real, structured record, and
+          four different tools actually enforce it: they check, at the moment data is used, that nobody's touching
+          more than what was agreed to.
         </p>
         <p class="layer-note vault-compose-note">
           <strong>One contract, four surfaces.</strong> The pattern is <strong>vault-vendor-shaped but vendor-neutral</strong>: the field names match Skyflow's vault-contract vocabulary, but the runtime targets work against any tokenization vault (Skyflow, Privacera, Very Good Security, in-house). One procurement signature travels into the retrieval index, the deal-desk UI, the marketing connector, and the operator console, without any of them learning a raw PII value they aren't authorized to see. Every read, reveal, and transform event lands on the same hash-chained <a href="/audit-stream/" style="color: inherit; text-decoration: underline;">audit-stream</a> the rest of the Suite uses.
@@ -434,7 +454,7 @@
     </div>
   </footer>
 
-  <script src="/suite-nav.js?v=20260809-flow" defer></script>
+  <script src="/suite-nav.js?v=20260809-explain" defer></script>
   <script src="/nav-toggle.js" defer></script>
 </body>
 </html>

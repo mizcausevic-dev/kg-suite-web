@@ -231,3 +231,50 @@
     tab.addEventListener("click", function () { activate(tab); });
   });
 })();
+
+/* "Explain this page" register toggle — Tech / Non-Tech / Layman. All
+   three registers already exist in the raw HTML (progressive enhancement:
+   a no-JS visitor sees the tech register, which is this page's real
+   original content, unchanged, and no toggle to switch away from it).
+   The chosen register persists across pages via localStorage, since a
+   reader who picks "Layman" on one page almost certainly wants it on the
+   next one too, not a fresh reset every navigation. Every .explain-text
+   block on the page (there is currently one per page, but this scales to
+   more without any change here) switches together, driven by one shared
+   register value, even if a page ever grows multiple toggle groups. */
+(function () {
+  "use strict";
+
+  var STORAGE_KEY = "kg-explain-register";
+  var VALID = { tech: true, nontech: true, layman: true };
+
+  var chips = [].slice.call(document.querySelectorAll(".explain-chip"));
+  var texts = [].slice.call(document.querySelectorAll(".explain-text"));
+  if (!chips.length || !texts.length) return;
+
+  function applyRegister(register) {
+    texts.forEach(function (el) {
+      el.hidden = el.getAttribute("data-register-text") !== register;
+    });
+    chips.forEach(function (chip) {
+      var active = chip.getAttribute("data-register") === register;
+      chip.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+  }
+
+  var saved = null;
+  try {
+    saved = localStorage.getItem(STORAGE_KEY);
+  } catch (e) {}
+  applyRegister(saved && VALID[saved] ? saved : "tech");
+
+  chips.forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      var register = chip.getAttribute("data-register") || "tech";
+      applyRegister(register);
+      try {
+        localStorage.setItem(STORAGE_KEY, register);
+      } catch (e) {}
+    });
+  });
+})();
