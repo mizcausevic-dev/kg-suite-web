@@ -158,3 +158,42 @@
     });
   });
 })();
+
+/* #audit-stream runtime filter chips — same pure show/hide discipline as
+   the #specs filter above, scoped separately (id, not the shared class)
+   since this one dims producer nodes and their connector lines instead of
+   hiding table rows. No node is ever removed from the DOM, only dimmed via
+   a class, and real connector geometry (audit-connectors.js) is untouched
+   by this script — it only reports the active filter through the public
+   window.__auditStreamSetFilter hook so redrawn paths pick up the same
+   dim state. If audit-connectors.js never loads, producer nodes still dim
+   correctly; only the connector-line dimming is skipped. */
+(function () {
+  "use strict";
+
+  var chipGroup = document.getElementById("ad-runtime-filter");
+  if (!chipGroup) return;
+
+  var chips = [].slice.call(chipGroup.querySelectorAll(".spec-filter-chip"));
+  var nodes = [].slice.call(document.querySelectorAll("#audit-stream .ad-node[data-runtime]"));
+  if (!chips.length || !nodes.length) return;
+
+  function applyFilter(value) {
+    nodes.forEach(function (node) {
+      var show = value === "all" || node.getAttribute("data-runtime") === value;
+      node.classList.toggle("ad-dim", !show);
+    });
+    if (typeof window.__auditStreamSetFilter === "function") {
+      window.__auditStreamSetFilter(value);
+    }
+  }
+
+  chips.forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      chips.forEach(function (c) {
+        c.setAttribute("aria-pressed", c === chip ? "true" : "false");
+      });
+      applyFilter(chip.getAttribute("data-filter") || "all");
+    });
+  });
+})();

@@ -140,16 +140,27 @@
         <p class="prose">
           Every governance moment in the portfolio writes to the same hash-chained log. Decision Cards drafted, AEO watches drifted, policy bundles deployed, requests denied at runtime, MCP + Azure OpenAI tool invocations gated, Postgres rows changed, WordPress content published, data contracts broken in CI, signatures verified or tampered, AEO graphs ingested, incidents correlated to remediation plans — <strong>one tamper-evident narrative</strong> an auditor can replay end-to-end.
         </p>
+        <div class="ad-status">
+          <span class="ad-status-dot" aria-hidden="true"></span>
+          <span>10 producers &middot; 1 hash-chained spine &middot; 3 consumers</span>
+        </div>
+        <div class="spec-filter-chips" role="group" aria-label="Filter producers by runtime" id="ad-runtime-filter">
+          <button type="button" class="spec-filter-chip" data-filter="all" aria-pressed="true">All <span class="spec-filter-count">10</span></button>
+          <button type="button" class="spec-filter-chip" data-filter="python" aria-pressed="false">Python <span class="spec-filter-count">5</span></button>
+          <button type="button" class="spec-filter-chip" data-filter="rust" aria-pressed="false">Rust <span class="spec-filter-count">3</span></button>
+          <button type="button" class="spec-filter-chip" data-filter="plpgsql" aria-pressed="false">PL/pgSQL <span class="spec-filter-count">1</span></button>
+          <button type="button" class="spec-filter-chip" data-filter="php" aria-pressed="false">PHP <span class="spec-filter-count">1</span></button>
+        </div>
         <div class="mermaid-frame">
           <div class="audit-diagram" role="img" aria-label="Audit-stream fan-in. Ten governance producers emit hash-chained events into the audit-stream-py spine, which feeds governance dashboards, compliance evidence, and SRE alerting.">
             <div class="ad-coltitle">Producers &middot; emit governance events</div>
             <div class="ad-grid">
-              <div class="ad-node">
+              <div class="ad-node" data-runtime="python">
                 <div class="ad-name">procurement-decision-api</div>
                 <div class="ad-tech">Python · FastAPI</div>
                 <div class="ad-events"><span>decision_card_drafted</span></div>
               </div>
-              <div class="ad-node">
+              <div class="ad-node" data-runtime="python">
                 <div class="ad-name">aeo-validator-service</div>
                 <div class="ad-tech">Python · FastAPI</div>
                 <div class="ad-events">
@@ -163,7 +174,7 @@
                   </details>
                 </div>
               </div>
-              <div class="ad-node">
+              <div class="ad-node" data-runtime="python">
                 <div class="ad-name">policy-as-code-engine</div>
                 <div class="ad-tech">Python · FastAPI</div>
                 <div class="ad-events">
@@ -177,7 +188,7 @@
                   </details>
                 </div>
               </div>
-              <div class="ad-node">
+              <div class="ad-node" data-runtime="python">
                 <div class="ad-name">data-contract-registry</div>
                 <div class="ad-tech">Python · FastAPI</div>
                 <div class="ad-events">
@@ -191,7 +202,7 @@
                   </details>
                 </div>
               </div>
-              <div class="ad-node">
+              <div class="ad-node" data-runtime="rust">
                 <div class="ad-name">hash-attestation</div>
                 <div class="ad-tech">Rust · crypto library</div>
                 <div class="ad-events">
@@ -205,7 +216,7 @@
                   </details>
                 </div>
               </div>
-              <div class="ad-node">
+              <div class="ad-node" data-runtime="rust">
                 <div class="ad-name">incident-correlation</div>
                 <div class="ad-tech">Rust · graph library</div>
                 <div class="ad-events">
@@ -218,7 +229,7 @@
                   </details>
                 </div>
               </div>
-              <div class="ad-node">
+              <div class="ad-node" data-runtime="rust">
                 <div class="ad-name">aeo-graph-explorer</div>
                 <div class="ad-tech">Rust · axum service</div>
                 <div class="ad-events">
@@ -231,7 +242,7 @@
                   </details>
                 </div>
               </div>
-              <div class="ad-node">
+              <div class="ad-node" data-runtime="python">
                 <div class="ad-name">mcp-permission-broker + azure-openai-governance-bridge</div>
                 <div class="ad-tech">Python · runtime gates</div>
                 <div class="ad-events">
@@ -245,12 +256,12 @@
                   </details>
                 </div>
               </div>
-              <div class="ad-node">
+              <div class="ad-node" data-runtime="plpgsql">
                 <div class="ad-name">pg-audit-stream-extension</div>
                 <div class="ad-tech">PL/pgSQL · pg_notify</div>
                 <div class="ad-events"><span>table CRUD events</span></div>
               </div>
-              <div class="ad-node">
+              <div class="ad-node" data-runtime="php">
                 <div class="ad-name">wp-kinetic-gain-audit</div>
                 <div class="ad-tech">PHP · WordPress/MySQL</div>
                 <div class="ad-events">

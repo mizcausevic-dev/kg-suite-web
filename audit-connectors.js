@@ -85,6 +85,11 @@
   }
 
   // Draw-in reveal (skipped entirely under reduced motion -- lines just appear).
+  // Once the reveal transition finishes, the inline styles it used are
+  // cleared and .ad-connector-flow takes over -- that class' own CSS
+  // @keyframes drives an ongoing marching-dash animation. Inline styles
+  // have higher specificity than a class rule, so leaving them in place
+  // would permanently block the ambient flow from ever appearing.
   function animateIn(path, delayMs) {
     if (reduceMotion) return;
     var len;
@@ -101,10 +106,18 @@
         path.style.strokeDashoffset = "0";
       });
     });
+    path.addEventListener("transitionend", function handler() {
+      path.removeEventListener("transitionend", handler);
+      path.style.transition = "";
+      path.style.strokeDasharray = "";
+      path.style.strokeDashoffset = "";
+      path.classList.add("ad-connector-flow");
+    });
   }
 
   var firstDraw = true;
   var pendingFrame = null;
+  var activeFilter = "all";
 
   function draw() {
     pendingFrame = null;
@@ -149,12 +162,24 @@
     var spineBottom = anchorPoint(spine, "bottom", baseRect);
 
     producerAnchors.forEach(function (a, i) {
+      var runtime = producers[i].getAttribute("data-runtime") || "";
       var path = document.createElementNS(SVG_NS, "path");
       path.setAttribute("d", curvePath(a.x, a.y, spineTop.x, spineTop.y));
       path.setAttribute("class", "ad-connector-line");
+      if (runtime) path.setAttribute("data-runtime", runtime);
       linesGroup.appendChild(path);
-      dotsGroup.appendChild(makeDot(a.x, a.y, false));
-      if (firstDraw) animateIn(path, i * 35);
+      var dot = makeDot(a.x, a.y, false);
+      if (runtime) dot.setAttribute("data-runtime", runtime);
+      dotsGroup.appendChild(dot);
+      if (firstDraw) {
+        animateIn(path, i * 35);
+      } else if (!reduceMotion) {
+        path.classList.add("ad-connector-flow");
+      }
+      if (activeFilter && activeFilter !== "all" && runtime !== activeFilter) {
+        path.classList.add("ad-dim");
+        dot.classList.add("ad-dim");
+      }
     });
 
     dotsGroup.appendChild(makeDot(spineTop.x, spineTop.y, true));
@@ -168,7 +193,11 @@
       path.setAttribute("class", "ad-connector-line");
       linesGroup.appendChild(path);
       dotsGroup.appendChild(makeDot(a.x, a.y, false));
-      if (firstDraw) animateIn(path, producers.length * 35 + i * 35);
+      if (firstDraw) {
+        animateIn(path, producers.length * 35 + i * 35);
+      } else if (!reduceMotion) {
+        path.classList.add("ad-connector-flow");
+      }
     });
 
     firstDraw = false;
@@ -203,4 +232,15 @@
     },
     { passive: true }
   );
+
+  // Public hook for the runtime filter chips (suite-nav.js owns the chip
+  // UI and dims/undims .ad-node elements directly; this only needs to know
+  // the active filter so redrawn connector paths/dots pick up .ad-dim too,
+  // since draw() fully recreates them on every call rather than patching
+  // existing elements in place).
+  window.__auditStreamSetFilter = function (filter) {
+    activeFilter = filter || "all";
+    firstDraw = false;
+    draw();
+  };
 })();
