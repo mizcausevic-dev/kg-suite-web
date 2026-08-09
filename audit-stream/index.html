@@ -144,6 +144,51 @@
           <span class="ad-status-dot" aria-hidden="true"></span>
           <span>10 producers &middot; 1 hash-chained spine &middot; 3 consumers</span>
         </div>
+        <div class="ad-tabs" role="tablist" aria-label="Audit-stream view">
+          <button type="button" class="ad-tab" role="tab" id="ad-tab-flow" aria-controls="ad-panel-flow" aria-selected="true">Flow</button>
+          <button type="button" class="ad-tab" role="tab" id="ad-tab-detail" aria-controls="ad-panel-detail" aria-selected="false" tabindex="-1">Full detail</button>
+        </div>
+
+        <div class="ad-panel" id="ad-panel-flow" role="tabpanel" aria-labelledby="ad-tab-flow">
+          <div class="mermaid-frame ad-flow-frame">
+            <div class="ad-flow-mesh" role="img" aria-label="Audit-stream flow. Python, Rust, and data-tier producers feed the audit-stream-py spine, which feeds governance dashboards, compliance evidence, and SRE alerting.">
+              <div class="ad-flow-col ad-flow-col-in">
+                <div class="ad-flow-node" data-runtime="python">
+                  <div class="ad-flow-node-title">Python producers</div>
+                  <div class="ad-flow-node-sub">5 services &middot; FastAPI</div>
+                </div>
+                <div class="ad-flow-node" data-runtime="rust">
+                  <div class="ad-flow-node-title">Rust producers</div>
+                  <div class="ad-flow-node-sub">3 libraries &middot; crypto, graph, axum</div>
+                </div>
+                <div class="ad-flow-node" data-runtime="data">
+                  <div class="ad-flow-node-title">Data-tier producers</div>
+                  <div class="ad-flow-node-sub">PL/pgSQL &middot; PHP</div>
+                </div>
+              </div>
+              <div class="ad-flow-hub">
+                <div class="ad-flow-hub-node">
+                  <div class="ad-flow-hub-title">audit-stream-py</div>
+                  <div class="ad-flow-hub-sub">hash-chained &middot; tamper-evident</div>
+                </div>
+              </div>
+              <div class="ad-flow-col ad-flow-col-out">
+                <div class="ad-flow-node">
+                  <div class="ad-flow-node-title">Governance dashboards</div>
+                </div>
+                <div class="ad-flow-node">
+                  <div class="ad-flow-node-title">Compliance evidence</div>
+                </div>
+                <div class="ad-flow-node">
+                  <div class="ad-flow-node-title">SRE alerting</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="prose" style="margin-top: 12px; font-size: 0.9rem; color: var(--muted);">Ten real producers, grouped by runtime. Switch to <strong>Full detail</strong> for every repo name and event kind, filterable by runtime.</p>
+        </div>
+
+        <div class="ad-panel" id="ad-panel-detail" role="tabpanel" aria-labelledby="ad-tab-detail" hidden>
         <div class="spec-filter-chips" role="group" aria-label="Filter producers by runtime" id="ad-runtime-filter">
           <button type="button" class="spec-filter-chip" data-filter="all" aria-pressed="true">All <span class="spec-filter-count">10</span></button>
           <button type="button" class="spec-filter-chip" data-filter="python" aria-pressed="false">Python <span class="spec-filter-count">5</span></button>
@@ -292,6 +337,7 @@
               <div class="ad-cnode">SRE alerting</div>
             </div>
           </div>
+        </div>
         </div>
         <p class="prose" style="margin-top: 12px; font-size: 0.9rem; color: var(--muted);">
           Same opt-in env-var contract (<code>AUDIT_STREAM_URL</code>) across all ten, spanning Python, Rust, PL/pgSQL, PHP, and Azure Functions.

@@ -197,3 +197,37 @@
     });
   });
 })();
+
+/* #audit-stream Flow / Full detail tabs — standard ARIA tabs pattern
+   (aria-selected + roving tabindex), native <button> elements so no-JS
+   still leaves both panels' real content in the DOM (Flow visible, Full
+   detail present but hidden via the HTML `hidden` attribute already on
+   the markup — a no-JS visitor sees the Flow view and has no way to reach
+   Full detail, the same graceful-degradation tradeoff any tabbed UI
+   without server-side tab state makes). Redraw is requested on every
+   switch, not just into Full detail: a panel measured while `hidden`
+   reports a zero-size rect, so whichever diagram was NOT visible on load
+   never got real geometry until this fires. */
+(function () {
+  "use strict";
+
+  var tabs = [].slice.call(document.querySelectorAll(".ad-tabs .ad-tab"));
+  if (!tabs.length) return;
+
+  function activate(tab) {
+    tabs.forEach(function (t) {
+      var selected = t === tab;
+      t.setAttribute("aria-selected", selected ? "true" : "false");
+      t.setAttribute("tabindex", selected ? "0" : "-1");
+      var panel = document.getElementById(t.getAttribute("aria-controls"));
+      if (panel) panel.hidden = !selected;
+    });
+    if (typeof window.__auditStreamRedraw === "function") {
+      window.__auditStreamRedraw();
+    }
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener("click", function () { activate(tab); });
+  });
+})();
