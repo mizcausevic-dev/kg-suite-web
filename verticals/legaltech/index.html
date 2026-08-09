@@ -14,26 +14,35 @@
   <meta property="og:description" content="ABA Model Rules + attorney-client privilege + work-product doctrine + state bar opinions + Mata v. Avianca-era court orders. Six sibling spec repos for AI tools in the practice of law. privilege_tier as first-class field. Part of the Kinetic Gain Protocol Suite." />
   <meta property="og:url" content="https://suite.kineticgain.com/verticals/legaltech/" />
   <link rel="stylesheet" href="/assets/fonts.css" />
-  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/style.css?v=20260808-rebuild" />
   <link rel="stylesheet" href="/verticals/vertical.css" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 </head>
 <body class="vertical-page">
-<header class="nav">
-  <div class="nav-inner">
-    <a class="brand" href="/">
-      <span class="brand-mark">KG</span>
-      <span class="brand-text">
-        <strong>Kinetic Gain Protocol Suite</strong>
-        <small>OPEN AI GOVERNANCE SPECS</small>
-      </span>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="/" class="kg-logo">
+      <svg class="kg-mark" viewBox="-8 -8 188 88" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kinetic Gain mark">
+        <rect class="kg-anchor" x="0" y="0" width="14" height="72"/>
+        <polygon class="kg-bar" points="32,0 83,0 77,18 26,18"/>
+        <polygon class="kg-bar" points="32,27 127,27 121,45 26,45"/>
+        <polygon class="kg-bar" points="32,54 172,54 166,72 26,72"/>
+      </svg>
+      <span class="kg-word">Kinetic Gain <span class="kg-word-dim">/ Protocol Suite</span></span>
     </a>
-    <nav class="nav-links">
-      <a href="/specs/">Specs</a>
-      <a href="/verticals/">Verticals</a>
-      <a href="/audit-stream/">Audit stream</a>
-      <a class="cta" href="https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite">GitHub</a>
+    <nav class="site-nav-links" id="site-nav" aria-label="Primary">
+      <a href="/" data-page="home">Overview</a>
+      <a href="/specs/" data-page="specs">Specs</a>
+      <a href="/implementations/" data-page="implementations">Implementations</a>
+      <a href="/audit-stream/" data-page="audit-stream">Audit spine</a>
+      <a href="/properties/" data-page="properties">Properties</a>
+      <a href="/verticals/" data-page="verticals" aria-current="page" class="active">Verticals</a>
+      <a href="/mcp/" data-page="mcp">MCP</a>
     </nav>
+    <button type="button" class="nav-toggle" aria-label="Toggle navigation" aria-controls="site-nav" aria-expanded="false">
+      <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
+    </button>
+    <a class="btn-start" href="https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite" target="_blank" rel="noreferrer">GitHub <span class="ar">&#8593;&#8599;</span></a>
   </div>
 </header>
 <section class="hero vertical-hero">
@@ -126,5 +135,7 @@
     <p class="footer-fineprint">Per the standing public-language guardrail: <em>readiness · evidence · posture · controls · scaffolding</em> — never &quot;compliant&quot; / &quot;certified&quot; without an external attestation specific to each regulatory regime.</p>
   </div>
 </footer>
+  <script src="/suite-nav.js?v=20260808-effects" defer></script>
+  <script src="/nav-toggle.js" defer></script>
 </body>
 </html>

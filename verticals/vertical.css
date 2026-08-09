@@ -8,7 +8,7 @@ body.vertical-index {
 
 .vertical-hero { padding: 4rem 1.25rem 4rem; }
 .vertical-hero h1 { font-size: clamp(1.9rem, 4.5vw, 3.2rem); }
-.vertical-hero h1 em { display: inline; font-size: 0.55em; font-style: italic; }
+.vertical-hero h1 em { display: inline; font-size: 0.55em; font-style: normal; }
 
 .block, .block-dark {
   padding: 4rem 1.25rem;

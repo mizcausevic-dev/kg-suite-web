@@ -14,7 +14,7 @@
   <meta property="og:description" content="75 governance tools for the Kinetic Gain Protocol Suite, a 12-spec open governance catalog, plus the DefenseTech 8-pack. One Claude Desktop config entry. Live on npm + MCP Registry + mcp.so." />
   <meta property="og:url" content="https://suite.kineticgain.com/mcp/" />
   <link rel="stylesheet" href="/assets/fonts.css" />
-  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/style.css?v=20260808-rebuild" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"SoftwareApplication","name":"mcp-kinetic-gain","softwareVersion":"0.9.1","applicationCategory":"DeveloperApplication","operatingSystem":"Cross-platform","license":"https://www.gnu.org/licenses/agpl-3.0.html","downloadUrl":"https://www.npmjs.com/package/mcp-kinetic-gain","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Unified MCP server exposing 75 tools for the Kinetic Gain Protocol Suite, a 12-spec open governance catalog, plus the DefenseTech 8-pack. stdio transport, AGPL-3.0, 172 tests passing.","publisher":{"@type":"Organization","name":"Kinetic Gain LLC"}}
@@ -70,21 +70,30 @@
   </style>
 </head>
 <body>
-<header class="nav">
-  <div class="nav-inner">
-    <a class="brand" href="/">
-      <span class="brand-mark">KG</span>
-      <span class="brand-text">
-        <strong>Kinetic Gain Protocol Suite</strong>
-        <small>OPEN AI GOVERNANCE SPECS</small>
-      </span>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="/" class="kg-logo">
+      <svg class="kg-mark" viewBox="-8 -8 188 88" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kinetic Gain mark">
+        <rect class="kg-anchor" x="0" y="0" width="14" height="72"/>
+        <polygon class="kg-bar" points="32,0 83,0 77,18 26,18"/>
+        <polygon class="kg-bar" points="32,27 127,27 121,45 26,45"/>
+        <polygon class="kg-bar" points="32,54 172,54 166,72 26,72"/>
+      </svg>
+      <span class="kg-word">Kinetic Gain <span class="kg-word-dim">/ Protocol Suite</span></span>
     </a>
-    <nav class="nav-links">
-      <a href="/specs/">Specs</a>
-      <a href="/verticals/">Verticals</a>
-      <a href="/mcp/">MCP server</a>
-      <a class="cta" href="https://github.com/mizcausevic-dev/mcp-kinetic-gain">GitHub</a>
+    <nav class="site-nav-links" id="site-nav" aria-label="Primary">
+      <a href="/" data-page="home">Overview</a>
+      <a href="/specs/" data-page="specs">Specs</a>
+      <a href="/implementations/" data-page="implementations">Implementations</a>
+      <a href="/audit-stream/" data-page="audit-stream">Audit spine</a>
+      <a href="/properties/" data-page="properties">Properties</a>
+      <a href="/verticals/" data-page="verticals">Verticals</a>
+      <a href="/mcp/" data-page="mcp" aria-current="page" class="active">MCP</a>
     </nav>
+    <button type="button" class="nav-toggle" aria-label="Toggle navigation" aria-controls="site-nav" aria-expanded="false">
+      <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
+    </button>
+    <a class="btn-start" href="https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite" target="_blank" rel="noreferrer">GitHub <span class="ar">&#8593;&#8599;</span></a>
   </div>
 </header>
 
@@ -366,5 +375,7 @@
   </div>
 </footer>
 
+  <script src="/suite-nav.js?v=20260808-effects" defer></script>
+  <script src="/nav-toggle.js" defer></script>
 </body>
 </html>
