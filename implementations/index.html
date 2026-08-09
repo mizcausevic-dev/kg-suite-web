@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Suite x Implementations - the open-source stack - Kinetic Gain Protocol Suite</title>
+  <meta name="description" content="The 23 real open-source repos that implement the Kinetic Gain Protocol Suite specs, grouped by buyer persona, plus the Vault Contract Pattern." />
+  <meta name="theme-color" content="#0B0C10" />
+  <link rel="canonical" href="https://suite.kineticgain.com/implementations/" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests" />
+  <link rel="stylesheet" href="/assets/fonts.css" />
+  <link rel="stylesheet" href="/style.css?v=20260808-rebuild" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="/" class="kg-logo">
+        <svg class="kg-mark" viewBox="-8 -8 188 88" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kinetic Gain mark">
+          <rect class="kg-anchor" x="0" y="0" width="14" height="72"/>
+          <polygon class="kg-bar" points="32,0 83,0 77,18 26,18"/>
+          <polygon class="kg-bar" points="32,27 127,27 121,45 26,45"/>
+          <polygon class="kg-bar" points="32,54 172,54 166,72 26,72"/>
+        </svg>
+        <span class="kg-word">Kinetic Gain <span class="kg-word-dim">/ Protocol Suite</span></span>
+      </a>
+      <nav class="site-nav-links" id="site-nav" aria-label="Primary">
+        <a href="/" data-page="home">Overview</a>
+        <a href="/specs/" data-page="specs">Specs</a>
+        <a href="/implementations/" data-page="implementations" aria-current="page" class="active">Implementations</a>
+        <a href="/audit-stream/" data-page="audit-stream">Audit spine</a>
+        <a href="/properties/" data-page="properties">Properties</a>
+        <a href="/verticals/" data-page="verticals">Verticals</a>
+        <a href="/mcp/" data-page="mcp">MCP</a>
+      </nav>
+      <button type="button" class="nav-toggle" aria-label="Toggle navigation" aria-controls="site-nav" aria-expanded="false">
+        <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
+      </button>
+      <a class="btn-start" href="https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite" target="_blank" rel="noreferrer">GitHub <span class="ar">&#8593;&#8599;</span></a>
+    </div>
+  </header>
+
+  <main>
+
+    <section id="vault-contract" class="block">
+      <div class="block-inner">
+        <div class="section-kicker">
+          <svg class="kicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M12 3 19 6v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z"/>
+            <circle cx="12" cy="10.5" r="1.6"/>
+            <path d="M12 12.1v3.2"/>
+          </svg>
+          <span class="kicker-text">03 &middot; Runtime enforcement</span>
+        </div>
+        <h2>The Vault Contract Pattern &mdash; one Decision Card field, four runtime surfaces</h2>
+        <p class="prose">
+          The AI Procurement Decision Card v0.2 added a single field, <code>data_vault_targets[]</code>, that names the fields a buyer authorizes a vendor to read, the protection level required at rest, and the roles permitted to reveal them. Four open-source reference surfaces enforce that field at runtime, vendor-neutral by design; expand one below for how it works, or read the note beneath for why all four matter together.
+        </p>
+        <p class="layer-note vault-compose-note">
+          <strong>One contract, four surfaces.</strong> The pattern is <strong>vault-vendor-shaped but vendor-neutral</strong>: the field names match Skyflow's vault-contract vocabulary, but the runtime targets work against any tokenization vault (Skyflow, Privacera, Very Good Security, in-house). One procurement signature travels into the retrieval index, the deal-desk UI, the marketing connector, and the operator console, without any of them learning a raw PII value they aren't authorized to see. Every read, reveal, and transform event lands on the same hash-chained <a href="/audit-stream/" style="color: inherit; text-decoration: underline;">audit-stream</a> the rest of the Suite uses.
+        </p>
+
+        <div class="vault-accordion">
+          <details class="card-feature fx-layer fx-glow card-feature--blue vault-surface" name="vault-surface" open>
+            <summary class="vault-surface-summary">
+              <div class="vault-surface-summary-text">
+                <div class="card-feature-eyebrow">SURFACE 1 &middot; TOKENIZE-BEFORE-INDEX</div>
+                <h3>rag-sentinel</h3>
+              </div>
+              <span class="vault-surface-caret" aria-hidden="true">&#9662;</span>
+            </summary>
+            <div class="vault-surface-body">
+              <p>The retrieval-layer enforcer. Intercepts documents on the way into a vector store, tokenizes every <code>data_vault_targets[]</code> field per the Decision Card's protection level (None &middot; Masked &middot; Tokenized &middot; Encrypted), and stamps the chunk with the vault-token reference. Embeddings index the token, never the raw value &mdash; so the index is procurement-clean even if the LLM is compromised.</p>
+              <ul class="card-feature-list">
+                <li><strong>Where it sits:</strong> between your ingest pipeline and your vector DB</li>
+                <li><strong>Buyer outcome:</strong> a RAG corpus that can't leak fields procurement didn't authorize</li>
+              </ul>
+              <a class="card-feature-link" href="https://github.com/mizcausevic-dev/rag-sentinel" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+            </div>
+          </details>
+
+          <details class="card-feature fx-layer fx-glow card-feature--emerald vault-surface" name="vault-surface">
+            <summary class="vault-surface-summary">
+              <div class="vault-surface-summary-text">
+                <div class="card-feature-eyebrow">SURFACE 2 &middot; RBAC-AWARE REVEAL</div>
+                <h3>deal-desk-workspace</h3>
+              </div>
+              <span class="vault-surface-caret" aria-hidden="true">&#9662;</span>
+            </summary>
+            <div class="vault-surface-body">
+              <p>The seat-of-work enforcer. A deal-desk operator UI that reads the Decision Card's <code>reveal_roles</code> for each vault field and renders accordingly &mdash; a sales engineer sees a token, a compliance officer sees the masked tail, a principal sees the unredacted value. Every reveal click writes a <code>vault_field_revealed</code> event into the audit-stream with the role, the field, and the token reference.</p>
+              <ul class="card-feature-list">
+                <li><strong>Where it sits:</strong> the human-in-the-loop surface for vault data</li>
+                <li><strong>Buyer outcome:</strong> a reveal log that survives an audit without a SIEM lift</li>
+              </ul>
+              <a class="card-feature-link" href="https://github.com/mizcausevic-dev/deal-desk-workspace" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+            </div>
+          </details>
+
+          <details class="card-feature fx-layer fx-glow card-feature--blue vault-surface" name="vault-surface">
+            <summary class="vault-surface-summary">
+              <div class="vault-surface-summary-text">
+                <div class="card-feature-eyebrow">SURFACE 3 &middot; TRANSFORM PIPELINE LIB</div>
+                <h3>kg-skyyflow-klaviyo-bridge</h3>
+              </div>
+              <span class="vault-surface-caret" aria-hidden="true">&#9662;</span>
+            </summary>
+            <div class="vault-surface-body">
+              <p>The marketing-connector enforcer. A TypeScript bridge library that sits between a vault and an outbound marketing platform (Klaviyo) &mdash; the buyer's Decision Card describes which fields can flow through to which downstream lists, in which protection state (raw / masked / tokenized). Every transform is a typed pipeline step with a reversible test fixture; nothing leaves the bridge that wasn't authorized in writing.</p>
+              <ul class="card-feature-list">
+                <li><strong>Where it sits:</strong> the egress edge of your marketing stack</li>
+                <li><strong>Buyer outcome:</strong> a connector that ships a contract change in PR, not a hot deploy</li>
+              </ul>
+              <a class="card-feature-link" href="https://github.com/mizcausevic-dev/kg-skyyflow-klaviyo-bridge" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+            </div>
+          </details>
+
+          <details class="card-feature fx-layer fx-glow card-feature--emerald vault-surface" name="vault-surface">
+            <summary class="vault-surface-summary">
+              <div class="vault-surface-summary-text">
+                <div class="card-feature-eyebrow">SURFACE 4 &middot; VISUAL OPERATOR CONSOLE</div>
+                <h3>skyyflow-klaviyo-bridge-console</h3>
+              </div>
+              <span class="vault-surface-caret" aria-hidden="true">&#9662;</span>
+            </summary>
+            <div class="vault-surface-body">
+              <p>The operator-readable companion to the bridge library. React 19 + slate-indigo Bento dashboard: live sync log of each transform run, dead-letter queue with retry semantics, a Schema Mapper page that diffs the active Decision Card's <code>data_vault_targets[]</code> against the connector configuration, and a Security Assets page that lists what's tokenized vs. what's still raw. The operator console for a contract, not just a connector.</p>
+              <ul class="card-feature-list">
+                <li><strong>Where it sits:</strong> alongside the bridge for ops + procurement review</li>
+                <li><strong>Buyer outcome:</strong> a single screen procurement can audit between renewals</li>
+              </ul>
+              <a class="card-feature-link" href="https://github.com/mizcausevic-dev/skyyflow-klaviyo-bridge-console" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+            </div>
+          </details>
+        </div>
+
+        <p class="prose" style="margin-top: 24px;">
+          <strong>How it composes.</strong> The four surfaces don't share a runtime &mdash; they share the same JSON field on the same procurement document. A vendor accepts the Decision Card; <code>rag-sentinel</code> reads <code>data_vault_targets[]</code> to decide what tokenizes on ingest; <code>deal-desk-workspace</code> reads <code>reveal_roles</code> to decide who sees what at the UI; <code>kg-skyyflow-klaviyo-bridge</code> reads the protection levels to decide what propagates to Klaviyo; and the bridge console reads all of the above to render the live posture. <strong>One signature, four enforcement layers, one audit trail</strong> &mdash; and any of the four is opt-in. Buyers can adopt the pattern incrementally without committing to a fifth vendor.
+        </p>
+        <div class="hero-cta" style="margin-top: 24px;">
+          <a class="btn btn-primary" href="https://mizcausevic-dev.github.io/kinetic-gain-visualizer/?view=editor&amp;spec=decision-card" target="_blank" rel="noreferrer">See the v0.2 example in the visualizer &rarr;</a>
+          <a class="btn btn-secondary" href="https://github.com/mizcausevic-dev/ai-procurement-decision-spec" target="_blank" rel="noreferrer">Decision Card spec on GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="implementations" class="block block-tinted">
+      <div class="block-inner">
+        <div class="section-kicker">
+          <svg class="kicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="6" cy="6" r="2.4"/>
+            <circle cx="18" cy="6" r="2.4"/>
+            <circle cx="12" cy="18" r="2.4"/>
+            <path d="M8.1 7.3 10.5 16.1M15.9 7.3 13.5 16.1M8.4 6h7.2"/>
+          </svg>
+          <span class="kicker-text">03b &middot; Open-source stack</span>
+        </div>
+        <h2>Suite &times; Implementations &mdash; the repos that implement it</h2>
+        <p class="prose">
+          The Suite is a set of specs &mdash; this is the open-source software that implements them: CI-green, semver-tagged, MIT-licensed repos, grouped below by the buyer persona who reaches for each one first. Five cross-ecosystem hooks and three runtime-enforcement layers chain the busiest of them together &mdash; unpacked inside the Procurement reviewer and Runtime enforcement groups below.
+        </p>
+
+        <div class="impl-count-note">
+          <strong>A note on the numbers.</strong> The meta-repo README headlines a "fifteen-repo" stack "across Tiers A&ndash;E," but grep-verified: no repo there carries a literal Tier A&ndash;E label &mdash; the real structure is the six buyer-persona groups below. Counting the 19 individually-described repos here plus 4 more the README only names collectively ("defense-in-depth predecessors," no write-ups) &mdash; the true count is <strong>23</strong>, not 15.
+        </div>
+
+        <div class="impl-accordion">
+
+          <details class="impl-group fx-layer fx-corner">
+            <summary>
+              <h3>Procurement reviewer <span class="impl-count">2 repos</span></h3>
+            </summary>
+            <div class="impl-group-body">
+              <p class="impl-group-intro">Five cross-ecosystem hooks chain these into one system: <code>procurement-decision-api</code> (below) drafts Decision Cards &rarr; <code>policy-as-code-engine</code> turns conditions into runtime gates &rarr; <code>data-contract-registry</code> extracts owners &rarr; <code>csv-data-quality-rs</code> validates CSVs row-by-row &rarr; <code>sql-contract-enforcer</code> compiles cross-dialect DDL.</p>
+              <div class="impl-repo-grid">
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">procurement-decision-api</span>
+                    <span class="impl-lang">Python (FastAPI)</span>
+                  </div>
+                  <p class="impl-repo-desc">FastAPI service that drafts AI Procurement Decision Cards from a buyer rubric and a set of vendor Suite documents (AEO + agent-card + tool-card + ai-evidence + &hellip;). <strong>The first cross-ecosystem bridge in the portfolio</strong> &mdash; Suite &times; Decision Intelligence.</p>
+                  <p class="impl-repo-companions"><strong>NIST RMF:</strong> GOVERN 5.1, MAP 3.1, MEASURE 2.5, MANAGE 1.2 (Full)</p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/procurement-decision-api" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">policy-as-code-engine</span>
+                    <span class="impl-lang">Python (FastAPI)</span>
+                  </div>
+                  <p class="impl-repo-desc">Declarative policy evaluator. Headline: <code>POST /bundles/from-decision-card</code> turns a Decision Card's <code>conditions[]</code> into a runtime-enforceable PolicyBundle. Closes the loop from "buyer signed off" to "request gated." Cross-ecosystem hook #2.</p>
+                  <p class="impl-repo-companions"><strong>Composes with:</strong> <code>procurement-decision-api</code> (in this group &mdash; hook #2 consumes its Decision Cards)</p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/policy-as-code-engine" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="impl-group fx-layer fx-corner">
+            <summary>
+              <h3>AEO consumer / spec implementer <span class="impl-count">4 repos</span></h3>
+            </summary>
+            <div class="impl-group-body">
+              <p class="impl-group-intro">The 5-layer AEO Reference Stack, in order: SDKs &rarr; CLI &rarr; Crawler &rarr; <code>aeo-validator-service</code> (Layer 4) &rarr; <code>aeo-graph-explorer-rs</code> (Layer 5, below).</p>
+              <div class="impl-repo-grid">
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">aeo-validator-service</span>
+                    <span class="impl-lang">Python (FastAPI)</span>
+                  </div>
+                  <p class="impl-repo-desc">Always-on HTTP validator for AEO + all 11 Suite docs. Auto-detects the spec via <code>*_version</code> sniffing, hashes canonically, tracks drift across re-checks (<code>POST /watches/{id}/recheck</code> returns a structured DriftReport). Layer 4 of the AEO Reference Stack.</p>
+                  <p class="impl-repo-companions"><strong>Composes with:</strong> <code>aeo-graph-explorer-rs</code> (in this group &mdash; receives a JSONL feed from this service)</p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/aeo-validator-service" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">aeo-graph-explorer-rs</span>
+                    <span class="impl-lang">Rust (axum, petgraph)</span>
+                  </div>
+                  <p class="impl-repo-desc">HTTP graph-query service over <code>aeo-crawler</code> JSON-Lines output. axum + petgraph, atomic <code>POST /ingest</code>, exposes <code>/nodes</code> &middot; <code>/neighbors</code> &middot; <code>/shortest-path</code> &middot; <code>/find-by-claim</code>. <strong>The fifth layer of the AEO Reference Stack &mdash; 3&rarr;5 layers gap closed.</strong></p>
+                  <p class="impl-repo-companions"><strong>Composes with:</strong> <code>aeo-validator-service</code> (in this group &mdash; drift detection across watches)</p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/aeo-graph-explorer-rs" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">incident-correlation-rs</span>
+                    <span class="impl-lang">Rust (petgraph)</span>
+                  </div>
+                  <p class="impl-repo-desc">Walks the Suite graph from an IncidentCard and emits a structured remediation plan: DecisionCard &rarr; RecheckPolicy, Vendor &rarr; RequestReview, AEO/agent/tool &rarr; Revalidate.</p>
+                  <p class="impl-repo-companions"><strong>Composes with:</strong> drives <code>policy-as-code-engine</code> (per the composition diagram: "ICR -.-&gt;|drives| PAC")</p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/incident-correlation-rs" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">hash-attestation-rs</span>
+                    <span class="impl-lang">Rust (ed25519)</span>
+                  </div>
+                  <p class="impl-repo-desc">Sign + verify Suite documents with ed25519 over the same canonical-hash convention every other Suite repo uses. <strong>The missing "this AEO actually came from the vendor" layer.</strong> Vendors sign, publish a well-known public key URL, consumers verify before they trust the document.</p>
+                  <p class="impl-repo-companions"><strong>Composes with:</strong> <code>aeo-validator-service</code> (in this group &mdash; tamper events) and <code>procurement-decision-api</code> (Procurement reviewer group above &mdash; signed Decision Cards)</p>
+                  <p class="impl-repo-companions"><strong>NIST RMF:</strong> MAP 2.2 (provenance), MEASURE 2.8 (transparency)</p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/hash-attestation-rs" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="impl-group fx-layer fx-corner">
+            <summary>
+              <h3>Data team <span class="impl-count">3 repos</span></h3>
+            </summary>
+            <div class="impl-group-body">
+              <p class="impl-group-intro">One contract, two enforcement paths: <code>data-contract-registry</code> defines it, <code>csv-data-quality-rs</code> validates CSV rows against it, <code>sql-contract-enforcer</code> compiles it to database DDL.</p>
+              <div class="impl-repo-grid">
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">data-contract-registry</span>
+                    <span class="impl-lang">Python (FastAPI)</span>
+                  </div>
+                  <p class="impl-repo-desc">Schema registry with semver versioning, compatibility checks (backward / forward / full), declared owners, freshness SLAs. <code>POST /contracts/owners/from-decision-card</code> pulls Owner records out of a Procurement Decision Card. Cross-ecosystem hook #3.</p>
+                  <p class="impl-repo-companions"><strong>Composes with:</strong> <code>procurement-decision-api</code> (Procurement reviewer group above &mdash; hook #3); feeds <code>csv-data-quality-rs</code> (hook #4) and <code>sql-contract-enforcer</code> (hook #5)</p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/data-contract-registry" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">csv-data-quality-rs</span>
+                    <span class="impl-lang">Rust (tokio, csv)</span>
+                  </div>
+                  <p class="impl-repo-desc">Streaming CSV validator against a <code>data-contract-registry</code> contract. Async, row-by-row, structured violation report (<code>required</code> / <code>bad_type</code> / <code>enum_mismatch</code> / <code>column_count_mismatch</code> / <code>invalid_json</code>). Cross-ecosystem hook #4.</p>
+                  <p class="impl-repo-companions"><strong>Composes with:</strong> <code>data-contract-registry</code> (hook #4)</p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/csv-data-quality-rs" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">sql-contract-enforcer</span>
+                    <span class="impl-lang">Python (SQL)</span>
+                  </div>
+                  <p class="impl-repo-desc">Turns a <code>data-contract-registry</code> contract into enforceable cross-dialect DDL (<code>CHECK</code> / <code>NOT NULL</code> / <code>UNIQUE</code> / <code>PK</code> / <code>FK</code>) for Postgres, MySQL, Snowflake, BigQuery, plus a contract-vs-schema checker for CI. Dialect-aware (BigQuery demotes CHECK/UNIQUE to comments + PK/FK to NOT ENFORCED). Cross-ecosystem hook #5.</p>
+                  <p class="impl-repo-companions"><strong>Composes with:</strong> <code>data-contract-registry</code> (hook #5); enforces at the database-table runtime layer alongside the Runtime enforcement group below</p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/sql-contract-enforcer" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="impl-group fx-layer fx-corner">
+            <summary>
+              <h3>SRE / Platform reliability <span class="impl-count">5 repos + 4 grouped predecessors</span></h3>
+            </summary>
+            <div class="impl-group-body">
+              <p class="impl-group-intro">The README claims <strong>"Ten repos"</strong> here; the table only names 9 &mdash; 5 described below (including <code>audit-stream-py</code>, the spine this stack writes to) plus 4 more grouped under "Plus 5 earlier reliability repos" (itself claims 5, names 4). Two count mismatches, carried here rather than rounded off.</p>
+              <div class="impl-repo-grid">
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">slo-budget-tracker</span>
+                    <span class="impl-lang">Python (FastAPI, Prometheus)</span>
+                  </div>
+                  <p class="impl-repo-desc">SLO + error-budget library, multi-window burn-rate alerts (SRE workbook threshold 14.4).</p>
+                  <p class="impl-repo-companions"><strong>Composes with:</strong> <code>mcp-reliability-toolkit</code> (shares its SLO-burn math); <code>audit-stream-py</code> (in this group &mdash; the spine every repo in this stack writes to)</p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/slo-budget-tracker" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">reliability-toolkit-rs</span>
+                    <span class="impl-lang">Rust (Tokio)</span>
+                  </div>
+                  <p class="impl-repo-desc">Token-bucket rate limiter &middot; 3-state circuit breaker &middot; exponential-backoff retry with jitter &middot; bulkhead.</p>
+                  <p class="impl-repo-companions"><strong>Composes with:</strong> <code>mcp-reliability-toolkit</code> (emits configs based on this repo's primitives)</p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/reliability-toolkit-rs" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">feature-flag-rs</span>
+                    <span class="impl-lang">Rust (Tokio)</span>
+                  </div>
+                  <p class="impl-repo-desc">Server-side flag eval &mdash; targeting rules, sticky percentage rollouts (SHA-256 bucketing, no RNG), hot reload.</p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/feature-flag-rs" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">request-shadow-rs</span>
+                    <span class="impl-lang">Rust (Tokio)</span>
+                  </div>
+                  <p class="impl-repo-desc">Async request mirroring with sampling + divergence detection. The SRE primitive for safe migrations.</p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/request-shadow-rs" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">audit-stream-py</span>
+                    <span class="impl-lang">Python &middot; SSE</span>
+                  </div>
+                  <p class="impl-repo-desc">Append-only governance event stream for the whole portfolio. Hash-chained for tamper-evidence; Server-Sent Events for live tailing; REST for queries. <strong>Every other portfolio repo is a producer</strong> &mdash; decision_card_drafted, policy_bundle_registered, watch_drifted, attestation_verified, contract_promoted, incident_filed.</p>
+                  <p class="impl-repo-companions">20+ event kinds across 10 producer repos &middot; <code>GET /verify</code> walks the chain end-to-end</p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/audit-stream-py" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+                <div class="impl-repo impl-repo--grouped">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">rate-limit-shield &middot; identity-mesh &middot; agent-canary &middot; model-registry-pro</span>
+                    <span class="impl-lang">Python</span>
+                  </div>
+                  <p class="impl-repo-desc">"Defense-in-depth predecessors" &mdash; the README's own collective description, applied to all four names in this row; no individual write-up exists for any of them. Verbatim README row: "(Plus 5 earlier reliability repos) | Python | rate-limit-shield &middot; identity-mesh &middot; agent-canary &middot; model-registry-pro &mdash; defense-in-depth predecessors." That row claims 5 earlier repos but names only 4 &mdash; an internal mismatch in the source, not one introduced here. All four are confirmed to exist (GitHub API returns HTTP 200 for each), but none of the four names is hyperlinked anywhere in the README &mdash; they appear only as a bare code span &mdash; so the links below follow the org's <code>github.com/mizcausevic-dev/&lt;repo-name&gt;</code> pattern used by every other repo in this document: pattern-inferred, not source-confirmed.</p>
+                  <div class="impl-repo-links">
+                    <a href="https://github.com/mizcausevic-dev/rate-limit-shield" target="_blank" rel="noreferrer">rate-limit-shield &rarr;</a>
+                    <a href="https://github.com/mizcausevic-dev/identity-mesh" target="_blank" rel="noreferrer">identity-mesh &rarr;</a>
+                    <a href="https://github.com/mizcausevic-dev/agent-canary" target="_blank" rel="noreferrer">agent-canary &rarr;</a>
+                    <a href="https://github.com/mizcausevic-dev/model-registry-pro" target="_blank" rel="noreferrer">model-registry-pro &rarr;</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="impl-group fx-layer fx-corner">
+            <summary>
+              <h3>MCP / Claude integrator <span class="impl-count">3 repos</span></h3>
+            </summary>
+            <div class="impl-group-body">
+              <p class="impl-group-intro">Three MCP servers for three integration surfaces &mdash; the README calls the latter two "sibling MCP servers &hellip; for narrower use cases" alongside the unified <code>mcp-kinetic-gain</code>.</p>
+              <div class="impl-repo-grid">
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">mcp-kinetic-gain</span>
+                    <span class="impl-lang">TypeScript</span>
+                  </div>
+                  <p class="impl-repo-desc">Unified Suite MCP server &mdash; 75 tools across 12 specs + DefenseTech 8-pack (v0.9.1, on the official MCP Registry). One Claude Desktop config entry. Headline tools: <code>aup_check_compliance</code> (joins AUP + Disclosure into one allow/deny call); <code>decision_card_validate</code> (enforces the full Decision Card conditional rule set); <code>defensetech_vault_resolve_3axis</code> (resolves CUI &times; export-control &times; foreign-person to the most-restrictive vault policy).</p>
+                  <p class="impl-repo-companions"><strong>Composes with:</strong> <code>mcp-reliability-toolkit</code>, <code>mcp-decision-intelligence</code> (README calls these "sibling MCP servers &hellip; for narrower use cases")</p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/mcp-kinetic-gain" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">mcp-reliability-toolkit</span>
+                    <span class="impl-lang">TypeScript</span>
+                  </div>
+                  <p class="impl-repo-desc">Reliability MCP server &mdash; <code>compute_slo_burn</code>, <code>design_rate_limiter</code>, <code>design_circuit_breaker</code>, <code>compose_reliability_pattern</code>. Same math as <code>slo-budget-tracker</code>; emits Python + Rust configs.</p>
+                  <p class="impl-repo-companions"><strong>Composes with:</strong> <code>slo-budget-tracker</code>, <code>reliability-toolkit-rs</code></p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/mcp-reliability-toolkit" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">mcp-decision-intelligence</span>
+                    <span class="impl-lang">TypeScript</span>
+                  </div>
+                  <p class="impl-repo-desc">Decision Intelligence MCP server &mdash; <code>validate_decision_card</code>, <code>preview_policy_bundle</code>, <code>plan_incident_remediation</code>, <code>check_contract_compatibility</code>. Read-only preview of what the live Python/Rust services would compute.</p>
+                  <p class="impl-repo-companions"><strong>Composes with:</strong> <code>procurement-decision-api</code> (featured above), <code>policy-as-code-engine</code>, <code>incident-correlation-rs</code>, <code>data-contract-registry</code> &mdash; the live services it previews</p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/mcp-decision-intelligence" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="impl-group fx-layer fx-corner">
+            <summary>
+              <h3>Runtime enforcement <span class="impl-count">2 repos</span></h3>
+            </summary>
+            <div class="impl-group-body">
+              <p class="impl-group-intro">The Decision Card enforces at three runtime layers: the MCP tool call (<code>mcp-permission-broker</code>), the Azure OpenAI call (<code>azure-openai-governance-bridge</code>), and the database table (<code>sql-contract-enforcer</code>, Data team group above).</p>
+              <div class="impl-repo-grid">
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">mcp-permission-broker</span>
+                    <span class="impl-lang">Python</span>
+                  </div>
+                  <p class="impl-repo-desc">Runtime gate between a Decision Card and an MCP tool call. Composes Decision Card conditions into deny-trumps-allow PolicyBundles; emits <code>tool_invocation_*</code> to the spine.</p>
+                  <p class="impl-repo-companions"><strong>Composes with:</strong> <code>azure-openai-governance-bridge</code> (its "Azure-native sibling"); <code>audit-stream-py</code> (SRE / Platform reliability group above &mdash; the spine); enforces Decision Cards produced by <code>procurement-decision-api</code></p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/mcp-permission-broker" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+                <div class="impl-repo">
+                  <div class="impl-repo-head">
+                    <span class="impl-repo-name">azure-openai-governance-bridge</span>
+                    <span class="impl-lang">Python (Azure Functions, Bicep)</span>
+                  </div>
+                  <p class="impl-repo-desc">The Azure-native sibling &mdash; an Azure Function in front of Azure OpenAI enforcing the same PolicyBundle contract on every chat-completion call (deployment + each declared tool). Puts the Suite's governance on the data path enterprises actually run AI on.</p>
+                  <p class="impl-repo-companions"><strong>Composes with:</strong> <code>mcp-permission-broker</code> (sibling)</p>
+                  <a class="impl-repo-link" href="https://github.com/mizcausevic-dev/azure-openai-governance-bridge" target="_blank" rel="noreferrer">View on GitHub &rarr;</a>
+                </div>
+              </div>
+            </div>
+          </details>
+
+        </div>
+
+        <p class="prose" style="margin-top: 24px;">
+          Every individually-described repo above is grouped exactly as the meta-repo's <a href="https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite#-suite--implementations">Suite &times; Implementations</a> section groups it &mdash; the README documents the same stack in prose form, though it still headlines a "fifteen-repo" count under correction.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <small>&copy; 2026 Miz Causevic &middot; <a href="https://kineticgain.com" target="_blank" rel="noreferrer">kineticgain.com</a> &middot; <a href="https://github.com/mizcausevic-dev" target="_blank" rel="noreferrer">GitHub</a> &middot; <a href="https://www.linkedin.com/in/mirzacausevic/" target="_blank" rel="noreferrer">LinkedIn</a> &middot; <a href="https://medium.com/@mizcausevic/" target="_blank" rel="noreferrer">Medium</a> &middot; <a href="/privacy/">Privacy</a></small>
+      <small class="code">suite.kineticgain.com &middot; Kinetic Gain Protocol Suite</small>
+    </div>
+  </footer>
+
+  <script src="/suite-nav.js?v=20260808-effects" defer></script>
+  <script src="/nav-toggle.js" defer></script>
+</body>
+</html>
