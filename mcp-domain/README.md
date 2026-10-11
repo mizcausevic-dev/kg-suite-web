@@ -16,7 +16,7 @@ For a local preview that resolves the page's root-relative asset paths, run `pyt
 
 All six proposed `/fonts/` paths returned public HTTP 404 before this candidate. The candidate files have these SHA-256 hashes:
 
-`index.html` candidate SHA-256: `F675AB3A68325BE21E08FDC2E6F9AEB75AEE3126EF310184838E50594D9D6852`.
+`index.html` candidate SHA-256: `8CCDD882D4A210ABBAFB772A6F5E6436B4B85A342A788B846EB45BB54DDD6D19`.
 
 | New file under `/fonts/` | SHA-256 |
 |---|---|
