@@ -4,20 +4,20 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>mcp-kinetic-gain — 75 governance tools, one MCP config | Kinetic Gain Suite</title>
-  <meta name="description" content="mcp-kinetic-gain v0.9.1 — unified MCP server exposing 75 tools (47 spec + 16 implementation-preview + 8 DefenseTech + 4 AI Claims Decision Card) for the Kinetic Gain Protocol Suite, a 12-spec open governance catalog. One Claude Desktop / Cursor / Cline config entry. Live on npm, Official MCP Registry, mcp.so. AGPL-3.0, 172 tests passing, no API key required." />
+  <meta name="description" content="mcp-kinetic-gain v0.10.0 — 75 local stdio tools across the twelve Kinetic Gain Protocol Suite specs, implementation previews, and DefenseTech semantics. Published on npm with provenance and listed in the official MCP Registry. The published package does not provide a governed buyer-policy gateway." />
   <meta name="theme-color" content="#10b981" />
   <link rel="canonical" href="https://suite.kineticgain.com/mcp/" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="mcp-kinetic-gain — unified MCP server" />
-  <meta property="og:description" content="75 governance tools for the Kinetic Gain Protocol Suite, a 12-spec open governance catalog, plus the DefenseTech 8-pack. One Claude Desktop config entry. Live on npm + MCP Registry + mcp.so." />
+  <meta property="og:description" content="mcp-kinetic-gain v0.10.0: 75 stdio tools for the twelve Suite specs, implementation previews, and DefenseTech. Published on npm and the official MCP Registry." />
   <meta property="og:url" content="https://suite.kineticgain.com/mcp/" />
   <link rel="stylesheet" href="/assets/fonts.css" />
-  <link rel="stylesheet" href="/style.css?v=20260809-explain" />
+  <link rel="stylesheet" href="/style.css?v=20260820-llmicons" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"mcp-kinetic-gain","softwareVersion":"0.9.1","applicationCategory":"DeveloperApplication","operatingSystem":"Cross-platform","license":"https://www.gnu.org/licenses/agpl-3.0.html","downloadUrl":"https://www.npmjs.com/package/mcp-kinetic-gain","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Unified MCP server exposing 75 tools for the Kinetic Gain Protocol Suite, a 12-spec open governance catalog, plus the DefenseTech 8-pack. stdio transport, AGPL-3.0, 172 tests passing.","publisher":{"@type":"Organization","name":"Kinetic Gain LLC"}}
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"mcp-kinetic-gain","softwareVersion":"0.10.0","applicationCategory":"DeveloperApplication","operatingSystem":"Cross-platform","license":"https://www.gnu.org/licenses/agpl-3.0.html","downloadUrl":"https://www.npmjs.com/package/mcp-kinetic-gain/v/0.10.0","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Unified local stdio MCP server exposing 75 tools across twelve Suite specs, implementation previews, and DefenseTech semantics. This published package is not a governed buyer-policy gateway.","publisher":{"@type":"Organization","name":"Kinetic Gain LLC"}}
   </script>
   <style>
     /* Page-scoped styles (style.css extension) */
@@ -30,6 +30,9 @@
     .install-block .label{font-size:.7rem;letter-spacing:.14em;color:var(--slate-400);text-transform:uppercase}
     .install-block code{color:var(--emerald-400);font-size:1rem;font-family:inherit;background:transparent;padding:0;border:0;word-break:break-all}
     .registry-status{margin:2.5rem auto;max-width:1100px;padding:0 1.5rem}
+    .registry-table-scroll{max-width:100%;overflow-x:auto}
+    .registry-table-scroll:focus-visible{outline:2px solid var(--emerald-400);outline-offset:3px}
+    .registry-scroll-hint{display:none}
     .registry-table{width:100%;border-collapse:collapse;background:var(--slate-800);border:1px solid var(--slate-700);border-radius:12px;overflow:hidden;font-size:.95rem}
     .registry-table th,.registry-table td{padding:.85rem 1.1rem;text-align:left;border-bottom:1px solid var(--slate-700)}
     .registry-table thead th{font-family:"Geist Mono",ui-monospace,monospace;font-size:.72rem;letter-spacing:.10em;text-transform:uppercase;color:var(--slate-400);background:rgba(0,0,0,.2);font-weight:600}
@@ -39,6 +42,7 @@
     .reg-status.live{color:var(--emerald-400)}
     .reg-status.submitted{color:#fbbf24}
     .registry-table a{color:var(--emerald-400)}
+    @media(max-width:640px){.registry-table{min-width:560px}.registry-scroll-hint{display:block;font-size:.82rem;color:var(--slate-600);margin:0 0 .5rem}}
     .spec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:1.5rem}
     .spec-card{background:var(--slate-800);border:1px solid var(--slate-700);border-radius:10px;padding:1.1rem 1.2rem;display:flex;flex-direction:column}
     .spec-card .spec-num{font-family:"Geist Mono",ui-monospace,monospace;font-size:.7rem;letter-spacing:.14em;color:var(--slate-400);text-transform:uppercase;margin-bottom:.4rem}
@@ -67,6 +71,58 @@
     .who-card{background:var(--slate-800);border:1px solid var(--slate-700);border-radius:10px;padding:1rem 1.2rem}
     .who-card h4{margin:0 0 .3rem 0;font-size:.9rem;color:var(--slate-100);font-weight:600}
     .who-card p{margin:0;font-size:.78rem;color:var(--slate-400);line-height:1.5}
+
+    /* MCP tool-surface constellation (mcp-constellation.js). Additive above
+       the existing spec-grid/ext-card, which stay the default reference
+       surface untouched. See mcp-constellation.js header comment for the
+       full rationale on what got a diagram and what deliberately didn't. */
+    .mcpc{margin:1.75rem 0 .5rem;position:relative}
+    .mcpc-note{color:var(--slate-400);font-size:.82rem;margin:0 0 .8rem;text-align:center}
+    .mcpc-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:0 auto .9rem;max-width:900px}
+    .mcpc-pill{font-family:"Geist Mono",var(--font-mono),ui-monospace,monospace;font-size:.66rem;letter-spacing:.03em;padding:5px 11px;border-radius:999px;border:1px solid var(--slate-700);background:var(--slate-800);color:var(--slate-400);cursor:pointer;user-select:none;transition:transform .12s ease,border-color .15s ease,color .15s ease,background .15s ease;white-space:nowrap;-webkit-appearance:none;appearance:none}
+    .mcpc-pill:hover{transform:translateY(-1px);color:#fff}
+    .mcpc-pill:focus-visible,.mcpc-pill:focus{outline:2px solid var(--emerald-400);outline-offset:2px}
+    .mcpc-pill.active{color:var(--slate-900);font-weight:700;border-color:transparent}
+    .mcpc-pill.reset{border-color:var(--emerald-400);color:var(--emerald-400)}
+    .mcpc-pill.reset.active{background:var(--emerald-400)}
+    .mcpc-stage{position:relative;margin:0 auto;max-width:660px;overflow:hidden;border-radius:50%}
+    .mcpc-stage svg{display:block;width:100%;height:auto}
+    .mcpc-sweep{position:absolute;inset:0;pointer-events:none;border-radius:50%;background:conic-gradient(from 0deg,transparent 0deg,rgba(102,252,241,.08) 12deg,transparent 26deg,transparent 360deg);animation:mcpc-spin 20s linear infinite;mix-blend-mode:screen}
+    @keyframes mcpc-spin{to{transform:rotate(360deg)}}
+    .mcpc .node-hub circle.ring{fill:none;stroke-width:1.3;transition:opacity .25s ease}
+    .mcpc .node-hub circle.core{stroke-width:1.5;transition:opacity .25s ease,r .15s ease}
+    .mcpc .node-leaf circle{stroke-width:1.1;transition:opacity .25s ease,r .15s ease}
+    .mcpc .node-leaf circle.beacon{animation:mcpc-pulse 2.4s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+    @keyframes mcpc-pulse{0%,100%{opacity:.45}50%{opacity:1}}
+    .mcpc .spoke,.mcpc .branch{fill:none;stroke-width:1;transition:opacity .25s ease,stroke-width .15s ease}
+    .mcpc .arc{fill:none;stroke-width:1.6;opacity:.5}
+    .mcpc .lbl-hub{font-family:"Geist Mono",var(--font-mono),ui-monospace,monospace;font-weight:700;letter-spacing:.02em;transition:opacity .25s ease}
+    .mcpc .lbl-leaf{font-family:"Geist Mono",var(--font-mono),ui-monospace,monospace;transition:opacity .25s ease}
+    .mcpc .dim{opacity:.14 !important}
+    .mcpc .center-core{fill:var(--slate-900);stroke:var(--emerald-400);stroke-width:1.8}
+    .mcpc .center-ring{fill:none;stroke:#A78BFA;stroke-width:1;stroke-dasharray:3 5;opacity:.6}
+    .mcpc .center-lbl{font-family:"Geist Mono",var(--font-mono),ui-monospace,monospace;font-weight:800;fill:#fff;letter-spacing:.04em}
+    .mcpc .center-sub{font-family:"Geist Mono",var(--font-mono),ui-monospace,monospace;fill:var(--slate-400);letter-spacing:.04em}
+    .mcpc .hoverable{cursor:pointer}
+    .mcpc .hoverable:focus-visible,.mcpc .hoverable:focus{outline:2px solid var(--emerald-400);outline-offset:3px}
+    .mcpc-dossier{max-width:660px;margin:1rem auto 0;background:var(--slate-800);border:1px solid var(--slate-700);border-radius:14px;padding:1.1rem 1.4rem;display:none;max-height:320px;overflow-y:auto;position:relative}
+    .mcpc-dossier.show{display:block}
+    .mcpc-dossier .kind{font-family:"Geist Mono",var(--font-mono),ui-monospace,monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-400);margin-bottom:6px}
+    .mcpc-dossier h3{margin:0 0 8px;color:#fff;font-size:1.05rem;line-height:1.3}
+    .mcpc-dossier p{margin:0 0 12px;font-size:.86rem;color:var(--slate-300);line-height:1.55}
+    .mcpc-dossier .fields{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+    .mcpc-dossier .field{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap}
+    .mcpc-dossier .field span{font-family:"Geist Mono",var(--font-mono),ui-monospace,monospace;font-size:.64rem;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);min-width:96px;padding-top:2px}
+    .mcpc-dossier .field strong{color:#fff;font-family:"Geist Mono",var(--font-mono),ui-monospace,monospace;font-size:.86rem;font-weight:700}
+    .mcpc-dossier .field .codes{display:flex;flex-wrap:wrap;gap:6px}
+    .mcpc-dossier .field code{font-family:"Geist Mono",var(--font-mono),ui-monospace,monospace;font-size:.74rem;color:var(--emerald-400);background:var(--slate-900);border:1px solid var(--slate-700);border-radius:5px;padding:2px 7px}
+    .mcpc-dossier a.go{display:inline-block;font-family:"Geist Mono",var(--font-mono),ui-monospace,monospace;font-size:.78rem;color:var(--emerald-400);border:1px solid var(--slate-600);border-radius:8px;padding:6px 11px;text-decoration:none}
+    .mcpc-dossier a.go:hover{background:var(--emerald-400);color:var(--slate-900)}
+    .mcpc-dossier .close{position:absolute;top:12px;right:14px;color:var(--slate-400);cursor:pointer;font-family:"Geist Mono",var(--font-mono),ui-monospace,monospace;font-size:.95rem;background:none;border:none;padding:4px}
+    .mcpc-dossier .close:focus-visible,.mcpc-dossier .close:focus{outline:2px solid var(--emerald-400);outline-offset:2px}
+    .spec-grid .spec-card,.ext-card{scroll-margin-top:90px}
+    @media(prefers-reduced-motion:reduce){.mcpc-sweep,.mcpc .node-leaf circle.beacon{animation:none}}
+    @media(max-width:640px){.mcpc-dossier .field span{min-width:100%}}
   </style>
 </head>
 <body>
@@ -97,68 +153,79 @@
   </div>
 </header>
 
+<main id="main-content">
 <section class="hero" style="background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff">
   <div class="hero-inner">
-    <div class="mcp-eyebrow"><b>mcp-kinetic-gain</b> · v0.9.1 · AGPL-3.0</div>
+    <div class="mcp-eyebrow"><b>mcp-kinetic-gain</b> · v0.10.0 · AGPL-3.0</div>
     <h1 style="color:#fff">75 governance tools.<br /><em style="color:#A78BFA">One MCP config entry.</em></h1>
-    <p class="lede" style="color:#cbd5e1">The unified <a href="https://modelcontextprotocol.io" style="color:var(--emerald-400)">Model Context Protocol</a> server that exposes every Kinetic Gain Protocol Suite spec — plus the DefenseTech 8-pack — as callable tools to Claude Desktop, Cursor, Cline, or any MCP client. <strong>75 tools</strong> = 47 spec tools + 16 implementation-preview tools + 8 DefenseTech tools + 4 AI Claims Decision Card tools. stdio transport. 172 tests passing. No API key. No phone-home.</p>
+    <p class="lede" style="color:#cbd5e1">The unified <a href="https://modelcontextprotocol.io" style="color:var(--emerald-400)">Model Context Protocol</a> server exposes twelve Kinetic Gain Protocol Suite specs and the DefenseTech 8-tool pack to MCP clients. <strong>75 tools</strong> = 47 spec tools + 16 implementation-preview tools + 8 DefenseTech tools + 4 AI Claims Decision Card tools. It runs locally over stdio. URL fetch tools can contact user-supplied public origins; optional audit tools need a configured service and token. The published package does not intercept downstream requests or enforce buyer authorization.</p>
     <div class="mcp-stat-row">
       <div><span class="stat-num">75</span><span class="stat-lbl">Tools</span></div>
       <div><span class="stat-num">12</span><span class="stat-lbl">Specs covered</span></div>
-      <div><!-- BEGIN GENERATED tests-passing --><span class="stat-num" data-measured="2026-08-08">172</span><!-- END GENERATED tests-passing --><span class="stat-lbl">Tests passing</span></div>
-      <div><span class="stat-num">4</span><span class="stat-lbl">Registries</span></div>
+      <div><span class="stat-num">0.10.0</span><span class="stat-lbl">Published version</span></div>
+      <div><span class="stat-num">2</span><span class="stat-lbl">Verified channels</span></div>
     </div>
     <div class="install-block">
       <span class="label">Install (or run via npx)</span>
-      <code>npm install -g mcp-kinetic-gain</code>
-      <code>npx -y mcp-kinetic-gain</code>
+      <code>npm install -g mcp-kinetic-gain@0.10.0</code>
+      <code>npx -y mcp-kinetic-gain@0.10.0</code>
     </div>
+    <div class="send-to-llm" data-prompt="Please explain and summarize the key takeaways of this page:"></div>
   </div>
 </section>
 
 <section class="registry-status">
   <h2 style="color:var(--slate-900);font-size:1.5rem;margin:0 0 .5rem 0">Registry status</h2>
-  <p style="color:var(--slate-600);margin:0 0 1.5rem 0;font-size:.95rem">Where mcp-kinetic-gain is live. Bumped on every release via the canonical generator — these counts cannot drift from the actual published state.</p>
+  <p style="color:var(--slate-600);margin:0 0 1.5rem 0;font-size:.95rem">Version 0.10.0 was checked against npm and the official MCP Registry. Community directories are separate listings and are not release evidence here.</p>
+  <p class="registry-scroll-hint">Scroll sideways to see every registry column.</p>
+  <div class="registry-table-scroll" role="region" aria-label="Registry records, scroll horizontally to see every column" tabindex="0">
   <table class="registry-table">
     <thead>
-      <tr><th>Registry</th><th>Status</th><th>Since</th><th>Notes</th></tr>
+      <tr><th>Registry</th><th>Status</th><th>Version</th><th>Record</th></tr>
     </thead>
     <tbody>
       <tr>
         <td class="reg-name">npm</td>
         <td><span class="reg-status live">● LIVE</span></td>
-        <td>2026-05-24</td>
-        <td><a href="https://www.npmjs.com/package/mcp-kinetic-gain">npmjs.com/package/mcp-kinetic-gain</a> · v0.9.1 · provenance-stamped</td>
+        <td>0.10.0</td>
+        <td><a href="https://www.npmjs.com/package/mcp-kinetic-gain/v/0.10.0">npm package and provenance</a></td>
       </tr>
       <tr>
         <td class="reg-name">Official MCP Registry</td>
         <td><span class="reg-status live">● LIVE</span></td>
-        <td>2026-06-02</td>
-        <td><code>io.github.mizcausevic-dev/mcp-kinetic-gain</code> @ <a href="https://registry.modelcontextprotocol.io">registry.modelcontextprotocol.io</a></td>
-      </tr>
-      <tr>
-        <td class="reg-name">mcp.so</td>
-        <td><span class="reg-status live">● LIVE</span></td>
-        <td>2026-06-01</td>
-        <td>Community directory · auto-crawls metadata from GitHub repo</td>
-      </tr>
-      <tr>
-        <td class="reg-name">Cline marketplace</td>
-        <td><span class="reg-status submitted">○ SUBMITTED</span></td>
-        <td>2026-05-26</td>
-        <td><a href="https://github.com/cline/mcp-marketplace/issues/1661">cline/mcp-marketplace#1661</a> — open, awaiting team review</td>
+        <td>0.10.0</td>
+        <td><a href="https://registry.modelcontextprotocol.io/v0.1/servers/io.github.mizcausevic-dev%2Fmcp-kinetic-gain/versions/latest"><code>io.github.mizcausevic-dev/mcp-kinetic-gain</code></a></td>
       </tr>
     </tbody>
   </table>
+  </div>
 </section>
 
 <section class="block-dark">
   <div class="block-inner">
     <h2>The twelve Suite specs, as MCP tools</h2>
     <p class="prose">Each Kinetic Gain Protocol Suite specification exposes a tight tool surface — typically fetch + inspect + validate + cross-cutting checks. The agent picks the spec by the document's <code>*_version</code> field; the tool family handles the rest.</p>
+
+    <div class="mcpc" id="mcp-constellation" aria-label="MCP tool surface, visualized: the 12 specs plus the DefenseTech extension, each hub sized by its real MCP tool count">
+      <p class="mcpc-note">The same 12 specs above, mapped by real tool count — plus the DefenseTech extension. Click a hub to filter, click a leaf for the real tool name. Tab through with a keyboard; Enter/Space activates a node like a click.</p>
+      <div class="mcpc-pills" id="mcpc-pillbar"></div>
+      <div class="mcpc-stage">
+        <div class="mcpc-sweep" aria-hidden="true"></div>
+        <svg id="mcpc-graph" viewBox="0 0 1000 1000" role="group" aria-label="Radial map of the MCP tool surface: 12 specs plus the DefenseTech extension, hub size scaled to each spec's real tool count. 13 focusable hubs, 28 focusable tool leaves."></svg>
+      </div>
+      <div class="mcpc-dossier" id="mcpc-dossier">
+        <button class="close" id="mcpc-dossierClose" aria-label="Close details panel">&times;</button>
+        <div class="kind" id="mcpc-dKind"></div>
+        <h3 id="mcpc-dTitle"></h3>
+        <p id="mcpc-dDesc"></p>
+        <div class="fields" id="mcpc-dFields"></div>
+        <a class="go" id="mcpc-dLink" href="#">Jump to card &darr;</a>
+      </div>
+    </div>
+
     <div class="spec-grid">
 
-      <div class="spec-card">
+      <div class="spec-card" id="aeo">
         <div class="spec-num">Spec 01</div>
         <h3>AEO Protocol</h3>
         <div class="spec-tools">4 tools</div>
@@ -166,7 +233,7 @@
         <div class="headline"><code>aeo_fetch</code> <code>aeo_inspect</code></div>
       </div>
 
-      <div class="spec-card">
+      <div class="spec-card" id="provenance">
         <div class="spec-num">Spec 02</div>
         <h3>Prompt Provenance</h3>
         <div class="spec-tools">3 tools</div>
@@ -174,7 +241,7 @@
         <div class="headline"><code>prompt_provenance_validate</code> <code>prompt_provenance_eval_result</code></div>
       </div>
 
-      <div class="spec-card">
+      <div class="spec-card" id="agent-cards">
         <div class="spec-num">Spec 03</div>
         <h3>Agent Cards</h3>
         <div class="spec-tools">4 tools</div>
@@ -182,7 +249,7 @@
         <div class="headline"><code>agent_card_validate</code> <code>agent_card_tool_disclosure</code></div>
       </div>
 
-      <div class="spec-card">
+      <div class="spec-card" id="evidence">
         <div class="spec-num">Spec 04</div>
         <h3>AI Evidence Format</h3>
         <div class="spec-tools">3 tools</div>
@@ -190,7 +257,7 @@
         <div class="headline"><code>ai_evidence_validate</code> <code>ai_evidence_verify_hash</code></div>
       </div>
 
-      <div class="spec-card">
+      <div class="spec-card" id="tool-cards">
         <div class="spec-num">Spec 05</div>
         <h3>MCP Tool Cards</h3>
         <div class="spec-tools">4 tools</div>
@@ -198,7 +265,7 @@
         <div class="headline"><code>tool_card_validate</code> <code>tool_card_tested_with</code></div>
       </div>
 
-      <div class="spec-card">
+      <div class="spec-card" id="tutor-cards">
         <div class="spec-num">Spec 06 · EdTech</div>
         <h3>AI Tutor Cards</h3>
         <div class="spec-tools">6 tools</div>
@@ -206,7 +273,7 @@
         <div class="headline"><code>tutor_card_coppa_check</code> <code>tutor_card_subject_check</code></div>
       </div>
 
-      <div class="spec-card">
+      <div class="spec-card" id="student-disclosure">
         <div class="spec-num">Spec 07 · EdTech</div>
         <h3>Student AI Disclosure</h3>
         <div class="spec-tools">5 tools</div>
@@ -214,7 +281,7 @@
         <div class="headline"><code>disclosure_aup_check</code> <code>disclosure_verify_prompt_hash</code></div>
       </div>
 
-      <div class="spec-card">
+      <div class="spec-card" id="classroom-aup">
         <div class="spec-num">Spec 08 · EdTech</div>
         <h3>Classroom AI AUP</h3>
         <div class="spec-tools">5 tools</div>
@@ -222,7 +289,7 @@
         <div class="headline"><code>aup_check_compliance</code> <code>aup_validate</code></div>
       </div>
 
-      <div class="spec-card">
+      <div class="spec-card" id="clinical-ai">
         <div class="spec-num">Spec 09 · HealthTech</div>
         <h3>Clinical AI Disclosure</h3>
         <div class="spec-tools">4 tools</div>
@@ -230,23 +297,23 @@
         <div class="headline"><code>clinical_ai_validate</code> <code>clinical_ai_inspect</code></div>
       </div>
 
-      <div class="spec-card">
+      <div class="spec-card" id="incident-card">
         <div class="spec-num">Spec 10 · Cross-cutting</div>
         <h3>AI Incident Card</h3>
-        <div class="spec-tools">7 tools</div>
-        <p>Fetch, inspect, validate, walk-affected, remediation plan, index, well-known.</p>
-        <div class="headline"><code>incident_affected_walk</code> <code>incident_remediation_plan</code></div>
+        <div class="spec-tools">5 tools</div>
+        <p>Fetch, inspect, validate, index, well-known.</p>
+        <div class="headline"><code>incident_validate</code> <code>incident_inspect</code></div>
       </div>
 
-      <div class="spec-card">
+      <div class="spec-card" id="procurement-decision">
         <div class="spec-num">Spec 11 · Cross-cutting</div>
         <h3>AI Procurement Decision Card</h3>
-        <div class="spec-tools">7 tools</div>
-        <p>Fetch, inspect, validate, infer status, signature check, to-PolicyBundle preview, well-known.</p>
-        <div class="headline"><code>decision_card_validate</code> <code>decision_card_to_policy_bundle</code></div>
+        <div class="spec-tools">4 tools</div>
+        <p>Fetch, inspect, validate, well-known.</p>
+        <div class="headline"><code>decision_card_validate</code> <code>decision_card_inspect</code></div>
       </div>
 
-      <div class="spec-card">
+      <div class="spec-card" id="claims-card">
         <div class="spec-num">Spec 12 · InsurTech</div>
         <h3>AI Claims Decision Card</h3>
         <div class="spec-tools">4 tools</div>
@@ -256,7 +323,7 @@
 
     </div>
 
-    <div class="ext-card">
+    <div class="ext-card" id="defensetech">
       <div class="spec-num">Vertical extension</div>
       <h3>DefenseTech 8-pack — 8 tools</h3>
       <div class="spec-tools">CUI · ITAR · DFARS · CMMC L2/L3</div>
@@ -281,7 +348,7 @@
         <div class="num">Layer 2</div>
         <h4>Audit-stream (6 tools)</h4>
         <div class="pair-tools">offline + live event composition</div>
-        <p>Compose events, verify a hash-chained log, inspect events. Live mode: emit/query/verify against a running <code>audit-stream-py</code> via <code>AUDIT_STREAM_URL</code>.</p>
+        <p>Compose events, verify a supplied hash chain, and inspect events. Optional emit/query/verify calls need a running <code>audit-stream-py</code> service plus <code>AUDIT_STREAM_URL</code> and <code>AUDIT_STREAM_TOKEN</code>; chain verification alone does not establish a complete audit trail.</p>
       </div>
       <div class="pair-card">
         <div class="num">Layer 3</div>
@@ -309,12 +376,13 @@
   <span class="key">"mcpServers"</span><span class="punct">:</span> <span class="punct">{</span>
     <span class="key">"kinetic-gain"</span><span class="punct">:</span> <span class="punct">{</span>
       <span class="key">"command"</span><span class="punct">:</span> <span class="str">"npx"</span><span class="punct">,</span>
-      <span class="key">"args"</span><span class="punct">:</span> <span class="punct">[</span><span class="str">"-y"</span><span class="punct">,</span> <span class="str">"mcp-kinetic-gain"</span><span class="punct">]</span>
+      <span class="key">"args"</span><span class="punct">:</span> <span class="punct">[</span><span class="str">"-y"</span><span class="punct">,</span> <span class="str">"mcp-kinetic-gain@0.10.0"</span><span class="punct">]</span>
     <span class="punct">}</span>
   <span class="punct">}</span>
 <span class="punct">}</span></pre>
     </div>
-    <p class="prose" style="font-size:.9rem;color:var(--slate-400);margin-top:1rem">Optional: set <code>AUDIT_STREAM_URL</code> in the <code>env</code> block to enable the 3 live audit-stream tools against a running <a href="https://github.com/mizcausevic-dev/audit-stream-py" style="color:var(--emerald-400)">audit-stream-py</a> instance. Without it, the server runs fully offline — the other 72 tools work unchanged.</p>
+    <p class="prose" style="font-size:.9rem;color:var(--slate-400);margin-top:1rem">The three optional live audit-stream tools require both <code>AUDIT_STREAM_URL</code> and a configured <code>AUDIT_STREAM_TOKEN</code> for an approved <a href="https://github.com/mizcausevic-dev/audit-stream-py" style="color:var(--emerald-400)">audit-stream-py</a> service. The shared token authenticates the MCP process, not the caller-asserted source or tenant. Without that configuration those tools return an error; URL fetch tools can still contact user-supplied public origins. The default stdio tools are previews, not a governed request gateway.</p>
+    <p class="prose" style="font-size:.9rem;color:var(--slate-400);margin-top:.75rem">A separate <a href="https://github.com/mizcausevic-dev/mcp-kinetic-gain/pull/48" style="color:var(--emerald-400)">one-tool signed-card HTTP pilot</a> is still a draft source change. It is not in the published npm package or MCP Registry release and has not passed a hosted buyer-boundary drill.</p>
   </div>
 </section>
 
@@ -325,7 +393,7 @@
     <div class="who-list">
       <div class="who-card">
         <h4>Application developers</h4>
-        <p>Building an agent that needs to validate or emit Kinetic Gain Protocol Suite documents — System Cards, Tool Cards, Decision Cards, audit-stream events. The MCP server is the read+write surface.</p>
+        <p>Building an agent that needs to inspect or validate Kinetic Gain Protocol Suite documents. Optional audit-event writes require an approved configured sink.</p>
       </div>
       <div class="who-card">
         <h4>Security / GRC teams</h4>
@@ -342,7 +410,7 @@
 <section class="block-dark">
   <div class="block-inner">
     <h2>Where to next</h2>
-    <p class="prose">The unified server is the runtime layer. To explore the specs themselves, the visualizer, or the implementation stack:</p>
+    <p class="prose">The published server is a local MCP tool surface. To explore the specs, the visualizer, or the implementation stack:</p>
     <div class="pair-grid">
       <div class="pair-card">
         <h4><a href="/" style="color:var(--emerald-400)">Suite hub</a></h4>
@@ -350,20 +418,21 @@
       </div>
       <div class="pair-card">
         <h4><a href="https://kinetic-gain-visualizer.vercel.app/" style="color:var(--emerald-400)">Visualizer</a></h4>
-        <p>Render any document from any of the twelve specs. Six tabs including the live audit-stream demo.</p>
+        <p>Explore the currently supported Suite document types visually; the visualizer's latest verified detector covers 11 of the 12 MCP/spec types.</p>
       </div>
       <div class="pair-card">
         <h4><a href="https://github.com/mizcausevic-dev/mcp-kinetic-gain" style="color:var(--emerald-400)">Source</a></h4>
-        <p>TypeScript, AGPL-3.0, 172 tests, OpenSSF Scorecard + CodeQL + CycloneDX SBOM.</p>
+        <p>TypeScript source, AGPL-3.0 license, tool catalog, tests, and release workflows.</p>
       </div>
       <div class="pair-card">
         <h4><a href="https://github.com/mizcausevic-dev/mcp-kinetic-gain/blob/main/docs/REGISTRIES.md" style="color:var(--emerald-400)">Registry docs</a></h4>
-        <p>How the package got published to four registries + the bump-checklist for next time.</p>
+        <p>Distribution and release notes; verify a registry's current record before relying on it.</p>
       </div>
     </div>
   </div>
 </section>
 
+</main>
 <footer style="background:var(--slate-900);color:var(--slate-400);padding:2rem 1.5rem;font-size:.85rem">
   <div style="max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:space-between">
     <div>© Kinetic Gain LLC · Boston, MA · <a href="https://kineticgain.com/" style="color:var(--slate-400)">kineticgain.com</a></div>
@@ -377,5 +446,7 @@
 
   <script src="/suite-nav.js?v=20260809-explain" defer></script>
   <script src="/nav-toggle.js" defer></script>
+  <script src="/mcp-constellation.js" defer></script>
+  <script src="/send-to-llm.js" defer></script>
 </body>
 </html>

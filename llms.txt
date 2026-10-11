@@ -1,58 +1,55 @@
 # Kinetic Gain Protocol Suite
 
-> Canonical front door for the entire 11-spec open AI governance suite + 15-repo implementation stack.
+Public front door: https://suite.kineticgain.com/
+Source and architecture: https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite
+Public repository index: https://github.com/mizcausevic-dev/mizcausevic-dev/blob/main/docs/REPOSITORIES.md
 
-The official landing page for the Kinetic Gain Protocol Suite. **An eleven-spec family of open JSON governance specs** spanning entity declaration, prompt lineage, agent disclosure, citation evidence, tool disclosure, plus an EdTech trio (vendor / district / student), a HealthTech extension, a cross-cutting vendor-side incident-disclosure spec, and a cross-cutting buyer-side procurement Decision Card. **One unified MCP server (71 tools, v0.8.0, includes DefenseTech 6-pack), one unified visualizer (11 renderers), <!-- BEGIN GENERATED live-properties-count -->107<!-- END GENERATED live-properties-count --> live properties, plus a 15-repo Suite Implementation Stack** (procurement-decision-api, policy-as-code-engine, audit-stream-py, hash-attestation-rs, aeo-validator-service, aeo-graph-explorer-rs, slo-budget-tracker, reliability-toolkit-rs, feature-flag-rs, request-shadow-rs, data-contract-registry, csv-data-quality-rs, incident-correlation-rs, mcp-reliability-toolkit, mcp-decision-intelligence) with four cross-ecosystem hooks.
+The Suite publishes twelve open JSON governance specifications. The eleven
+regulated-vertical 6-packs are related extension repositories, not additional
+tools inside the published unified MCP package.
 
-## Identity
+## Start here
 
-- **Subdomain**: [suite.kineticgain.com](https://suite.kineticgain.com/)
-- **Spec repo**: [github.com/mizcausevic-dev/kinetic-gain-protocol-suite](https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite)
-- **Buyer audience**: Recruiters · Investors · Generalist visitors · Procurement reviewers · SREs · Data teams · MCP integrators
-- **Category**: Hub — canonical front door
-- **License**: AGPL-3.0 for spec text; Apache-2.0 for the landing site; MIT for the 15-repo implementation stack
-- **Deployment**: GitHub Actions FTP CI/CD on push to main
+- Specs and links to each source repo: https://suite.kineticgain.com/specs/
+- Related implementation repos and their release boundaries: https://suite.kineticgain.com/implementations/
+- Unified MCP server: https://suite.kineticgain.com/mcp/
+- Optional audit-stream architecture: https://suite.kineticgain.com/audit-stream/
+- Selected properties: https://suite.kineticgain.com/properties/
+- Regulated-vertical extensions: https://suite.kineticgain.com/verticals/
 
-## Pages
+## Published MCP package
 
-- [/](https://suite.kineticgain.com/): Kinetic Gain Protocol Suite — Canonical front door for the entire 11-spec open AI governance suite + 15-repo implementation stack.
-- [/docs/nist-rmf-crosswalk.md](https://suite.kineticgain.com/docs/nist-rmf-crosswalk.md): NIST AI RMF crosswalk v0.2 — maps every spec AND the implementation tooling to specific NIST AI RMF subcategories.
+As checked on 2026-10-10, mcp-kinetic-gain v0.10.0 is published on npm with
+provenance and listed in the official MCP Registry. It exposes 75 tools in one
+local stdio MCP server: 47 spec tools, 16 implementation previews, 8 DefenseTech
+tools, and 4 AI Claims Decision Card tools. Pin mcp-kinetic-gain@0.10.0 in a
+client configuration rather than depending on a moving latest version.
 
-## Part of the Kinetic Gain Protocol Suite
+- Source: https://github.com/mizcausevic-dev/mcp-kinetic-gain
+- npm version: https://www.npmjs.com/package/mcp-kinetic-gain/v/0.10.0
+- Official Registry record: https://registry.modelcontextprotocol.io/v0.1/servers/io.github.mizcausevic-dev%2Fmcp-kinetic-gain/versions/latest
 
-A family of **eleven open JSON governance specs** for the answer-engine and agent era — five core (AEO, Prompt Provenance, Agent Cards, AI Evidence Format, MCP Tool Cards), a three-spec EdTech trio (Tutor Cards / Student AI Disclosure / Classroom AI AUP), a HealthTech extension (Clinical AI Disclosure), a cross-cutting vendor-side Incident Card, and a cross-cutting buyer-side AI Procurement Decision Card. **Two regulated verticals covered. Bilateral (vendor disclosures + buyer decisions).**
+The published stdio tools validate, inspect, compare, and preview from supplied
+data. A true allow result is not a downstream authorization grant. URL fetch
+tools may contact user-supplied public origins. Optional live audit calls require
+both AUDIT_STREAM_URL and AUDIT_STREAM_TOKEN for an approved sink. Chain
+verification proves continuity among accepted events, not completeness.
 
-- **Front door**: [suite.kineticgain.com](https://suite.kineticgain.com/)
-- **Quickstart hub**: [docs.kineticgain.com](https://docs.kineticgain.com/)
-- **Portfolio constellation**: [portfolio.kineticgain.com](https://portfolio.kineticgain.com/) — live visual atlas of every public repo at github.com/mizcausevic-dev (hundreds of repos across 20+ languages), classified into named platforms + industry verticals, auto-refreshed every six hours.
-- **Unified MCP server** (71 tools across 11 specs + DefenseTech 6-pack + 5 cross-cutting op categories, v0.8.0, on the official MCP Registry): [github.com/mizcausevic-dev/mcp-kinetic-gain](https://github.com/mizcausevic-dev/mcp-kinetic-gain)
-- **Unified visualizer** (11 renderers): [github.com/mizcausevic-dev/kinetic-gain-visualizer](https://github.com/mizcausevic-dev/kinetic-gain-visualizer)
-- **Meta-repo + Suite × Implementations catalog**: [github.com/mizcausevic-dev/kinetic-gain-protocol-suite](https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite)
-- **NIST AI RMF crosswalk v0.2**: [suite.kineticgain.com/docs/nist-rmf-crosswalk.md](https://suite.kineticgain.com/docs/nist-rmf-crosswalk.md)
+A separate signed-card, one-tool HTTP pilot remains a draft source change at
+https://github.com/mizcausevic-dev/mcp-kinetic-gain/pull/48. It is not in the
+published npm package or Registry release. Buyer identity, authoritative
+conditions, durable revocation, a private hosted boundary, independent audit
+checkpoint, and hosted rollback remain unverified.
 
-## Implementation Stack (cross-ecosystem hooks)
+## Other boundaries
 
-1. `procurement-decision-api` → Suite docs (Suite × Decision Intelligence bridge)
-2. `policy-as-code-engine` → `procurement-decision-api` (Decision Card → runtime PolicyBundle)
-3. `data-contract-registry` → `procurement-decision-api` (Decision Card → contract Owner extraction)
-4. `csv-data-quality-rs` → `data-contract-registry` (streaming CSV validator)
+The visualizer's latest verified detector supports eleven Suite document types;
+the published MCP server covers twelve. See
+https://github.com/mizcausevic-dev/kinetic-gain-visualizer.
 
-## Audit-stream spine (one log, seven producers, two ecosystems)
+The Suite implementation pages describe reference software and proposed
+cross-repo integrations. A source link or local test does not establish live
+provider behavior, a complete audit trail, or production enforcement. Inspect
+each repository and its deployment evidence before relying on a claim.
 
-Every governance moment in the portfolio writes to one hash-chained, tamper-evident log via `audit-stream-py`. Producers fail safely — if the stream is down, governance still happens, the event is logged to stderr instead of the chain. Same opt-in env-var contract (`AUDIT_STREAM_URL`) across the whole spine.
-
-- `procurement-decision-api` → `decision_card_drafted` (Python · FastAPI)
-- `aeo-validator-service` → `watch_created`, `watch_drifted`, `watch_validity_flipped` (Python · FastAPI)
-- `policy-as-code-engine` → `policy_bundle_registered`, `request_allowed`, `request_denied` (Python · FastAPI)
-- `data-contract-registry` → `contract_promoted`, `contract_deprecated`, `contract_compatibility_failed` (Python · FastAPI)
-- `hash-attestation` → `attestation_signed`, `attestation_verified`, `attestation_failed` (Rust · crypto library, `--features audit-stream`)
-- `incident-correlation` → `incident_correlated`, `incident_correlation_failed` (Rust · graph library, `--features audit-stream`)
-- `aeo-graph-explorer` → `graph_ingested`, `graph_ingest_failed` (Rust · axum service)
-
-**17 event kinds across 7 producers**, all feeding one verifiable chain. `audit-stream-py` exposes SSE live tail, REST query, and `GET /verify` to walk the chain end-to-end for compliance evidence.
-
-## Author
-
-- **Miz Causevic** · Enterprise Technologist · Boston, MA
-- [github.com/mizcausevic-dev](https://github.com/mizcausevic-dev) · [linkedin.com/in/mirzacausevic](https://www.linkedin.com/in/mirzacausevic/) · [kineticgain.com](https://kineticgain.com/) · [medium.com/@mizcausevic](https://medium.com/@mizcausevic/)
-- ~30 years across IBM, CyberArk, Alteryx, Digital.ai, Gryphon.ai
+Author: Miz Causevic, Kinetic Gain LLC
