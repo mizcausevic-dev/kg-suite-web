@@ -2,9 +2,11 @@
 
 > Document version **0.2** · published 2026-05-14 · updated 2026-05-15 with implementation-tooling alignment (new section 7) · MIT-licensed
 
+> **Historical snapshot, not a current conformance assessment (2026-10-10).** This May 2026 document maps the first eleven Suite specs. The Suite now has twelve, and the twelfth has not been mapped here. Section 7 describes proposed tool-to-control relationships, not proof of deployed controls, buyer approval, complete audit, or NIST AI RMF conformance. Some repo counts, release states, and deployment assertions below reflect the original snapshot and need re-verification before use in procurement.
+
 This document maps each of the eleven [Kinetic Gain Protocol Suite](https://suite.kineticgain.com/) specifications to the corresponding NIST AI Risk Management Framework (AI RMF 1.0) functions, categories, and subcategories. It is intended for federal/enterprise procurement teams, vendor compliance leads, and AI auditors who need a concrete, document-level answer to *"which RMF controls does this set of vendor declarations actually address?"*
 
-The crosswalk is honest about gaps. Many RMF subcategories cover **operational practices** (training, monitoring, incident response process) that cannot be discharged by publishing JSON documents alone. Where the Suite covers a subcategory in full, that is called out explicitly. Where it covers part of one — typically the *disclosure* portion — that is also called out, with the operational gap noted.
+Many RMF subcategories cover **operational practices** (training, monitoring, incident response process) that cannot be discharged by publishing JSON documents alone. The original "Full" label below denotes a document-field mapping only; it is not a finding that any organization satisfies that RMF subcategory. Buyer-specific implementation and evidence remain necessary.
 
 ---
 
@@ -19,7 +21,7 @@ The crosswalk is honest about gaps. Many RMF subcategories cover **operational p
 - For each of the four NIST AI RMF functions (**GOVERN**, **MAP**, **MEASURE**, **MANAGE**), which Kinetic Gain Suite specs publish the relevant evidence.
 - For each of the eleven Suite specs, which NIST subcategories it satisfies in whole or in part.
 - A concrete recommendation for using the **AI Procurement Decision Card** (spec #11) to record RMF-aligned procurement outcomes in machine-readable form.
-- **(Section 7, new in v0.2)** Which NIST subcategories the **fifteen-repo implementation stack** actively *operationalizes* — converting Suite disclosure into runtime enforcement, drift detection, tamper-evident audit trail, and mechanical remediation planning. Several Section-4 "Partial" cells move closer to "Full" when the implementation stack is deployed alongside the specs.
+- **(Section 7, new in v0.2)** Historical examples of how implementation repositories could support NIST subcategories. These examples do not upgrade a "Partial" assessment without tested, buyer-specific operational evidence.
 
 **Coverage at a glance — specs only (sections 4–6):**
 
@@ -30,16 +32,16 @@ The crosswalk is honest about gaps. Many RMF subcategories cover **operational p
 | MEASURE | 6+ | AI Evidence, Clinical AI Card, Prompt Provenance, Incident Card |
 | MANAGE | 7+ | Incident Card, Decision Card, Agent Card, Classroom AUP |
 
-**Coverage at a glance — with the implementation stack (section 7):**
+**Historical implementation hypotheses (section 7; not deployed-control findings):**
 
-| NIST function | Additional subcategories operationalized by deployed tooling | Headline implementation repos |
+| NIST function | Possible supporting subcategories | Example implementation repos |
 |---|---|---|
 | GOVERN | 1.5 (record-keeping via audit-stream), 6.2 (transparency via MCP servers) | `audit-stream-py`, `mcp-*` servers |
 | MAP | 4.1 (graph-based risk mapping) | `aeo-graph-explorer-rs`, `incident-correlation-rs` |
 | MEASURE | 1.1 (mechanical contract validation), 2.3 (production diff), 3.1 (continuous drift detection) | `csv-data-quality-rs`, `request-shadow-rs`, `aeo-validator-service`, `slo-budget-tracker` |
-| MANAGE | 1.3 (runtime enforcement, not just policy text), 2.3 (mechanical remediation planning) | `policy-as-code-engine`, `incident-correlation-rs`, `feature-flag-rs` |
+| MANAGE | 1.3 (conditions of use), 2.3 (remediation planning) | `policy-as-code-engine`, `incident-correlation-rs`, `feature-flag-rs` |
 
-The Suite is strongest at GOVERN and MAP (disclosure-heavy functions), reasonable at MEASURE (where it provides artifact carriers for test results), and explicitly limited at MANAGE (which requires operational tooling beyond static documents). **The implementation stack reduces the MEASURE and MANAGE gaps materially.** Section 7 quantifies which "Partial" cells move closer to "Full" when the stack is deployed; section 8 itemizes the gaps that remain regardless.
+The Suite's documents can carry governance and measurement evidence, while operational RMF practices require separate verification. Section 7 shows possible support from implementation repositories; it does not quantify or certify an improvement in coverage.
 
 ---
 
@@ -84,7 +86,7 @@ The first ten are vendor-side declarations. **Spec #11 is the buyer-side artifac
 
 In each table below, the **"Suite coverage"** column uses one of three markers:
 
-- **Full** — the named spec(s) carry all the evidence this subcategory expects.
+- **Full** — the original snapshot judged the document fields sufficient for this mapping; this does not establish an implemented organizational control.
 - **Partial** — the spec(s) carry the disclosure portion; an operational gap remains.
 - **Adjacent** — the spec(s) cover a closely related concern but not the exact subcategory.
 
@@ -130,12 +132,12 @@ In each table below, the **"Suite coverage"** column uses one of three markers:
 
 | Subcategory | Description (paraphrased) | Suite specs | Suite coverage | Notes |
 |---|---|---|---|---|
-| **MANAGE 1.2** | A determination is made as to whether an AI system achieves its intended purpose and is fit for deployment. | **Decision Card** | **Full** | The Decision Card *is* this determination, recorded in machine-readable form. |
-| **MANAGE 1.3** | Plan responses to risks, including mitigations and conditions of use. | Decision Card (`conditions`); Classroom AUP | **Full** | The Decision Card's `conditions` array is the canonical carrier. AUP encodes standing policy responses. |
+| **MANAGE 1.2** | A determination is made as to whether an AI system achieves its intended purpose and is fit for deployment. | **Decision Card** | **Partial** | The Decision Card can record a determination. A trusted buyer must actually make it using adequate evidence. |
+| **MANAGE 1.3** | Plan responses to risks, including mitigations and conditions of use. | Decision Card (`conditions`); Classroom AUP | **Partial** | These fields can record conditions and policy. A buyer must approve and carry out the plan; any live enforcement needs its own proof. |
 | **MANAGE 2.1** | Resources are allocated to risk-prioritized actions. | — | **Not addressed** | Resource allocation is operational; no spec captures it. |
 | **MANAGE 2.3** | Procedures are followed to respond to and recover from previously unknown risks. | Incident Card (`mitigation`, `history`); Decision Card (`withdrawal`) | **Partial** | Incident Card records post-hoc response. Decision Card supports withdrawal of a prior approval. The *procedures themselves* are organizational. |
 | **MANAGE 3.1** | AI risk and benefit are monitored. | Incident Card (registry pattern at `/.well-known/ai-incidents.json`) | **Partial** | The vendor's published incident registry is the visible part. |
-| **MANAGE 3.2** | Procedures address third-party risks. | Decision Card (`subject.documents_reviewed`); Tool Card (third-party tools) | **Full** | Decision Card's per-document review is precisely a third-party risk record. |
+| **MANAGE 3.2** | Procedures address third-party risks. | Decision Card (`subject.documents_reviewed`); Tool Card (third-party tools) | **Partial** | A Decision Card can record reviewed documents; the organization's third-party risk procedure must be separately evidenced. |
 | **MANAGE 4.1** | Post-deployment monitoring plans are documented. | Incident Card; Decision Card (`effective_until` for re-review trigger) | **Partial** | The disclosure portion is covered; the monitoring practice itself is operational. |
 
 ---
@@ -185,7 +187,7 @@ This is the inverse view — for each spec, the NIST subcategories it can be use
 **Best used for:** Post-hoc incident disclosure. The Incident Card's `regulatory.reported_to` field directly carries EU AI Act Article 73 filings and FDA MedWatch references. The widest MEASURE/MANAGE coverage of any single spec.
 
 ### AI Procurement Decision Card (`decision_card_version`)
-**Touches:** GOVERN 1.2, GOVERN 2.1, GOVERN 5.1, MAP 3.1, MAP 5.2, **MANAGE 1.2** (in full), **MANAGE 1.3** (in full), MANAGE 2.3, MANAGE 3.2.
+**Touches:** GOVERN 1.2, GOVERN 2.1, GOVERN 5.1, MAP 3.1, MAP 5.2, MANAGE 1.2, MANAGE 1.3, MANAGE 2.3, MANAGE 3.2. These are possible document mappings, not control findings.
 **Best used for:** Recording RMF-aligned procurement outcomes. **The Decision Card is the natural artifact for federal Approved Vendor List (AVL) decisions under OMB M-24-10.** See section 6.
 
 ---
@@ -252,21 +254,21 @@ The Decision Card's standard fields (`buyer`, `subject.documents_reviewed`, `cri
 
 ---
 
-## 7. Implementation tooling: from disclosure to enforcement
+## 7. Implementation tooling: historical design mappings
 
-The crosswalk above (sections 4–6) treats the Suite as a pure disclosure layer. That's the right framing for the *specs*. But the Kinetic Gain implementation stack — **fifteen open-source repos that consume Suite documents** — converts a number of "Partial" cells in the spec-side crosswalk into operational practice. This section maps those repos to the NIST subcategories they actively address at runtime.
+The crosswalk above (sections 4–6) treats the Suite as a disclosure layer. This section is a May 2026 map of repositories that could support related operational practices. Repository code or a generated policy bundle does not establish that a buyer approved a policy or that a production request was denied. Treat the following rows as design hypotheses until tested at a specified deployment boundary.
 
-All fifteen implementation repos are MIT-licensed, semver-tagged at v0.1.0, with CI-green test suites. They compose: every repo reads or writes Suite documents, and four explicit **cross-ecosystem hooks** chain them together.
+The original snapshot grouped these implementations together. Verify each repository's current license, release, CI status, integration behavior, and deployment independently before relying on it.
 
 ### 7.1 The implementation stack
 
 | Repo | Lang | Role |
 |---|---|---|
 | [`procurement-decision-api`](https://github.com/mizcausevic-dev/procurement-decision-api) | Python · FastAPI | Drafts Decision Cards from buyer rubric + vendor Suite docs. |
-| [`policy-as-code-engine`](https://github.com/mizcausevic-dev/policy-as-code-engine) | Python · FastAPI | Runtime gate; converts Decision Card conditions into deny-by-default rules. |
+| [`policy-as-code-engine`](https://github.com/mizcausevic-dev/policy-as-code-engine) | Python · FastAPI | Proposes rules from Decision Card conditions; downstream enforcement needs a tested handler path. |
 | [`audit-stream-py`](https://github.com/mizcausevic-dev/audit-stream-py) | Python · FastAPI · SSE | Append-only governance event stream, hash-chained for tamper-evidence. |
 | [`hash-attestation-rs`](https://github.com/mizcausevic-dev/hash-attestation-rs) | Rust · ed25519 | Sign + verify Suite documents over the canonical-hash convention. |
-| [`aeo-validator-service`](https://github.com/mizcausevic-dev/aeo-validator-service) | Python · FastAPI | Always-on validator with content-hash drift tracking. |
+| [`aeo-validator-service`](https://github.com/mizcausevic-dev/aeo-validator-service) | Python · FastAPI | HTTP validator reference with content-hash drift reports; hosted uptime is unverified here. |
 | [`aeo-graph-explorer-rs`](https://github.com/mizcausevic-dev/aeo-graph-explorer-rs) | Rust · axum · petgraph | HTTP graph-query service over AEO crawls. |
 | [`incident-correlation-rs`](https://github.com/mizcausevic-dev/incident-correlation-rs) | Rust · petgraph | Walks the Suite graph from an Incident Card to a remediation plan. |
 | [`data-contract-registry`](https://github.com/mizcausevic-dev/data-contract-registry) | Python · FastAPI | Schema registry with semver + compatibility checks. |
@@ -281,32 +283,32 @@ All fifteen implementation repos are MIT-licensed, semver-tagged at v0.1.0, with
 
 | Implementation | Operationalizes | What it adds beyond the disclosure layer |
 |---|---|---|
-| **procurement-decision-api** | GOVERN 5.1, MAP 3.1, MAP 5.2, MEASURE 2.5, MANAGE 1.2 | The service that *produces* the Decision Card. Inputs: buyer rubric + vendor Suite docs. Output: a signed determination. Closes the per-review portion of GOVERN 5.1 and MANAGE 1.2. |
-| **policy-as-code-engine** | MANAGE 1.3 (runtime), MANAGE 3.2 | Headline: `POST /bundles/from-decision-card` turns every Decision Card `condition` into a deny-by-default runtime gate. Converts MANAGE 1.3 from "we wrote down the conditions" to "every request validates them." |
-| **audit-stream-py** | GOVERN 1.5 (record-keeping), MEASURE 3.1 | Append-only, hash-chained event stream. Records every Decision Card draft, policy denial, contract promotion, watch drift, incident filing. The audit-trail leg of GOVERN that pure-disclosure documents can't reach. |
-| **hash-attestation-rs** | MAP 2.2, MEASURE 2.8 | ed25519 signatures over the canonical hash of any Suite document. The "this AEO actually came from the vendor" layer. Tightens MAP 2.2's "knowledge limits and assumptions" with *non-repudiable* identity of who claimed what. |
-| **aeo-validator-service** | MEASURE 3.1, MANAGE 3.1 | Always-on validator with content-hash drift tracking. When a vendor's published AEO / agent-card / tool-card changes, the service emits a structured `DriftReport`. The continuous-monitoring piece MEASURE 3.1 calls for and the disclosure layer doesn't carry. |
+| **procurement-decision-api** | GOVERN 5.1, MAP 3.1, MAP 5.2, MEASURE 2.5, MANAGE 1.2 | Can draft a Decision Card from a buyer rubric and vendor documents. A buyer determination and signature require trusted inputs and an authorized buyer. |
+| **policy-as-code-engine** | MANAGE 1.3, MANAGE 3.2 | `POST /bundles/from-decision-card` proposes rules from conditions. Per-request denial requires a separately tested interception point. |
+| **audit-stream-py** | GOVERN 1.5, MEASURE 3.1 | A hash chain can show continuity of accepted records. It cannot prove all source events were captured without a complete producer path and independent checkpoint. |
+| **hash-attestation-rs** | MAP 2.2, MEASURE 2.8 | Ed25519 can bind a document to a signing key. Vendor identity requires independent trust in the key-to-vendor binding. |
+| **aeo-validator-service** | MEASURE 3.1, MANAGE 3.1 | Can produce drift reports for watched documents. Hosted continuous monitoring is not verified by this crosswalk. |
 | **aeo-graph-explorer-rs** | MAP 1.2, MAP 4.1 | HTTP graph-query service over the AEO crawl. `GET /shortest-path?from=&to=` lets auditors answer "does a citation chain connect entity X to entity Y?" without re-walking the graph. Cross-org dependency mapping in seconds. |
 | **incident-correlation-rs** | MAP 4.1, MANAGE 2.3, MANAGE 3.1 | Walks the Suite graph from an `IncidentCard` and emits a structured remediation plan: which agent-cards depend on the affected tool, which Decision Cards approved the affected vendor, which AEO entities reference the affected entity. Makes MANAGE 2.3 ("respond to and recover from previously unknown risks") mechanical. |
 | **data-contract-registry** | GOVERN 1.4, MAP 1.2 | Data-side analog of the Suite's governance model. Semver-versioned contracts, backward/forward compatibility checks, declared owners. Cross-ecosystem hook to `procurement-decision-api`: owners extracted from Decision Card's `buyer` + `decision_maker`. |
-| **csv-data-quality-rs** | MEASURE 1.1, MEASURE 2.3 | Streaming CSV validator against a registered contract. Producers prove their output matches the contract — mechanical proof, not "we wrote a test." |
+| **csv-data-quality-rs** | MEASURE 1.1, MEASURE 2.3 | Streaming CSV validation can compare rows with a declared contract. A passing run covers the tested data and rules, not all production output. |
 | **slo-budget-tracker** | MEASURE 3.1, MANAGE 3.1 | SLO + error-budget library with multi-window burn-rate alerts. Pair with Incident Card filing to detect emerging deployment risks before they cross MANAGE 2.3's "previously unknown" threshold. |
 | **reliability-toolkit-rs** | MEASURE 2.7 (security/resilience) | Rate limiter + circuit breaker + retry + bulkhead in Rust async. Operational resilience primitives. |
 | **feature-flag-rs** | MANAGE 1.3 (staged rollout) | Sticky percentage rollouts (SHA-256 bucketing, no RNG). Per-rule rollout control supports MANAGE 1.3's "conditions of use" with concrete flag semantics. |
-| **request-shadow-rs** | MEASURE 2.3 | Async request mirroring + structured response diff. Production performance comparison against a candidate — direct evidence for MEASURE 2.3's "measured against specified objectives." |
+| **request-shadow-rs** | MEASURE 2.3 | Async request mirroring and structured response diffs can support a controlled candidate comparison when actually run at an authorized boundary. |
 | **mcp-\* servers** | GOVERN 6.2 (transparency) | Three Claude-callable surfaces making Suite operations and reliability math observable to LLM-driven assistants. |
 
-### 7.3 Which Section-4 "Partial" cells get reduced when the implementation stack is deployed
+### 7.3 Possible evidence that could narrow Section-4 gaps
 
-| Subcategory | Spec-layer coverage (Section 4) | Adds when implementation deployed |
+| Subcategory | Spec-layer coverage (Section 4) | Additional evidence to verify |
 |---|---|---|
-| **GOVERN 5.1** — continuous policy review | Partial (Decision Card `effective_until` forces re-review) | **Closer to Full** via `procurement-decision-api` (scheduled review workflow) + `audit-stream-py` (re-review event records). |
-| **MEASURE 3.1** — deployment monitoring | Partial (Incident Card carries monitoring outcomes only) | **Closer to Full** via `aeo-validator-service` (continuous drift detection) + `slo-budget-tracker` (SLO-based monitoring). |
-| **MANAGE 1.3** — plan responses to risks | Full at the spec layer (Decision Card carries conditions) | **Full + enforced** via `policy-as-code-engine`. Conditions stop being aspirational text; they become deny-by-default gates. |
-| **MANAGE 2.3** — respond to / recover from previously unknown risks | Partial (Incident Card records post-hoc response) | **Closer to Full** via `incident-correlation-rs` (mechanical remediation planning) + `audit-stream-py` (response timeline as a tamper-evident record). |
-| **MANAGE 3.1** — risk + benefit monitoring | Partial (vendor incident registry only) | **Closer to Full** with `audit-stream-py` as the buyer-side tamper-evident registry alongside vendor disclosures. |
+| **GOVERN 5.1** — continuous policy review | Partial (Decision Card `effective_until` can prompt re-review) | Verify a buyer's scheduled review, accountable owner, outcome, and retained audit record. |
+| **MEASURE 3.1** — deployment monitoring | Partial (Incident Card carries monitoring outcomes only) | Verify actual drift checks, SLO telemetry, alert delivery, and response history at the deployment boundary. |
+| **MANAGE 1.3** — plan responses to risks | Partial (Decision Card carries conditions) | A buyer-approved policy, authenticated interception, denial and revocation tests, and audit-outage behavior would be needed to claim enforcement. |
+| **MANAGE 2.3** — respond to / recover from previously unknown risks | Partial (Incident Card records post-hoc response) | Verify a real incident drill, completed response actions, recovery evidence, and independently checked record continuity. |
+| **MANAGE 3.1** — risk + benefit monitoring | Partial (vendor incident registry only) | Verify buyer-side monitoring coverage and independently held audit checkpoints. |
 
-The Suite remains a **disclosure** framework; the implementation stack adds the operational tooling that procurement, compliance, and SRE teams would otherwise have to build themselves. **The two layers compose** — every implementation repo reads or writes Suite documents — but they're independently deployable.
+The Suite remains a disclosure framework. The implementation repositories provide possible operational components; their integration and hosted behavior must be tested case by case.
 
 ### 7.4 What the implementation stack still doesn't address
 
@@ -394,7 +396,7 @@ The 4 GAI risks not represented above (CBRN, dangerous content, environmental, o
 
 - **This document is v0.2**, dated 2026-05-15 (was v0.1 / 2026-05-14; v0.2 adds Section 7 covering the fifteen-repo implementation stack).
 - **License**: MIT.
-- **Repository**: [kinetic-gain-suite-landing/docs/nist-rmf-crosswalk.md](https://github.com/mizcausevic-dev/kinetic-gain-suite-landing/blob/main/docs/nist-rmf-crosswalk.md)
+- **Repository**: [kg-suite-web/docs/nist-rmf-crosswalk.md](https://github.com/mizcausevic-dev/kg-suite-web/blob/main/docs/nist-rmf-crosswalk.md)
 - **Issues / contributions**: Open issues against the [kinetic-gain-protocol-suite meta-repo](https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite) tagged `nist-rmf`.
 
 When NIST publishes AI RMF 1.1 or a new Generative AI Profile revision, this crosswalk will be versioned to track it. Suite specs will get a `nist_rmf_alignment` advisory field in a future minor release to make the mapping queryable programmatically.
@@ -417,13 +419,13 @@ When NIST publishes AI RMF 1.1 or a new Generative AI Profile revision, this cro
 | Classroom AI AUP | 1.4, 2.1, 5.1, 6.2 | — | — | 1.3 |
 | Clinical AI Card | 1.1, 6.1 | 1.1, 2.1, 2.2, 5.1 | 2.3, 2.5 | — |
 | AI Incident Card | 5.1 | 4.1, 5.1 | 2.5, 2.7, 3.1 | 2.3, 3.1, 4.1 |
-| **AI Procurement Decision Card** | 1.2, 2.1, 5.1 | 3.1, 5.2 | — | **1.2, 1.3**, 2.3, 3.2 |
+| **AI Procurement Decision Card** | 1.2, 2.1, 5.1 | 3.1, 5.2 | — | 1.2, 1.3, 2.3, 3.2 |
 
 Bold = "Full" coverage. Others = "Partial" or "Adjacent".
 
 ### A.2 Implementation repo × NIST subcategory
 
-Companion to A.1 — what the deployed implementation tooling operationalizes at runtime. See Section 7 for full notes.
+Historical repo-to-control design mapping, not a list of deployed controls. See Section 7 for limits.
 
 | Implementation | GOVERN | MAP | MEASURE | MANAGE |
 |---|---|---|---|---|
@@ -442,7 +444,7 @@ Companion to A.1 — what the deployed implementation tooling operationalizes at
 | `request-shadow-rs` | — | — | 2.3 | — |
 | `mcp-*` servers | 6.2 | — | — | — |
 
-Bold = primary operationalization (the repo is the headline carrier of that subcategory's enforcement layer).
+Bold marks a headline candidate from the original snapshot; it does not indicate verified enforcement or conformance.
 
 ---
 

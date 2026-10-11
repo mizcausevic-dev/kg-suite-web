@@ -4,12 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Featured properties and the full constellation - Kinetic Gain Protocol Suite</title>
-  <meta name="description" content="A tour of the live Kinetic Gain Protocol Suite properties: the Operator Console, AEO Visualizer, AI Procurement Pulse, and the full 21-link constellation of every spec surface and tool." />
+  <meta name="description" content="Explore selected Kinetic Gain Protocol Suite properties and source links, including the Operator Console, AEO Visualizer, procurement telemetry, MCP server, and spec surfaces. Availability and deployed controls require individual verification." />
   <meta name="theme-color" content="#0B0C10" />
   <link rel="canonical" href="https://suite.kineticgain.com/properties/" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests" />
   <link rel="stylesheet" href="/assets/fonts.css" />
-  <link rel="stylesheet" href="/style.css?v=20260809-explain" />
+  <link rel="stylesheet" href="/style.css?v=20260820-llmicons" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -34,6 +34,7 @@
         <a href="/properties/" data-page="properties" aria-current="page" class="active">Properties</a>
         <a href="/verticals/" data-page="verticals">Verticals</a>
         <a href="/mcp/" data-page="mcp">MCP</a>
+        <a href="/certified/" data-page="certified">Certified</a>
       </nav>
       <button type="button" class="nav-toggle" aria-label="Toggle navigation" aria-controls="site-nav" aria-expanded="false">
         <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
@@ -62,55 +63,66 @@
           <button type="button" class="spec-filter-chip explain-chip" data-register="layman" aria-pressed="false">Layman</button>
         </div>
         <p class="prose explain-text" data-register-text="tech">
-          A selected slice of the <strong>107 live properties</strong> under kineticgain.com. Every property is React 19 + TypeScript, Rust, Python, Julia, Kotlin, Flutter, C#, PHP, R, Shell, or hand-written static HTML, MIT/AGPL/Apache-2.0, push-to-deploy via GitHub Actions or FTPS to Hostinger.
+          A selected tour of Kinetic Gain properties and source repositories. The linked projects use several implementation stacks and deployment routes; this index is not a live availability or production-control audit.
         </p>
         <p class="prose explain-text" data-register-text="nontech" hidden>
-          A sample of the 107 live tools and sites that make up the Kinetic Gain product line. Each one is built
-          with a mainstream, well-supported technology, not a fragile one-off, is openly licensed, and ships
-          through an automated deploy pipeline rather than manual file uploads, so updates go out reliably and
-          consistently.
+          A sample of tools and sites in the Kinetic Gain product line. Follow each link for its current behavior
+          and source. This page does not establish that every project is hosted, automated, or ready for sensitive
+          production data.
         </p>
         <p class="prose explain-text" data-register-text="layman" hidden>
-          This is a small sample of the 107 real, working websites and tools that make up this project, out of
-          many more behind the scenes. None of them are thrown together with duct tape; they're built the way
-          professional software is normally built, and every update happens through an automatic, repeatable
-          process instead of someone manually copying files onto a server.
+          These are selected sites and tools from the Kinetic Gain product line. Open a project to see its current
+          behavior and check its source for release status. Some pages are reference demonstrations, and this index
+          does not establish that every integration or production safeguard is live.
         </p>
+        <div class="send-to-llm" data-prompt="Please explain and summarize the key takeaways of this page:"></div>
         <div class="grid grid-2">
           <a class="card card-dark fx-layer fx-glow" href="https://aeo.kineticgain.com" target="_blank" rel="noreferrer">
             <div class="card-eyebrow">aeo.kineticgain.com</div>
             <h3>AEO Visualizer</h3>
+            <span style="display:block; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin:0.6rem 0;">
+              <img src="/properties/aeo-visualizer.png" alt="AEO Visualizer — dedicated visualizer for AEO Protocol declarations" loading="lazy" style="display:block; width:100%; height:auto; max-width:100%;" />
+            </span>
             <p>Dedicated visualizer for AEO Protocol declarations. The original Kinetic Gain property.</p>
             <span class="link">Open ↗</span>
           </a>
           <a class="card card-dark fx-layer fx-glow" href="https://tutor.kineticgain.com" target="_blank" rel="noreferrer">
             <div class="card-eyebrow">tutor.kineticgain.com</div>
             <h3>AI Tutor Cards</h3>
+            <span style="display:block; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin:0.6rem 0;">
+              <img src="/properties/ai-tutor-cards.png" alt="AI Tutor Cards — EdTech vertical landing page" loading="lazy" style="display:block; width:100%; height:auto; max-width:100%;" />
+            </span>
             <p>EdTech vertical landing — vendor disclosure for AI tutors with FERPA/COPPA/GDPR posture.</p>
             <span class="link">Open ↗</span>
           </a>
           <a class="card card-dark fx-layer fx-glow" href="https://clinical.kineticgain.com" target="_blank" rel="noreferrer">
             <div class="card-eyebrow">clinical.kineticgain.com</div>
             <h3>Clinical AI Disclosure</h3>
+            <span style="display:block; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin:0.6rem 0;">
+              <img src="/properties/clinical-ai-disclosure.png" alt="Clinical AI Disclosure — HealthTech vertical landing page" loading="lazy" style="display:block; width:100%; height:auto; max-width:100%;" />
+            </span>
             <p>HealthTech vertical landing — HIPAA / FDA / SaMD posture, bias audits, EHR integration.</p>
             <span class="link">Open ↗</span>
           </a>
           <a class="card card-dark fx-layer fx-glow" href="https://bench.kineticgain.com" target="_blank" rel="noreferrer">
             <div class="card-eyebrow">bench.kineticgain.com</div>
             <h3>prompt-injection-bench</h3>
-            <p>Visual harness: paste a JSONL transcript, see pass rates by category and severity. Agent-Card refusal-taxonomy back-references.</p>
+            <p>v0.2 visual harness: screen a complete JSONL transcript against 30 synthetic text cases and review heuristic results by category and severity. The result does not prove an agent is safe or meets its policy.</p>
             <span class="link">Open ↗</span>
           </a>
           <a class="card card-dark fx-layer fx-glow" href="https://pulse.kineticgain.com" target="_blank" rel="noreferrer">
             <div class="card-eyebrow">pulse.kineticgain.com</div>
             <h3>AI Procurement Pulse</h3>
-            <p>Quarterly research index of vendor AI governance disclosure. Issues #1-#4 live — universe scaled from dozens to thousands of domains, kineticgain.com flipped to <strong>verified=11/11</strong> (ed25519), engine v0.4 per-spec discriminator landed. Issue #5 = the first true quarterly delta (August 2026).</p>
+            <span style="display:block; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin:0.6rem 0;">
+              <img src="/properties/ai-procurement-pulse.png" alt="AI Procurement Pulse — quarterly research index of vendor AI governance disclosure" loading="lazy" style="display:block; width:100%; height:auto; max-width:100%;" />
+            </span>
+            <p>Public index of vendor AI governance disclosure with a published issue archive and methodology. Check the live Pulse page for its current cadence, measured universe, and signed-document evidence.</p>
             <span class="link">Open ↗</span>
           </a>
           <a class="card card-dark fx-layer fx-glow" href="https://console.kineticgain.com" target="_blank" rel="noreferrer">
             <div class="card-eyebrow">console.kineticgain.com</div>
             <h3>Operator Console</h3>
-            <p>Mission-control for the Suite: a v0.2 topology mesh with runtime-gate overlays, ed25519 signature posture, and blast-radius tracing, plus a configurable SRE operator dashboard, live audit-stream visualization, and PDF export.</p>
+            <p>Operator visualization for Suite topology, runtime-gate overlays, signature posture, and audit-stream views. The overlays describe architecture; they do not prove a gate is deployed on an application's request path.</p>
             <div class="grid grid-2" style="margin-top: 0.85rem; gap: 0.6rem;">
               <span style="display:block; border:1px solid var(--border); border-radius:10px; overflow:hidden;">
                 <img src="/operator-console.png" alt="Kinetic Gain Operator Console — mission-control dashboard" loading="lazy" style="display:block; width:100%; height:auto; max-width:100%;" />
@@ -120,8 +132,107 @@
               </span>
             </div>
             <p style="margin-top: 0.65rem;">
-              The console's <strong>Active Topology Mesh (v0.2)</strong> maps the Suite's producers, consumers, and the three runtime gates — MCP Permission Broker, Azure OpenAI Governance Bridge, SQL Contract Enforcer — onto the hash-chained AuditStream spine, with ed25519 signature posture and click-to-trace blast-radius.
+              The console's <strong>Active Topology Mesh</strong> illustrates producers, consumers, and candidate runtime gates. It is a map, not evidence of live Broker, Azure, database, or complete audit integration.
             </p>
+            <span class="link">Open ↗</span>
+          </a>
+          <a class="card card-dark fx-layer fx-glow" href="https://amordelfato.app" target="_blank" rel="noreferrer">
+            <div class="card-eyebrow">amordelfato.app</div>
+            <h3>Amor del Fato</h3>
+            <span style="display:block; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin:0.6rem 0;">
+              <img src="/properties/amor-del-fato.png" alt="Amor del Fato: daily Stoic philosophy practice app" loading="lazy" style="display:block; width:100%; height:auto; max-width:100%;" />
+            </span>
+            <p>A daily Stoic philosophy practice: a new guided reflection each day, a dated Epictetus/Marcus Aurelius-style quote with a reflection prompt, and themed session collections (For a Hard Day, Morning Arming, Before Sleep, Facing Loss).</p>
+            <span class="link">Open ↗</span>
+          </a>
+          <a class="card card-dark fx-layer fx-glow" href="https://rvsr.kineticgain.com" target="_blank" rel="noreferrer">
+            <div class="card-eyebrow">rvsr.kineticgain.com</div>
+            <h3>RVSR</h3>
+            <span style="display:block; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin:0.6rem 0;">
+              <img src="/properties/rvsr.png" alt="RVSR: reverse-engineers a repo, site, or media file into the prompt that built it" loading="lazy" style="display:block; width:100%; height:auto; max-width:100%;" />
+            </span>
+            <p>Paste a GitHub repo, website, audio, video, or image. RVSR reverses it into the prompt that would have built it.</p>
+            <span class="link">Open ↗</span>
+          </a>
+          <a class="card card-dark fx-layer fx-glow" href="https://sitegapleads.com" target="_blank" rel="noreferrer">
+            <div class="card-eyebrow">sitegapleads.com</div>
+            <h3>SiteGapLeads</h3>
+            <span style="display:block; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin:0.6rem 0;">
+              <img src="/properties/sitegapleads.png" alt="SiteGapLeads: scored local-business website-gap lead lists by city and niche" loading="lazy" style="display:block; width:100%; height:auto; max-width:100%;" />
+            </span>
+            <p>Scored lead lists of local businesses with real reputations and no website, pulled live from Google Maps and ranked 0-100 by revenue opportunity, sold by city and niche to web design agencies.</p>
+            <span class="link">Open ↗</span>
+          </a>
+          <a class="card card-dark fx-layer fx-glow" href="https://cineops.kineticgain.com" target="_blank" rel="noreferrer">
+            <div class="card-eyebrow">cineops.kineticgain.com</div>
+            <h3>Cine-Ops Pro</h3>
+            <span style="display:block; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin:0.6rem 0;">
+              <img src="/properties/cine-ops-pro.png" alt="Cine-Ops Pro: cinematic AI prompt engine for camera, lens, and lighting" loading="lazy" style="display:block; width:100%; height:auto; max-width:100%;" />
+            </span>
+            <p>Cinematic AI prompt engine: dial in mission profile, theme, camera body, lens, and lighting, then export a structured, platform-ready prompt for Midjourney, Sora, Veo, Runway, Flux, and a dozen other generators.</p>
+            <span class="link">Open ↗</span>
+          </a>
+          <a class="card card-dark fx-layer fx-glow" href="https://openmathproblems.kineticgain.com" target="_blank" rel="noreferrer">
+            <div class="card-eyebrow">openmathproblems.kineticgain.com</div>
+            <h3>Open Problems Atlas</h3>
+            <span style="display:block; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin:0.6rem 0;">
+              <img src="/properties/open-problems-atlas.png" alt="Open Problems Atlas: every unsolved problem in mathematics, tracked" loading="lazy" style="display:block; width:100%; height:auto; max-width:100%;" />
+            </span>
+            <p>Every entry from Wikipedia's list of unsolved problems in mathematics, parsed from the source article rather than hand-picked. 591 problems across 14 fields, with a calendar-driven daily problem and per-field browsing.</p>
+            <span class="link">Open ↗</span>
+          </a>
+          <a class="card card-dark fx-layer fx-glow" href="https://provenance-lab.kineticgain.com" target="_blank" rel="noreferrer">
+            <div class="card-eyebrow">provenance-lab.kineticgain.com</div>
+            <h3>Watermark Robustness Lab</h3>
+            <span style="display:block; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin:0.6rem 0;">
+              <img src="/properties/watermark-robustness-lab.png" alt="Watermark Robustness Lab: in-browser stress test for AI content watermarks" loading="lazy" style="display:block; width:100%; height:auto; max-width:100%;" />
+            </span>
+            <p>An educational, in-browser lab that injects a synthetic, SynthID-style watermark and lets you attack it (notch filtering, denoising, and more) to show why hidden in-band watermarks are fragile, and why durable provenance needs signed C2PA Content Credentials instead. It does not detect, contain, or remove Google SynthID or any production watermark.</p>
+            <span class="link">Open ↗</span>
+          </a>
+          <a class="card card-dark fx-layer fx-glow" href="https://datinggazette.com" target="_blank" rel="noreferrer">
+            <div class="card-eyebrow">datinggazette.com</div>
+            <h3>The Dating Gazette</h3>
+            <span style="display:block; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin:0.6rem 0;">
+              <img src="/properties/dating-gazette.png" alt="The Dating Gazette: U.S. dating market intelligence" loading="lazy" style="display:block; width:100%; height:auto; max-width:100%;" />
+            </span>
+            <p>U.S. dating market intelligence: 124 metro markets and roughly 2,000 neighborhoods mapped across 393 sourced datasets, with a coast-by-coast rankings desk, a modern-dating glossary, and an annual State of Dating report.</p>
+            <span class="link">Open ↗</span>
+          </a>
+          <a class="card card-dark fx-layer fx-glow" href="https://portfolio.kineticgain.com" target="_blank" rel="noreferrer">
+            <div class="card-eyebrow">portfolio.kineticgain.com</div>
+            <h3>Portfolio Constellation</h3>
+            <span style="display:block; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin:0.6rem 0;">
+              <img src="/properties/portfolio-constellation.png" alt="Portfolio Constellation: live GitHub-synced map of the full repo portfolio" loading="lazy" style="display:block; width:100%; height:auto; max-width:100%;" />
+            </span>
+            <p>A live, GitHub-synced map of 726 public repos across 24 languages and 9 named platforms. Click a hub to filter the archive below by platform, vertical, or language.</p>
+            <span class="link">Open ↗</span>
+          </a>
+          <a class="card card-dark fx-layer fx-glow" href="https://sveska.studio" target="_blank" rel="noreferrer">
+            <div class="card-eyebrow">sveska.studio</div>
+            <h3>Sveska</h3>
+            <span style="display:block; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin:0.6rem 0;">
+              <img src="/properties/sveska.png" alt="Sveska: local-first notepad PWA" loading="lazy" style="display:block; width:100%; height:auto; max-width:100%;" />
+            </span>
+            <p>A local-first notepad PWA. Notes, folders, and snapshot history stay in the browser, with one-click export to .txt, .md, .html, or .pdf.</p>
+            <span class="link">Open ↗</span>
+          </a>
+          <a class="card card-dark fx-layer fx-glow" href="https://kineticgain.com/protocol/" target="_blank" rel="noreferrer">
+            <div class="card-eyebrow">kineticgain.com/protocol</div>
+            <h3>Kinetic Gain Protocol</h3>
+            <span style="display:block; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin:0.6rem 0;">
+              <img src="/properties/kinetic-gain-protocol.png" alt="Kinetic Gain Protocol: signed, verifiable provenance spec for web claims" loading="lazy" style="display:block; width:100%; height:auto; max-width:100%;" />
+            </span>
+            <p>The open KGP specification: ed25519-signed, sha256-reproducible provenance for web claims, unifying the AI Evidence Format, the Evidence Bundle manifest, and /.well-known/ key publication into one machine-verifiable conformance profile.</p>
+            <span class="link">Open ↗</span>
+          </a>
+          <a class="card card-dark fx-layer fx-glow" href="https://validator.kineticgain.com" target="_blank" rel="noreferrer">
+            <div class="card-eyebrow">validator.kineticgain.com</div>
+            <h3>Suite Validator</h3>
+            <span style="display:block; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin:0.6rem 0;">
+              <img src="/properties/suite-validator.png" alt="Kinetic Gain Suite Validator: in-browser JSON Schema validator for the Suite specs" loading="lazy" style="display:block; width:100%; height:auto; max-width:100%;" />
+            </span>
+            <p>In-browser JSON Schema validator for all twelve Kinetic Gain Suite documents. Paste a vendor's AI Entity Card, Clinical AI Card, or any Suite JSON and get inline, line-numbered validation errors. No upload, no server, no signup.</p>
             <span class="link">Open ↗</span>
           </a>
         </div>
@@ -141,7 +252,7 @@
           <span class="kicker-text">05b &middot; Every live surface</span>
         </div>
         <h2>The full constellation</h2>
-        <p class="prose">Every live property in the Kinetic Gain Protocol Suite. The eleven spec surfaces declare and render the protocol; the tools validate, visualize, govern, and measure adoption across the open web.</p>
+        <p class="prose">Selected Suite properties and source links. Eleven linked specification landing surfaces appear below; the published MCP server covers twelve specs, including AI Claims Decision Card, which does not have a dedicated landing page here. Follow each property for its current availability and limits.</p>
         <div class="constellation">
           <div>
             <h3>Specification surfaces</h3>
@@ -154,7 +265,7 @@
             <details class="cluster-expander">
               <summary class="cluster-expander-summary">
                 <span class="cluster-expander-caret" aria-hidden="true">&#9656;</span>
-                Show all 11 specification surfaces
+                Show 11 linked specification surfaces
                 <span class="cluster-expander-count">(+7 more)</span>
               </summary>
               <ul class="cluster-list">
@@ -174,7 +285,7 @@
               <li><a href="https://console.kineticgain.com">Operator Console</a><span class="sub">console.kineticgain.com</span></li>
               <li><a href="https://pulse.kineticgain.com">AI Procurement Pulse</a><span class="sub">pulse.kineticgain.com</span></li>
               <li><a href="https://validator.kineticgain.com">Suite JSON Validator</a><span class="sub">validator.kineticgain.com</span></li>
-              <li><a href="https://mizcausevic-dev.github.io/kinetic-gain-visualizer/">Unified Suite Visualizer</a><span class="sub">all twelve specs, one renderer</span></li>
+              <li><a href="https://mizcausevic-dev.github.io/kinetic-gain-visualizer/">Unified Suite Visualizer</a><span class="sub">11 document types currently supported</span></li>
             </ul>
             <details class="cluster-expander">
               <summary class="cluster-expander-summary">
@@ -184,7 +295,7 @@
               </summary>
               <ul class="cluster-list">
                 <li><a href="https://gv.kineticgain.com">GitVisualizer</a><span class="sub">gv.kineticgain.com</span></li>
-                <li><a href="https://mcp.kineticgain.com">MCP Sentinel</a><span class="sub">mcp.kineticgain.com</span></li>
+                <li><a href="https://mcp.kineticgain.com">mcp-kinetic-gain front door</a><span class="sub">mcp.kineticgain.com</span></li>
                 <li><a href="https://rag.kineticgain.com">RAG Sentinel</a><span class="sub">rag.kineticgain.com</span></li>
                 <li><a href="https://observe.kineticgain.com">AgentObserve</a><span class="sub">observe.kineticgain.com</span></li>
                 <li><a href="https://walker.kineticgain.com">well-known-walker</a><span class="sub">walker.kineticgain.com</span></li>
@@ -205,5 +316,6 @@
   </footer>
   <script src="/suite-nav.js?v=20260809-explain" defer></script>
   <script src="/nav-toggle.js" defer></script>
+  <script src="/send-to-llm.js" defer></script>
 </body>
 </html>
