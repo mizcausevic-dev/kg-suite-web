@@ -44,6 +44,8 @@ python3 -m http.server 8080
 
 For this review branch, first make an independently recoverable remote backup of the exact destination files and confirm their hashes still match the live baselines in the [site sync review](docs/SITE_SYNC_REVIEW_2026-10-10.md) and [standalone MCP provenance](mcp-domain/README.md). Upload only the listed paths over the existing SSH-key channel. The standalone domain has its own `/public_html/mcp/` target and must be transferred independently of the Suite `/public_html/suite/mcp/` route. Recheck every edited route, its referenced assets, and the external npm/Registry links. Prove rollback by restoring the saved files and observing the prior hashes before calling the procedure ready. No delete step is part of this transfer.
 
+The later [`security.txt` correction](docs/releases/suite-security-scope-2026-10-12.md) has its own one-file baseline and preflight/postflight hash checker. It does not authorize a whole-tree upload.
+
 ## License
 
 Apache-2.0.
