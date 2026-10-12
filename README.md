@@ -1,6 +1,6 @@
 # kg-suite-web
 
-The landing site for the **[Kinetic Gain Protocol Suite](https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite)** — twelve open JSON governance specs for the answer-engine and agent era, plus eleven regulated-vertical extensions.
+The landing site for the **[Kinetic Gain Protocol Suite](https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite)** — twelve open JSON governance specs, eleven regulated six-pack extensions, and a separately shaped aerospace extension in draft.
 
 Live at **[suite.kineticgain.com](https://suite.kineticgain.com)**.
 
@@ -15,7 +15,7 @@ Live at **[suite.kineticgain.com](https://suite.kineticgain.com)**.
 ├── nist-crosswalk.js, send-to-llm.js # historical mapping visual and click-initiated link sharing
 ├── mcp/                          # suite.kineticgain.com/mcp/ — MCP server tool inventory + registry status
 ├── mcp-domain/                   # separate mcp.kineticgain.com docroot source; deploy independently
-├── verticals/                    # the 11 regulated-vertical landing pages (HealthTech, EdTech, FinTech, ...)
+├── verticals/                    # 11 six-pack landings plus a draft aerospace page (not a six-pack)
 ├── docs/nist-rmf-crosswalk.md    # historical eleven-spec NIST AI RMF mapping, not conformance evidence
 ├── assets/fonts.css, assets/fonts/*.woff2   # self-hosted Space Grotesk / Inter / JetBrains Mono
 ├── .htaccess                     # security headers (CSP, HSTS, etc.)
@@ -25,6 +25,8 @@ Live at **[suite.kineticgain.com](https://suite.kineticgain.com)**.
 ```
 
 No build step. The Suite docroot is static HTML/CSS/JS with self-hosted fonts and its own strict CSP (`script-src 'self'`, no `unsafe-inline`/`unsafe-eval`). The separately hosted MCP candidate removes the current page's GTM bootstrap and serves its fonts from its own docroot; its live header policy must be reviewed independently before upload.
+
+The aerospace page is a noindex draft at `verticals/aerospace/`. Its cards and tool have not been published, so the page links only to existing Suite routes and primary public sources. It is not one of the eleven six-packs. The legacy `verticals/_generate.mjs` script requires an explicit overwrite flag because it would replace live-synced content; it must not be used to produce aerospace pages.
 
 ## Provenance
 
@@ -43,6 +45,8 @@ python3 -m http.server 8080
 **Manual, not CI.** The old repo's GitHub Actions workflow deployed over FTPS (port 21) and was unreliable. This checkout still differs from unedited live routes. A whole-tree upload could replace newer live files with older source versions.
 
 For this review branch, first make an independently recoverable remote backup of the exact destination files and confirm their hashes still match the live baselines in the [site sync review](docs/SITE_SYNC_REVIEW_2026-10-10.md) and [standalone MCP provenance](mcp-domain/README.md). Upload only the listed paths over the existing SSH-key channel. The standalone domain has its own `/public_html/mcp/` target and must be transferred independently of the Suite `/public_html/suite/mcp/` route. Recheck every edited route, its referenced assets, and the external npm/Registry links. Prove rollback by restoring the saved files and observing the prior hashes before calling the procedure ready. No delete step is part of this transfer.
+
+For the aerospace draft, see [the dated site release gate](docs/AEROSPACE_SITE_RELEASE_2026-10-12.md). It records live baselines, exact paths, unresolved repo-link gates, and selective rollback steps. Do not upload the draft while its linked source repositories and MCP tool status are unverified.
 
 ## License
 

@@ -1,12 +1,22 @@
 #!/usr/bin/env node
-// _generate.mjs — Render the 6 per-vertical mini-landings + the /verticals/
-// index page from _verticals-data.json. Dark theme matching the suite landing.
+// _generate.mjs — Legacy generator for the eleven six-pack verticals only.
+// Aerospace is a separate extension and must not be added to this input.
 //
-// Run: node verticals/_generate.mjs
+// This generator overwrites the live-synced index and several hand-edited pages.
+// Do not run it for a normal site edit. Explicit recovery-only use:
+// node verticals/_generate.mjs --overwrite-legacy-pages
 
 import { readFileSync, writeFileSync } from "node:fs";
 
 const data = JSON.parse(readFileSync(new URL("./_verticals-data.json", import.meta.url), "utf8"));
+if (data.verticals.some((vertical) => vertical.code === "aerospace")) {
+  console.error("Aerospace is not a six-pack and cannot use this generator");
+  process.exit(1);
+}
+if (!process.argv.includes("--overwrite-legacy-pages")) {
+  console.error("Legacy generator would overwrite live-synced pages; pass --overwrite-legacy-pages only for intentional recovery");
+  process.exit(1);
+}
 
 const HEAD = (title, description, canonical) => `<!doctype html>
 <html lang="en">
@@ -49,7 +59,7 @@ const NAV = `<header class="nav">
 
 const FOOTER = `<footer class="footer">
   <div class="footer-inner">
-    <p><a href="/">← Back to Suite hub</a> · <a href="/verticals/">All six verticals</a> · <a href="https://github.com/mizcausevic-dev/kg-suite-vertical-comparator/blob/main/docs/CROSS-VERTICAL-COMPARISON.md">Cross-vertical comparison</a></p>
+    <p><a href="/">← Back to Suite hub</a> · <a href="/verticals/">All eleven six-pack verticals</a> · <a href="https://github.com/mizcausevic-dev/kg-suite-vertical-comparator/blob/main/docs/CROSS-VERTICAL-COMPARISON.md">Cross-vertical comparison</a></p>
     <p class="footer-fineprint">Per the standing public-language guardrail: <em>readiness · evidence · posture · controls · scaffolding</em> — never "compliant" / "certified" without an external attestation specific to each regulatory regime.</p>
   </div>
 </footer>`;
@@ -76,7 +86,7 @@ ${NAV}
     <p class="lede">${escapeHtml(v.lede)}</p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="#repos">See the 6 repos</a>
-      <a class="btn btn-secondary" href="/verticals/">All six verticals →</a>
+      <a class="btn btn-secondary" href="/verticals/">All eleven six-pack verticals →</a>
     </div>
   </div>
 </section>
