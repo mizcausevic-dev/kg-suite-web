@@ -76,17 +76,18 @@ class AerospaceSiteTests(unittest.TestCase):
         self.assertEqual(1, index.tags.count("main"))
         self.assertNotIn("All six verticals", INDEX.read_text(encoding="utf-8"))
 
-    def test_no_unpublished_repo_or_six_pack_claim_on_draft_page(self):
+    def test_draft_repos_linked_without_mcp_release_claim(self):
         content = PAGE.read_text(encoding="utf-8")
         self.assertNotIn("vertical 6-pack", content.lower())
-        for unlaunched in (
+        for published_draft in (
             "aviation-ml-assurance-card-spec",
             "mro-ai-signoff-card-spec",
             "aero-dataset-provenance-rs",
             "aero-assurance-crosswalk",
+            "aviation-ml-card-fleet-summary-action",
         ):
-            self.assertNotIn(f'href="https://github.com/mizcausevic-dev/{unlaunched}', content)
-        self.assertIn("MCP package</a> does not yet include aviation tools", content)
+            self.assertIn(f'href="https://github.com/mizcausevic-dev/{published_draft}"', content)
+        self.assertIn("does not yet include them", content)
 
     def test_responsive_and_keyboard_styles_are_present(self):
         css = (ROOT / "verticals" / "aerospace" / "aerospace.css").read_text(encoding="utf-8")

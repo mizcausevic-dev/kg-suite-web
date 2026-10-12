@@ -1,4 +1,5 @@
 .aerospace-page { background: var(--slate-950); }
+.aerospace-page .aero-source-mobile { display: none; }
 .aero-skip { position: absolute; left: 1rem; top: -5rem; z-index: 100; padding: .75rem 1rem; color: #0b1720; background: #fff; }
 .aero-skip:focus { top: 1rem; }
 .aero-hero { padding: 4.5rem 1.25rem 4rem; background: radial-gradient(circle at 75% 12%, #173c3c 0, transparent 45%), var(--slate-950); }
@@ -19,6 +20,8 @@
 .aero-kind { margin: 0 0 .45rem !important; color: var(--emerald-400) !important; font-size: .72rem; }
 .aero-card h3 { margin: 0 0 .8rem; color: #fff; font-size: 1.35rem; }
 .aero-card p { margin: 0 0 .85rem; }
+.aero-card .aero-card-link { margin: .9rem 0 0; font-weight: 700; }
+.aero-card-link a { color: var(--emerald-400); }
 .aero-card .aero-limitation { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--slate-700); color: var(--slate-300); font-size: .9rem; }
 .aero-composition { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(18rem, .75fr); gap: 2.5rem; align-items: start; }
 .aero-composition code { overflow-wrap: anywhere; }
@@ -35,4 +38,5 @@
 .aero-sources a { white-space: nowrap; color: var(--emerald-400); }
 .aero-guardrail { max-width: 77ch; padding: 1rem 1.2rem; border-left: 3px solid var(--emerald-500); background: var(--slate-800); }
 @media (max-width: 760px) { .aero-grid, .aero-composition { grid-template-columns: 1fr; } .aero-hero { padding-top: 3rem; } .aero-card { padding: 1.25rem; } }
+@media (max-width: 480px) { .aerospace-page .btn-start { display: none; } .aerospace-page .site-nav-links.is-open .aero-source-mobile { display: block; } }
 @media (prefers-reduced-motion: reduce) { .aerospace-page *, .aerospace-page *::before, .aerospace-page *::after { scroll-behavior: auto !important; transition-duration: 0s !important; animation-duration: 0s !important; } }

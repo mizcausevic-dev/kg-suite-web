@@ -2,7 +2,7 @@
 
 ## State
 
-**Draft only. No merge, upload, or public release has been performed for this change.** The aerospace cards, provenance tool, crosswalk, and Incident Card profile are under separate review. The public MCP package does not yet include aviation tools. The new page is `noindex,nofollow`, is absent from `sitemap.xml` and `llms.txt`, and contains no links to unpublished repositories.
+**Site draft only. No Suite-site merge or upload has been performed for this change.** The five linked aerospace repositories are now public drafts. The Incident Card profile and aviation MCP tools remain review candidates; the public MCP package does not yet include aviation tools. The new page is `noindex,nofollow` and is absent from `sitemap.xml` and `llms.txt`.
 
 The active Suite source is `kg-suite-web`. The older `kinetic-gain-suite-landing` repository is retired and must not be used as a deploy source. This branch started from GitHub `origin/main` at `dd8fa6748aa98dabf812c6f42d4e6db83528f819`.
 
@@ -27,12 +27,21 @@ The live verticals index has an 11-hub, 66-leaf constellation. Those are the exi
 
 The live index also links to `/certified/`, which returned HTTP 200 but is not represented in `origin/main`. The new page preserves that live navigation link. Its presence is a further reason to deploy selected files only.
 
+The live `/`, `/verticals/`, `/style.css`, `/verticals-constellation.js`, and `/verticals/vertical.css` responses were fetched again before release work on 2026-10-12. All five returned HTTP 200 and exactly matched the SHA-256 baselines above.
+
+## Local verification
+
+- `py -3 -m unittest discover -s tests -v`: 5/5 passed, including local links, route separation, noindex, and public-draft source links.
+- `node --check nav-toggle.js`: exit 0.
+- `git -c core.whitespace=cr-at-eol diff --check`: exit 0.
+- Local HTTP preview in the in-app browser: on the new page, at 390 px and 1440 px viewport widths, document scroll width equalled client width; the four cards became one column on phone and two on desktop. At 768 px the page was visually checked with no horizontal overflow. Mobile menu opened by button, Tab reached its first link, Escape closed it. With `prefers-reduced-motion: reduce`, computed transition and animation durations on the primary button were `0s`. The edited `/verticals/` index also had no horizontal overflow at 390 px and its menu button now precedes the links in keyboard order; after opening it, Tab reached Overview. This checks the local candidate, not Hostinger behavior.
+
 ## Release gates
 
-1. Confirm the proposed aviation repositories and reviewed commits exist remotely, then replace draft status with links only to real, reachable repos. Confirm the Rust tool's exact behavior and the MCP tool inventory from its release, not the proposal. Do not claim the current public MCP package has aviation tools.
+1. The five aerospace source repositories exist remotely and are linked as public drafts. The Rust implementation has hosted CI. Keep the aviation MCP tools labelled unreleased until their private Glama and package release gates pass.
 2. Re-fetch the exact live destination paths and compare hashes before upload. If the live files changed from the baselines above, rebase the affected files on the new live versions and rerun checks. The page must preserve the live navigation, explain controls, constellation, and scripts.
 3. Review the final page copy against current EASA/FAA/EUROCAE status. Recheck whether Part 108 has final text before adding any UAS autonomy claim. Review aviation legal and export-control boundaries with a qualified human before any certification or defense-related claim.
-4. Run browser responsive and keyboard checks on phone, tablet, and desktop, with reduced motion. Run link and static-asset checks from the local site root and then against the hosted route. The current branch has only source-level checks until these are executed.
+4. Local responsive, keyboard, reduced-motion, and static-asset checks are recorded above. After upload, repeat link, header, and route checks against the hosted boundary.
 5. For an authorized manual release, back up the exact live destination files and hashes. Upload only `/verticals/aerospace/index.html`, `/verticals/aerospace/aerospace.css`, `/verticals/index.html`, and `/verticals/vertical.css` to the Suite docroot. `style.css` and `verticals-constellation.js` in this branch are imported live baselines and need no upload if their live hashes still match. Do not whole-tree sync.
 6. Fetch each uploaded URL and verify status, headers, links, content, and hashes. Test rollback by restoring the saved previous files and confirming their original hashes. The two new aerospace files have no previous version; reverting that route would require deleting only those new files, with a deliberate approval at release time.
 

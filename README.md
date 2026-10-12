@@ -26,7 +26,7 @@ Live at **[suite.kineticgain.com](https://suite.kineticgain.com)**.
 
 No build step. The Suite docroot is static HTML/CSS/JS with self-hosted fonts and its own strict CSP (`script-src 'self'`, no `unsafe-inline`/`unsafe-eval`). The separately hosted MCP candidate removes the current page's GTM bootstrap and serves its fonts from its own docroot; its live header policy must be reviewed independently before upload.
 
-The aerospace page is a noindex draft at `verticals/aerospace/`. Its cards and tool have not been published, so the page links only to existing Suite routes and primary public sources. It is not one of the eleven six-packs. The legacy `verticals/_generate.mjs` script requires an explicit overwrite flag because it would replace live-synced content; it must not be used to produce aerospace pages.
+The aerospace page is a noindex draft at `verticals/aerospace/`. Five aerospace source repositories are public drafts and linked from the page. The optional aviation tools are still a review candidate in `mcp-kinetic-gain`, not part of its public package. Aerospace is not one of the eleven six-packs. The legacy `verticals/_generate.mjs` script requires an explicit overwrite flag because it would replace live-synced content; it must not be used to produce aerospace pages.
 
 ## Provenance
 
@@ -46,7 +46,7 @@ python3 -m http.server 8080
 
 For this review branch, first make an independently recoverable remote backup of the exact destination files and confirm their hashes still match the live baselines in the [site sync review](docs/SITE_SYNC_REVIEW_2026-10-10.md) and [standalone MCP provenance](mcp-domain/README.md). Upload only the listed paths over the existing SSH-key channel. The standalone domain has its own `/public_html/mcp/` target and must be transferred independently of the Suite `/public_html/suite/mcp/` route. Recheck every edited route, its referenced assets, and the external npm/Registry links. Prove rollback by restoring the saved files and observing the prior hashes before calling the procedure ready. No delete step is part of this transfer.
 
-For the aerospace draft, see [the dated site release gate](docs/AEROSPACE_SITE_RELEASE_2026-10-12.md). It records live baselines, exact paths, unresolved repo-link gates, and selective rollback steps. Do not upload the draft while its linked source repositories and MCP tool status are unverified.
+For the aerospace draft, see [the dated site release gate](docs/AEROSPACE_SITE_RELEASE_2026-10-12.md). It records live baselines, exact paths, browser checks, and selective rollback steps. Do not imply the public MCP package contains aviation tools until its separate release is verified.
 
 ## License
 

@@ -28,6 +28,9 @@
         </svg>
         <span class="kg-word">Kinetic Gain <span class="kg-word-dim">/ Protocol Suite</span></span>
       </a>
+      <button type="button" class="nav-toggle" aria-label="Toggle navigation" aria-controls="site-nav" aria-expanded="false">
+        <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
+      </button>
       <nav class="site-nav-links" id="site-nav" aria-label="Primary">
         <a href="/" data-page="home">Overview</a>
         <a href="/specs/" data-page="specs">Specs</a>
@@ -37,10 +40,8 @@
         <a href="/verticals/" data-page="verticals" aria-current="page" class="active">Verticals</a>
         <a href="/mcp/" data-page="mcp">MCP</a>
         <a href="/certified/" data-page="certified">Certified</a>
+        <a class="aero-source-mobile" href="https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite" rel="noreferrer">Suite source</a>
       </nav>
-      <button type="button" class="nav-toggle" aria-label="Toggle navigation" aria-controls="site-nav" aria-expanded="false">
-        <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
-      </button>
       <a class="btn-start" href="https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite" rel="noreferrer">Suite source <span class="ar" aria-hidden="true">&#8593;&#8599;</span></a>
     </div>
   </header>
@@ -55,7 +56,7 @@
           <a class="btn btn-primary" href="#artifacts">Explore the draft artifacts</a>
           <a class="btn btn-secondary" href="#sources">Read the source boundaries</a>
         </div>
-        <p class="aero-status">The aerospace repositories and MCP tools are in review. The public <a href="/mcp/">MCP package</a> does not yet include aviation tools.</p>
+        <p class="aero-status">Five aerospace repositories are public drafts. The aviation MCP tools remain in review; the public <a href="/mcp/">MCP package</a> does not yet include them.</p>
       </div>
     </section>
 
@@ -70,6 +71,7 @@
             <p class="aero-kind">Vendor disclosure · draft spec</p>
             <h3>Aviation ML Assurance Card</h3>
             <p>Identifies the system, intended use, proposed EASA AI level, target design-assurance level, operational conditions, learning process, dataset references, and human role. Each declared operating condition can point to its own evidence.</p>
+            <p class="aero-card-link"><a href="https://github.com/mizcausevic-dev/aviation-ml-assurance-card-spec">Read the draft spec</a></p>
             <p class="aero-limitation">The card records a vendor assertion. It does not assign a DAL or prove that evidence is sufficient.</p>
           </article>
           <article class="aero-card">
@@ -77,13 +79,15 @@
             <p class="aero-kind">Per-artifact review · draft spec</p>
             <h3>MRO AI Sign-off Card</h3>
             <p>Binds an AI-assisted maintenance finding to the model version, inspected artifact hash, evidence references, human decision, and review signature. It can record an override and the reviewer’s authority reference.</p>
+            <p class="aero-card-link"><a href="https://github.com/mizcausevic-dev/mro-ai-signoff-card-spec">Read the draft spec</a></p>
             <p class="aero-limitation">A signed review is not a certificate of release to service or proof of staff privileges.</p>
           </article>
           <article class="aero-card">
             <span class="aero-number" aria-hidden="true">03</span>
-            <p class="aero-kind">Engineering check · implementation in review</p>
+            <p class="aero-kind">Engineering check · public draft</p>
             <h3>Dataset provenance</h3>
-            <p>The candidate Rust tool hashes a dataset manifest, checks train, validation, and test split overlap, and reports coverage gaps against declared operating conditions. Signed output is planned through the existing hash-attestation library.</p>
+            <p>The Rust tool hashes dataset files and a manifest, checks train, validation, and test split overlap, and reports coverage gaps against declared operating conditions. It can sign its reports with the existing hash-attestation library.</p>
+            <p class="aero-card-link"><a href="https://github.com/mizcausevic-dev/aero-dataset-provenance-rs">Inspect the source and test fixtures</a></p>
             <p class="aero-limitation">A hash proves byte identity, not collection rights, labeling quality, or real-world coverage.</p>
           </article>
           <article class="aero-card">
@@ -91,6 +95,7 @@
             <p class="aero-kind">Source map · draft reference</p>
             <h3>Assurance crosswalk</h3>
             <p>Links proposed card fields to EASA proposal topics, the FAA roadmap, public standard identifiers, NIST AI RMF categories, and separate maintenance-release rules. Every row states its applicability and limit.</p>
+            <p class="aero-card-link"><a href="https://github.com/mizcausevic-dev/aero-assurance-crosswalk">Read the source map</a></p>
             <p class="aero-limitation">Licensed standard objectives have not been verified or reproduced; this is not a conformity matrix.</p>
           </article>
         </div>
@@ -102,13 +107,13 @@
         <div>
           <p class="aero-overline">Composition</p>
           <h2 id="composition-title">Keep one MCP client entry</h2>
-          <p>The aviation validators and inspectors belong in <a href="https://github.com/mizcausevic-dev/mcp-kinetic-gain"><code>mcp-kinetic-gain</code></a>, alongside the existing Suite tools. The existing <a href="https://github.com/mizcausevic-dev/ai-incident-card-spec">AI Incident Card</a> receives an optional aviation profile. No second MCP server or separate aviation incident format is proposed.</p>
+          <p>The aviation validators and inspectors are proposed for <a href="https://github.com/mizcausevic-dev/mcp-kinetic-gain"><code>mcp-kinetic-gain</code></a>, alongside the existing Suite tools. The existing <a href="https://github.com/mizcausevic-dev/ai-incident-card-spec">AI Incident Card</a> receives an optional aviation profile. A <a href="https://github.com/mizcausevic-dev/aviation-ml-card-fleet-summary-action">fleet summary Action</a> checks card structure in pull requests. No second MCP server or separate aviation incident format is proposed.</p>
         </div>
         <aside class="aero-state" aria-label="Publication status">
           <h3>Publication status</h3>
           <dl>
-            <div><dt>Current Suite</dt><dd>12 published core specs and an existing unified MCP server.</dd></div>
-            <div><dt>Aerospace</dt><dd>Draft cards, tool, crosswalk, and incident profile under review.</dd></div>
+            <div><dt>Current Suite</dt><dd>12 established Suite specs and an existing unified MCP server.</dd></div>
+            <div><dt>Aerospace</dt><dd>Five public draft repositories. Incident profile and MCP integration remain in review.</dd></div>
             <div><dt>UAS autonomy</dt><dd>Deferred pending final Part 108 text and a separate scope review.</dd></div>
           </dl>
         </aside>
