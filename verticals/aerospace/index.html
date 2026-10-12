@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#0b1720" />
+  <meta name="description" content="Draft aerospace extension of the Kinetic Gain Protocol Suite: aviation ML disclosure, AI-assisted maintenance review, dataset provenance, and a source-linked assurance crosswalk." />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests" />
+  <title>Aerospace extension | Kinetic Gain Protocol Suite</title>
+  <link rel="stylesheet" href="/assets/fonts.css" />
+  <link rel="stylesheet" href="/style.css?v=20260820-llmicons" />
+  <link rel="stylesheet" href="/verticals/vertical.css?v=20261012-aerospace" />
+  <link rel="stylesheet" href="/verticals/aerospace/aerospace.css" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+</head>
+<body class="vertical-page aerospace-page">
+  <a class="aero-skip" href="#main">Skip to aerospace content</a>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="/" class="kg-logo" aria-label="Kinetic Gain Protocol Suite home">
+        <svg class="kg-mark" viewBox="-8 -8 188 88" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <rect class="kg-anchor" x="0" y="0" width="14" height="72"/>
+          <polygon class="kg-bar" points="32,0 83,0 77,18 26,18"/>
+          <polygon class="kg-bar" points="32,27 127,27 121,45 26,45"/>
+          <polygon class="kg-bar" points="32,54 172,54 166,72 26,72"/>
+        </svg>
+        <span class="kg-word">Kinetic Gain <span class="kg-word-dim">/ Protocol Suite</span></span>
+      </a>
+      <button type="button" class="nav-toggle" aria-label="Toggle navigation" aria-controls="site-nav" aria-expanded="false">
+        <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
+      </button>
+      <nav class="site-nav-links" id="site-nav" aria-label="Primary">
+        <a href="/" data-page="home">Overview</a>
+        <a href="/specs/" data-page="specs">Specs</a>
+        <a href="/implementations/" data-page="implementations">Implementations</a>
+        <a href="/audit-stream/" data-page="audit-stream">Audit spine</a>
+        <a href="/properties/" data-page="properties">Properties</a>
+        <a href="/verticals/" data-page="verticals" aria-current="page" class="active">Verticals</a>
+        <a href="/mcp/" data-page="mcp">MCP</a>
+        <a href="/certified/" data-page="certified">Certified</a>
+        <a class="aero-source-mobile" href="https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite" rel="noreferrer">Suite source</a>
+      </nav>
+      <a class="btn-start" href="https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite" rel="noreferrer">Suite source <span class="ar" aria-hidden="true">&#8593;&#8599;</span></a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero aero-hero" aria-labelledby="aero-title">
+      <div class="hero-inner">
+        <p class="aero-kicker">Aerospace / civil aviation <span>Draft extension · reviewed 12 October 2026</span></p>
+        <h1 id="aero-title">Make the assurance story <em>inspectable.</em></h1>
+        <p class="lede">A vendor-side aviation ML disclosure, an artifact-bound AI-assisted maintenance review, and dataset provenance checks. Each fits the existing Protocol Suite. None is an airworthiness approval, a maintenance release, or a regulatory filing.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#artifacts">Explore the draft artifacts</a>
+          <a class="btn btn-secondary" href="#sources">Read the source boundaries</a>
+        </div>
+        <p class="aero-status">Five aerospace repositories are public drafts. The aviation MCP tools remain in review; the public <a href="/mcp/">MCP package</a> does not yet include them.</p>
+      </div>
+    </section>
+
+    <section class="block-dark" id="artifacts" aria-labelledby="artifacts-title">
+      <div class="block-inner">
+        <p class="aero-overline">One Suite extension, four linked assets</p>
+        <h2 id="artifacts-title">What travels with the system and the work</h2>
+        <p class="block-lede">Two cards define what the vendor discloses and what a human reviewed. A dataset tool checks concrete engineering properties. A crosswalk identifies the public sources behind the questions.</p>
+        <div class="aero-grid">
+          <article class="aero-card">
+            <span class="aero-number" aria-hidden="true">01</span>
+            <p class="aero-kind">Vendor disclosure · draft spec</p>
+            <h3>Aviation ML Assurance Card</h3>
+            <p>Identifies the system, intended use, proposed EASA AI level, target design-assurance level, operational conditions, learning process, dataset references, and human role. Each declared operating condition can point to its own evidence.</p>
+            <p class="aero-card-link"><a href="https://github.com/mizcausevic-dev/aviation-ml-assurance-card-spec" rel="noreferrer">Read the draft spec</a></p>
+            <p class="aero-limitation">The card records a vendor assertion. It does not assign a DAL or prove that evidence is sufficient.</p>
+          </article>
+          <article class="aero-card">
+            <span class="aero-number" aria-hidden="true">02</span>
+            <p class="aero-kind">Per-artifact review · draft spec</p>
+            <h3>MRO AI Sign-off Card</h3>
+            <p>Binds an AI-assisted maintenance finding to the model version, inspected artifact hash, evidence references, human decision, and review signature. It can record an override and the reviewer’s authority reference.</p>
+            <p class="aero-card-link"><a href="https://github.com/mizcausevic-dev/mro-ai-signoff-card-spec" rel="noreferrer">Read the draft spec</a></p>
+            <p class="aero-limitation">A signed review is not a certificate of release to service or proof of staff privileges.</p>
+          </article>
+          <article class="aero-card">
+            <span class="aero-number" aria-hidden="true">03</span>
+            <p class="aero-kind">Engineering check · public draft</p>
+            <h3>Dataset provenance</h3>
+            <p>The Rust tool hashes dataset files and a manifest, checks train, validation, and test split overlap, and reports coverage gaps against declared operating conditions. It can sign its reports with the existing hash-attestation library.</p>
+            <p class="aero-card-link"><a href="https://github.com/mizcausevic-dev/aero-dataset-provenance-rs" rel="noreferrer">Inspect the source and test fixtures</a></p>
+            <p class="aero-limitation">A hash proves byte identity, not collection rights, labeling quality, or real-world coverage.</p>
+          </article>
+          <article class="aero-card">
+            <span class="aero-number" aria-hidden="true">04</span>
+            <p class="aero-kind">Source map · draft reference</p>
+            <h3>Assurance crosswalk</h3>
+            <p>Links proposed card fields to EASA proposal topics, the FAA roadmap, public standard identifiers, NIST AI RMF categories, and separate maintenance-release rules. Every row states its applicability and limit.</p>
+            <p class="aero-card-link"><a href="https://mizcausevic-dev.github.io/aero-assurance-crosswalk/" rel="noreferrer">Explore the crosswalk</a> · <a href="https://github.com/mizcausevic-dev/aero-assurance-crosswalk" rel="noreferrer">Source</a></p>
+            <p class="aero-limitation">Licensed standard objectives have not been verified or reproduced; this is not a conformity matrix.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="composition-title">
+      <div class="block-inner aero-composition">
+        <div>
+          <p class="aero-overline">Composition</p>
+          <h2 id="composition-title">Keep one MCP client entry</h2>
+          <p>The aviation validators and inspectors are proposed for <a href="https://github.com/mizcausevic-dev/mcp-kinetic-gain" rel="noreferrer"><code>mcp-kinetic-gain</code></a>, alongside the existing Suite tools. The existing <a href="https://github.com/mizcausevic-dev/ai-incident-card-spec" rel="noreferrer">AI Incident Card</a> now has an optional aviation profile. A <a href="https://github.com/mizcausevic-dev/aviation-ml-card-fleet-summary-action" rel="noreferrer">fleet summary Action</a> checks card structure in pull requests. No second MCP server or separate aviation incident format is proposed.</p>
+        </div>
+        <aside class="aero-state" aria-label="Publication status">
+          <h3>Publication status</h3>
+          <dl>
+            <div><dt>Current Suite</dt><dd>12 established Suite specs and an existing unified MCP server.</dd></div>
+            <div><dt>Aerospace</dt><dd>Five public draft repositories and an optional Incident Card profile. MCP integration remains in review.</dd></div>
+            <div><dt>UAS autonomy</dt><dd>Deferred pending final Part 108 text and a separate scope review.</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <section class="block-dark" id="sources" aria-labelledby="sources-title">
+      <div class="block-inner">
+        <p class="aero-overline">Primary sources · status matters</p>
+        <h2 id="sources-title">What informs the draft</h2>
+        <p class="block-lede">These references point to objectives and boundaries. The card schemas are a proposed disclosure format, not a regulator-endorsed method.</p>
+        <ul class="aero-sources">
+          <li><strong>EASA NPA 2025-07</strong><span>Proposal, published 10 November 2025; consultation closed 10 March 2026. The proposed AI-level table reserves Level 3B.</span><a href="https://www.easa.europa.eu/en/document-library/notices-of-proposed-amendment/npa-2025-07">Read the NPA</a></li>
+          <li><strong>FAA AI Safety Assurance Roadmap, Version I</strong><span>Signed 23 July 2024. A roadmap, not an applicant-specific certification basis.</span><a href="https://www.faa.gov/aircraft/air_cert/step/roadmap_for_AI_safety_assurance">Read the roadmap</a></li>
+          <li><strong>EUROCAE WG-114</strong><span>ED-324 was listed as draft when checked on 12 October 2026. ARP6983 / ED-324 is referenced by identifier only.</span><a href="https://www.eurocae.net/working-group/wg-114/">See the working group</a></li>
+          <li><strong>Maintenance release</strong><span>EASA Part-145 145.A.50 and U.S. 14 CFR §43.9 govern separate, jurisdiction-specific records and authorisations.</span><a href="https://www.easa.europa.eu/en/document-library/easy-access-rules/online-publications/easy-access-rules-continuing-airworthiness?erules-id=ERULES-1963177438-272">EASA rule</a><a href="https://www.ecfr.gov/current/title-14/chapter-I/subchapter-C/part-43/section-43.9">U.S. rule</a></li>
+          <li><strong>NIST AI RMF 1.0</strong><span>Voluntary risk-management context, not aviation certification.</span><a href="https://airc.nist.gov/airmf-resources/airmf/5-sec-core/">Read the core</a></li>
+        </ul>
+        <p class="aero-guardrail">Examples use synthetic, publicly shareable material. Do not place aircraft technical data, restricted maintenance records, personal data, or export-controlled information in a public card. Standards text remains under its publisher’s terms.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p><a href="/">Suite hub</a> · <a href="/verticals/">All verticals</a> · <a href="/specs/">Core specs</a></p>
+      <p class="footer-fineprint">Draft disclosure and engineering tools. Aviation authorities and authorised maintenance personnel make the applicable approval and release decisions.</p>
+    </div>
+  </footer>
+  <script src="/nav-toggle.js" defer></script>
+</body>
+</html>
