@@ -55,6 +55,9 @@ def verify_file(entry, phase, opener):
     local_hash = hashlib.sha256(local_bytes).hexdigest()
     if local_hash != candidate:
         raise ValueError(f"candidate hash mismatch for {source_name}: {local_hash}")
+    if phase == "source":
+        print(f"PASS source {source_name} sha256={local_hash}")
+        return
 
     request = urllib.request.Request(
         url,
@@ -85,7 +88,7 @@ def verify_file(entry, phase, opener):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("manifest", type=Path)
-    parser.add_argument("phase", choices=("preflight", "postflight"))
+    parser.add_argument("phase", choices=("source", "preflight", "postflight"))
     args = parser.parse_args()
     try:
         manifest = json.loads(args.manifest.read_text(encoding="utf-8"))

@@ -18,6 +18,7 @@ The candidate file SHA-256 and live baseline are pinned in
 [`suite-security-scope-2026-10-12.json`](suite-security-scope-2026-10-12.json).
 The checker reads the local candidate and the exact public URL; it rejects
 redirects, missing files, unexpected hosts, non-200 responses, and hash drift.
+Its `source` phase checks the candidate hash without network access in CI.
 Its preflight and postflight phases do not upload or restore anything.
 
 ## Release and rollback gate

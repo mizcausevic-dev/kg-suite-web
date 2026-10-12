@@ -1,0 +1,21 @@
+name: Selected release source
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.2.2
+      - name: Verify selected candidate and security contact fields
+        run: |
+          python3 scripts/verify_selected_release.py docs/releases/suite-security-scope-2026-10-12.json source
+          grep -q '^Contact: mailto:' .well-known/security.txt
+          grep -q '^Canonical: https://suite.kineticgain.com/.well-known/security.txt$' .well-known/security.txt
+          ! grep -q '^Encryption:' .well-known/security.txt
