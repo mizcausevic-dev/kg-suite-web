@@ -26,7 +26,7 @@ Live at **[suite.kineticgain.com](https://suite.kineticgain.com)**.
 
 No build step. The Suite docroot is static HTML/CSS/JS with self-hosted fonts and its own strict CSP (`script-src 'self'`, no `unsafe-inline`/`unsafe-eval`). The separately hosted MCP candidate removes the current page's GTM bootstrap and serves its fonts from its own docroot; its live header policy must be reviewed independently before upload.
 
-The aerospace page is a noindex draft at `verticals/aerospace/`. Five aerospace source repositories are public drafts and linked from the page. The optional aviation tools are still a review candidate in `mcp-kinetic-gain`, not part of its public package. Aerospace is not one of the eleven six-packs. The legacy `verticals/_generate.mjs` script requires an explicit overwrite flag because it would replace live-synced content; it must not be used to produce aerospace pages.
+The [aerospace page](https://suite.kineticgain.com/verticals/aerospace/) is a live noindex draft. Five aerospace source repositories are public drafts and linked from it. The optional aviation tools are still a review candidate in `mcp-kinetic-gain`, not part of its public package. Aerospace is not one of the eleven six-packs. The legacy `verticals/_generate.mjs` script requires an explicit overwrite flag because it would replace live-synced content; it must not be used to produce aerospace pages.
 
 ## Provenance
 
