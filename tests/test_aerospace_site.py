@@ -87,6 +87,7 @@ class AerospaceSiteTests(unittest.TestCase):
             "aviation-ml-card-fleet-summary-action",
         ):
             self.assertIn(f'href="https://github.com/mizcausevic-dev/{published_draft}"', content)
+        self.assertIn('href="https://mizcausevic-dev.github.io/aero-assurance-crosswalk/"', content)
         self.assertIn("does not yet include them", content)
 
     def test_responsive_and_keyboard_styles_are_present(self):

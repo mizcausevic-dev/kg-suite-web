@@ -2,7 +2,7 @@
 
 ## State
 
-**Site draft only. No Suite-site merge or upload has been performed for this change.** The five linked aerospace repositories are now public drafts. The Incident Card profile and aviation MCP tools remain review candidates; the public MCP package does not yet include aviation tools. The new page is `noindex,nofollow` and is absent from `sitemap.xml` and `llms.txt`.
+**Site draft only. No Suite-site merge or upload has been performed for this change.** The five linked aerospace repositories are public drafts, the optional Incident Card profile is merged, and the source-linked crosswalk page is live at <https://mizcausevic-dev.github.io/aero-assurance-crosswalk/>. Aviation MCP tools remain a review candidate; the public MCP package does not yet include them. The new Suite page is `noindex,nofollow` and is absent from `sitemap.xml` and `llms.txt`.
 
 The active Suite source is `kg-suite-web`. The older `kinetic-gain-suite-landing` repository is retired and must not be used as a deploy source. This branch started from GitHub `origin/main` at `dd8fa6748aa98dabf812c6f42d4e6db83528f819`.
 
@@ -38,7 +38,7 @@ The live `/`, `/verticals/`, `/style.css`, `/verticals-constellation.js`, and `/
 
 ## Release gates
 
-1. The five aerospace source repositories exist remotely and are linked as public drafts. The Rust implementation has hosted CI. Keep the aviation MCP tools labelled unreleased until their private Glama and package release gates pass.
+1. The five aerospace source repositories exist remotely and are linked as public drafts. The Rust implementation has hosted CI; the crosswalk page's generated HTML/CSS hashes were read back from GitHub Pages at its successful deployment run `38276505643`. Keep the aviation MCP tools labelled unreleased until their private Glama and package release gates pass.
 2. Re-fetch the exact live destination paths and compare hashes before upload. If the live files changed from the baselines above, rebase the affected files on the new live versions and rerun checks. The page must preserve the live navigation, explain controls, constellation, and scripts.
 3. Review the final page copy against current EASA/FAA/EUROCAE status. Recheck whether Part 108 has final text before adding any UAS autonomy claim. Review aviation legal and export-control boundaries with a qualified human before any certification or defense-related claim.
 4. Local responsive, keyboard, reduced-motion, and static-asset checks are recorded above. After upload, repeat link, header, and route checks against the hosted boundary.
