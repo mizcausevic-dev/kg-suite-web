@@ -26,7 +26,8 @@ Its preflight and postflight phases do not upload or restore anything.
 1. Record the reviewed Git commit and ensure the checkout is clean. Run
    `python scripts/verify_selected_release.py docs/releases/suite-security-scope-2026-10-12.json preflight`
    from the repository root. Abort on any failure.
-2. Over the established authenticated SSH channel, compare the remote file's
+2. Over the established authenticated SSH channel with its previously verified
+   host key pinned, compare the remote file's
    SHA-256 with the manifest's `live_before_sha256`. Save its exact bytes in a
    restricted backup outside the served docroot, and read the backup back to
    confirm the same hash. The destination is
