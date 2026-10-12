@@ -55,6 +55,8 @@ Those four responses carried CSP, HSTS, `X-Content-Type-Options: nosniff`, and `
 
 The rollback script restored the prior `/verticals/` hash `3b81ed44f16dccccb8443b380598bdff56659c3b7ac9920ae03c2581a6698622`; a live GET returned that hash and `/verticals/aerospace/` returned 404. Reactivation then restored the four final hashes above. The new directory was moved into the private backup during rollback, not deleted.
 
+The first withdrawal target is now occupied by that drill. A separate retained recovery script uses a fresh private target and passed remote `sh -n` plus a read-only preflight against the final live hashes; it has not been executed a second time.
+
 ## Release procedure and continuing gates
 
 1. The five aerospace source repositories exist remotely and are linked as public drafts. The Rust implementation has hosted CI; the crosswalk page's generated HTML/CSS hashes were read back from GitHub Pages at its successful deployment run `38276505643`. Keep the aviation MCP tools labelled unreleased until their private Glama and package release gates pass.
