@@ -96,6 +96,10 @@ class AerospaceSiteTests(unittest.TestCase):
         self.assertIn("prefers-reduced-motion", css)
         self.assertIn(":focus-visible", css)
 
+    def test_changed_shared_stylesheet_has_a_fresh_url(self):
+        for path in (PAGE, INDEX):
+            self.assertIn('/verticals/vertical.css?v=20261012-aerospace', path.read_text(encoding="utf-8"))
+
 
 if __name__ == "__main__":
     unittest.main()
