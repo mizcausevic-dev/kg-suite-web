@@ -14,7 +14,7 @@
   <meta property="og:description" content="Eleven regulated-vertical 6-packs of AI governance specs — HealthTech, EdTech, PropTech / Real Estate, Insurance / InsurTech, HR Tech / Employment AI, FinTech, GovTech, LegalTech, EnergyTech, DefenseTech, RetailTech. 66 sibling spec repos. Same six canonical shapes in every vertical; different per-vertical regulatory basis, data categories, and invariants." />
   <meta property="og:url" content="https://suite.kineticgain.com/verticals/" />
   <link rel="stylesheet" href="/assets/fonts.css" />
-  <link rel="stylesheet" href="/style.css?v=20260809-explain" />
+  <link rel="stylesheet" href="/style.css?v=20260820-llmicons" />
   <link rel="stylesheet" href="/verticals/vertical.css" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 </head>
@@ -38,6 +38,7 @@
       <a href="/properties/" data-page="properties">Properties</a>
       <a href="/verticals/" data-page="verticals" aria-current="page" class="active">Verticals</a>
       <a href="/mcp/" data-page="mcp">MCP</a>
+        <a href="/certified/" data-page="certified">Certified</a>
     </nav>
     <button type="button" class="nav-toggle" aria-label="Toggle navigation" aria-controls="site-nav" aria-expanded="false">
       <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
@@ -49,18 +50,120 @@
   <div class="hero-inner">
     <span class="pill">66 sibling spec repos</span>
     <h1>Eleven Regulated Verticals.<br /><em>One canonical six-shape vocabulary.</em></h1>
-    <p class="lede">The Kinetic Gain Protocol Suite ships eleven vertical 6-packs — HealthTech, EdTech, PropTech / Real Estate, Insurance / InsurTech, HR Tech / Employment AI, FinTech, GovTech, LegalTech, EnergyTech, DefenseTech, and RetailTech — each containing the same six canonical artifact shapes (Decision Card vault contract · Incident Card · Evidence Bundle compliance · Evidence Bundle bias · Operator audit-stream · Operator regulatory-lifecycle tracker). Same shape across verticals; different per-vertical regulatory basis, data categories, and invariants. Pick a vertical to explore its 6 sibling specs + canonical example.</p>
+    <div class="explain-toggle" role="group" aria-label="Explain this page">
+      <span class="explain-toggle-label">Explain this page:</span>
+      <button type="button" class="spec-filter-chip explain-chip" data-register="tech" aria-pressed="true">Tech</button>
+      <button type="button" class="spec-filter-chip explain-chip" data-register="nontech" aria-pressed="false">Non-Tech</button>
+      <button type="button" class="spec-filter-chip explain-chip" data-register="layman" aria-pressed="false">Layman</button>
+    </div>
+    <p class="lede explain-text" data-register-text="tech">
+      The Kinetic Gain Protocol Suite ships eleven vertical 6-packs — HealthTech, EdTech, PropTech / Real Estate, Insurance / InsurTech, HR Tech / Employment AI, FinTech, GovTech, LegalTech, EnergyTech, DefenseTech, and RetailTech — each containing the same six canonical artifact shapes (Decision Card vault contract · Incident Card · Evidence Bundle compliance · Evidence Bundle bias · Operator audit-stream · Operator regulatory-lifecycle tracker). Same shape across verticals; different per-vertical regulatory basis, data categories, and invariants. Pick a vertical to explore its 6 sibling specs + canonical example.
+    </p>
+    <p class="lede explain-text" data-register-text="nontech" hidden>
+      Kinetic Gain publishes eleven separate six-repo bundles, one per regulated industry: HealthTech, EdTech, PropTech / Real Estate, Insurance / InsurTech, HR Tech / Employment AI, FinTech, GovTech, LegalTech, EnergyTech, DefenseTech, and RetailTech. Every bundle contains the same six document types: a data-access contract, an incident report, two evidence bundles (one for regulatory compliance, one for bias), an audit log, and a regulatory tracker. What changes from industry to industry is the underlying law, the data categories, and the specific rules, not the six-document structure itself. Pick an industry below to see its six repos and a worked example.
+    </p>
+    <p class="lede explain-text" data-register-text="layman" hidden>
+      Kinetic Gain built the same starter kit eleven times, once for each regulated industry: HealthTech, EdTech, PropTech, Insurance, HR Tech, FinTech, GovTech, LegalTech, EnergyTech, DefenseTech, and RetailTech. Every kit always has the same six pieces of paperwork: what data an AI is allowed to touch, what happens when it makes a mistake, proof it follows the rules, proof it isn't biased, a running log of what it did, and a tracker for which laws apply. The paperwork template never changes. Only the industry-specific rules inside it do. Pick an industry below to see its six pieces and a real example.
+    </p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="https://github.com/mizcausevic-dev/kg-suite-vertical-comparator/blob/main/docs/CROSS-VERTICAL-COMPARISON.md">Cross-vertical comparison table</a>
       <a class="btn btn-secondary" href="https://github.com/mizcausevic-dev/kg-suite-vertical-router">Routing tool</a>
     </div>
+    <div class="send-to-llm" data-prompt="Please explain and summarize the key takeaways of this page:"></div>
+  </div>
+</section>
+
+<section class="vconst" id="verticals-constellation" aria-label="The eleven verticals, visualized as a radial map">
+  <style>
+    .vconst{padding:52px 0 60px;position:relative;overflow-x:hidden;
+      background:radial-gradient(1200px 700px at 50% 20%,color-mix(in srgb,var(--accent) 5%,transparent) 0%,transparent 60%)}
+    .vconst-wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+    .vconst-head{text-align:center;margin-bottom:6px}
+    .vconst-head h2{margin:.2em 0 .3em;color:var(--head);font-family:var(--font-head)}
+    .vconst-head p{color:var(--muted-2);font-size:.95rem;max-width:640px;margin:0 auto}
+    .vconst-stats{display:flex;justify-content:center;gap:1.6rem;flex-wrap:wrap;margin:20px 0 6px;font-family:var(--font-mono)}
+    .vconst-stats .s{text-align:center}
+    .vconst-stats .s b{display:block;font-size:1.4rem;color:var(--accent);font-weight:700;line-height:1}
+    .vconst-stats .s span{font-size:.66rem;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em}
+    .vconst-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:20px auto 8px;max-width:1100px}
+    .vconst-pill{font:inherit;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.03em;padding:5px 11px;border-radius:999px;
+      border:1px solid var(--border);background:var(--panel-2);color:var(--muted-2);cursor:pointer;user-select:none;
+      transition:transform .12s ease,border-color .15s ease,color .15s ease,background .15s ease;white-space:nowrap}
+    .vconst-pill:hover{transform:translateY(-1px);color:var(--head)}
+    .vconst-pill:focus-visible,.vconst-pill:focus{outline:2px solid var(--accent);outline-offset:2px}
+    .vconst-pill.active{color:var(--bg);font-weight:700;border-color:transparent}
+    .vconst-pill.reset{border-color:var(--accent);color:var(--accent)}
+    .vconst-pill.reset.active{background:var(--accent);color:var(--bg)}
+    .vconst-stage{position:relative;margin:10px auto 0;max-width:920px}
+    .vconst-stage svg{display:block;width:100%;height:auto}
+    .vconst-sweep{position:absolute;inset:0;pointer-events:none;border-radius:50%;
+      background:conic-gradient(from 0deg,transparent 0deg,color-mix(in srgb,var(--accent) 9%,transparent) 12deg,transparent 26deg,transparent 360deg);
+      animation:vconst-spin 18s linear infinite;mix-blend-mode:screen}
+    @keyframes vconst-spin{to{transform:rotate(360deg)}}
+    .vconst .node-hub circle.ring{fill:none;stroke-width:1.4;transition:opacity .25s ease}
+    .vconst .node-hub circle.core{stroke-width:1.6;transition:opacity .25s ease,r .15s ease}
+    .vconst .node-leaf circle{stroke-width:1.2;transition:opacity .25s ease,r .15s ease}
+    .vconst .spoke,.vconst .branch{fill:none;stroke-width:1;transition:opacity .25s ease,stroke-width .15s ease}
+    .vconst .arc{fill:none;stroke-width:2;opacity:.55}
+    .vconst .lbl-hub{font-family:var(--font-mono);font-weight:700;letter-spacing:.03em;transition:opacity .25s ease}
+    .vconst .lbl-leaf{font-family:var(--font-mono);transition:opacity .25s ease}
+    .vconst .dim{opacity:.14 !important}
+    .vconst .center-core{fill:var(--panel);stroke:var(--accent);stroke-width:2}
+    .vconst .center-ring{fill:none;stroke:var(--accent2);stroke-width:1;stroke-dasharray:3 5;opacity:.6}
+    .vconst .center-lbl{font-family:var(--font-mono);font-weight:800;fill:var(--head);letter-spacing:.06em}
+    .vconst .center-sub{font-family:var(--font-mono);fill:var(--muted-2);letter-spacing:.06em}
+    .vconst .hoverable{cursor:pointer}
+    .vconst .hoverable:focus-visible,.vconst .hoverable:focus{outline:3px solid var(--accent);outline-offset:5px;border-radius:50%}
+    .vconst .node-hub:focus-visible circle.core{stroke-width:3}
+    .vconst .node-leaf:focus-visible circle{stroke-width:2.6}
+    .vconst-dossier{position:fixed;right:18px;top:50%;transform:translateY(-50%);width:300px;max-width:calc(100vw - 36px);
+      background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 18px;
+      box-shadow:0 20px 60px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .18s ease;z-index:40}
+    .vconst-dossier.show{opacity:1;pointer-events:auto}
+    .vconst-dossier .kind{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2);margin-bottom:6px}
+    .vconst-dossier h3{margin:0 0 6px;font-family:var(--font-head);color:var(--head);font-size:1.02rem;line-height:1.3}
+    .vconst-dossier p{margin:0 0 10px;font-size:.85rem;color:var(--text);line-height:1.5}
+    .vconst-dossier .meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+    .vconst-dossier .meta span{font-family:var(--font-mono);font-size:.66rem;color:var(--muted-2);background:var(--panel-2);border:1px solid var(--border);border-radius:6px;padding:2px 7px}
+    .vconst-dossier a.go{display:inline-block;font-family:var(--font-mono);font-size:.78rem;color:var(--accent);border:1px solid var(--accent2);border-radius:8px;padding:6px 10px;text-decoration:none}
+    .vconst-dossier a.go:hover{background:var(--accent);color:var(--bg)}
+    .vconst-dossier a.go:focus-visible,.vconst-dossier a.go:focus{outline:2px solid var(--accent);outline-offset:2px}
+    .vconst-dossier .close{position:absolute;top:10px;right:12px;color:var(--muted-2);cursor:pointer;font-family:var(--font-mono);font-size:.9rem;background:none;border:none}
+    .vconst-dossier .close:focus-visible,.vconst-dossier .close:focus{outline:2px solid var(--accent);outline-offset:2px}
+    .vconst-note{text-align:center;color:var(--muted-2);font-size:.76rem;margin-top:10px;font-family:var(--font-mono)}
+    @media(max-width:720px){
+      .vconst-dossier{left:12px;right:12px;top:auto;bottom:12px;transform:translateY(0);width:auto}
+      .vconst-stats{gap:1rem}
+    }
+    @media(prefers-reduced-motion:reduce){.vconst-sweep{animation:none}}
+  </style>
+  <div class="vconst-wrap">
+    <div class="vconst-head">
+      <h2>Same six shapes, eleven verticals.</h2>
+      <p>Eleven hubs, six leaves each, 66 real sibling repos total. Click a vertical to filter, click any node for its dossier, or tab through with the keyboard.</p>
+    </div>
+    <div class="vconst-stats" id="vconst-stats"></div>
+    <div class="vconst-pills" id="vconst-pillbar"></div>
+    <div class="vconst-stage">
+      <div class="vconst-sweep" aria-hidden="true"></div>
+      <svg id="vconst-graph" viewBox="0 0 1000 1000" role="group" aria-label="Radial map of the eleven regulated verticals, each fanning out to its six real sibling spec repos. 11 focusable vertical hubs, 66 focusable repo leaves."></svg>
+    </div>
+    <p class="vconst-note">Every leaf is a real, linked sibling repo — the same 66 repos also listed on each vertical's own page below. Tab to a node, press Enter or Space to activate it.</p>
+  </div>
+  <div class="vconst-dossier" id="vconst-dossier">
+    <button class="close" id="vconst-dossierClose" aria-label="Close dossier panel">&times;</button>
+    <div class="kind" id="vconst-dKind"></div>
+    <h3 id="vconst-dTitle"></h3>
+    <div class="meta" id="vconst-dMeta"></div>
+    <p id="vconst-dDesc"></p>
+    <a class="go" id="vconst-dLink" href="#">Open &rarr;</a>
   </div>
 </section>
 
 <section class="block-dark">
   <div class="block-inner">
     <div class="vertical-grid">
-      
+
     <a class="vertical-card" href="/verticals/healthtech/">
       <h3>HealthTech / Clinical AI</h3>
       <p class="vertical-card-tagline">FDA SaMD + HIPAA + Section 1557 + IMDRF.</p>
@@ -106,19 +209,19 @@
     <a class="vertical-card" href="/verticals/legaltech/">
       <h3>LegalTech / AI in the Practice of Law</h3>
       <p class="vertical-card-tagline">ABA Model Rules 1.1c8 + 1.6 + 3.3 + 5.3 + attorney-client privilege + work-product + state bar opinions + Mata v. Avianca-era court orders.</p>
-      <p class="vertical-card-buyer"><span>Canonical buyer:</span> Hale &amp; Dorrigan LLP</p>
+      <p class="vertical-card-buyer"><span>Canonical buyer:</span> Anchor &amp; Reef LLP</p>
       <span class="vertical-card-cta">See the 6 repos →</span>
     </a>
     <a class="vertical-card" href="/verticals/energytech/">
       <h3>EnergyTech / Grid + Pipeline Operations</h3>
       <p class="vertical-card-tagline">NERC CIP-002 through CIP-014 + TSA Security Directives + FERC Orders + DOE EO 14028 + state PUC orders + ISO/RTO Business Practice Manuals.</p>
-      <p class="vertical-card-buyer"><span>Canonical buyer:</span> Northern Grid Cooperative (BA + TO/TOP for the Pacific Northwest BES)</p>
+      <p class="vertical-card-buyer"><span>Canonical buyer:</span> Continental Grid Operator (CGO) — regional transmission organization in the MISO/PJM/ERCOT shape</p>
       <span class="vertical-card-cta">See the 6 repos →</span>
     </a>
     <a class="vertical-card" href="/verticals/defensetech/">
       <h3>DefenseTech / DIB AI Tooling</h3>
       <p class="vertical-card-tagline">DFARS 252.204-7012/7019/7020/7021 + CMMC 2.0 L2/L3 + NIST SP 800-171 r2 + 800-172 + ITAR (22 CFR 120-130) + EAR (15 CFR 730-774) + EO 13526 + ICD 705 + DoDI 5230.24 + NISPOM 32 CFR 117 + FAR 52.204-21 + False Claims Act 31 USC 3729.</p>
-      <p class="vertical-card-buyer"><span>Canonical buyer:</span> Stratos Aerospace (DIB Tier 2 contractor, CMMC L2 + Industrial Security)</p>
+      <p class="vertical-card-buyer"><span>Canonical buyer:</span> Stratos Aerospace — DIB Tier 2 defense contractor (CAGE-coded prime sub, representative of an Aerospace + Defense supplier)</p>
       <span class="vertical-card-cta">See the 6 repos →</span>
     </a>
     <a class="vertical-card" href="/verticals/retailtech/">
@@ -154,5 +257,7 @@
 </footer>
   <script src="/suite-nav.js?v=20260809-explain" defer></script>
   <script src="/nav-toggle.js" defer></script>
+  <script src="/verticals-constellation.js" defer></script>
+  <script src="/send-to-llm.js" defer></script>
 </body>
 </html>

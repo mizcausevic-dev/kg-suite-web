@@ -1143,7 +1143,7 @@ a.persona-card:hover { text-decoration: none; }
       under the persona chooser (new .stat-band wrapper). #map keeps its
       heading, intro paragraph, and the layers diagram — only the stat band
       itself moved. Count-up is IntersectionObserver-driven progressive
-      enhancement in suite-nav.js; the current numbers already
+      enhancement in suite-nav.js; the real numbers (12/11/75/172) already
       sit in the DOM, so no-JS and prefers-reduced-motion both just show the
       static final numbers with zero extra work.
    ============================================================================ */
