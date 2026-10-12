@@ -1,0 +1,10 @@
+{
+  "files": [
+    {
+      "source": ".well-known/security.txt",
+      "url": "https://suite.kineticgain.com/.well-known/security.txt",
+      "live_before_sha256": "ac73d9bd80032316431a49408f32f618a26431ab9f7eace02dbd7d7fca28f7ba",
+      "candidate_sha256": "34db447c0a3a83a270cfb706c6cfb4920659e44ff2c8408a77a3b300af867185"
+    }
+  ]
+}
