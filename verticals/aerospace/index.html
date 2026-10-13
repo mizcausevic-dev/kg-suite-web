@@ -86,7 +86,7 @@
             <span class="aero-number" aria-hidden="true">03</span>
             <p class="aero-kind">Engineering check · public draft</p>
             <h3>Dataset provenance</h3>
-            <p>The Rust tool hashes dataset files and a manifest, checks train, validation, and test split overlap, and counts records in manifest-declared ODD bins. It can sign its reports with the existing hash-attestation library.</p>
+            <p>The Rust tool hashes dataset files and a manifest, checks train, validation, and test split overlap, and counts records in manifest-declared ODD bins. Its optional sign command uses the existing hash-attestation library and a locally supplied key.</p>
             <p class="aero-card-link"><a href="https://github.com/mizcausevic-dev/aero-dataset-provenance-rs" rel="noreferrer">Inspect the source and test fixtures</a></p>
             <p class="aero-limitation">The Rust CLI alone does not map bins to Card operating conditions. A <a href="https://github.com/mizcausevic-dev/aviation-ml-assurance-card-spec/pull/1" rel="noreferrer">synthetic packet validator under review</a> tests optional condition IDs and bin references against the manifest and report. Hashes and bin counts do not prove collection rights, labeling quality, or real-world coverage.</p>
           </article>
