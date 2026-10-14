@@ -86,9 +86,9 @@
             <span class="aero-number" aria-hidden="true">03</span>
             <p class="aero-kind">Engineering check · public draft</p>
             <h3>Dataset provenance</h3>
-            <p>The Rust tool hashes dataset files and a manifest, checks train, validation, and test split overlap, and reports coverage gaps against declared operating conditions. It can sign its reports with the existing hash-attestation library.</p>
+            <p>The Rust tool hashes dataset files and a manifest, checks train, validation, and test split overlap, and reports observations against manifest-declared ODD bins. Its optional sign command uses the existing hash-attestation library and a locally supplied key.</p>
             <p class="aero-card-link"><a href="https://github.com/mizcausevic-dev/aero-dataset-provenance-rs" rel="noreferrer">Inspect the source and test fixtures</a></p>
-            <p class="aero-limitation">A hash proves byte identity, not collection rights, labeling quality, or real-world coverage.</p>
+            <p class="aero-limitation">The Rust CLI alone does not map bins to Card operating conditions. A <a href="https://github.com/mizcausevic-dev/aviation-ml-assurance-card-spec/blob/e90bc740afa8588431d6be51b8667ef32e414557/examples/golden-packet/README.md" rel="noreferrer">merged fictional packet validator</a> tests optional condition IDs and bin references against the manifest and report. Hashes and bin counts do not prove collection rights, labeling quality, or real-world coverage.</p>
           </article>
           <article class="aero-card">
             <span class="aero-number" aria-hidden="true">04</span>
@@ -107,7 +107,7 @@
         <div>
           <p class="aero-overline">Composition</p>
           <h2 id="composition-title">Keep one MCP client entry</h2>
-          <p>The aviation validators and inspectors are proposed for <a href="https://github.com/mizcausevic-dev/mcp-kinetic-gain" rel="noreferrer"><code>mcp-kinetic-gain</code></a>, alongside the existing Suite tools. The existing <a href="https://github.com/mizcausevic-dev/ai-incident-card-spec" rel="noreferrer">AI Incident Card</a> now has an optional aviation profile. A <a href="https://github.com/mizcausevic-dev/aviation-ml-card-fleet-summary-action" rel="noreferrer">fleet summary Action</a> checks card structure in pull requests. No second MCP server or separate aviation incident format is proposed.</p>
+          <p>The aviation validators and inspectors are under review in <a href="https://github.com/mizcausevic-dev/mcp-kinetic-gain/pull/52" rel="noreferrer">combined <code>mcp-kinetic-gain</code> PR #52</a>, alongside the existing Suite tools. They are not in the published package. The existing <a href="https://github.com/mizcausevic-dev/ai-incident-card-spec" rel="noreferrer">AI Incident Card</a> now has an optional aviation profile. A <a href="https://github.com/mizcausevic-dev/aviation-ml-card-fleet-summary-action" rel="noreferrer">fleet summary Action</a> checks card structure in pull requests. No second MCP server or separate aviation incident format is proposed.</p>
         </div>
         <aside class="aero-state" aria-label="Publication status">
           <h3>Publication status</h3>
@@ -129,6 +129,7 @@
           <li><strong>EASA NPA 2025-07</strong><span>Proposal, published 10 November 2025; consultation closed 10 March 2026. The proposed AI-level table reserves Level 3B.</span><a href="https://www.easa.europa.eu/en/document-library/notices-of-proposed-amendment/npa-2025-07">Read the NPA</a></li>
           <li><strong>FAA AI Safety Assurance Roadmap, Version I</strong><span>Signed 23 July 2024. A roadmap, not an applicant-specific certification basis.</span><a href="https://www.faa.gov/aircraft/air_cert/step/roadmap_for_AI_safety_assurance">Read the roadmap</a></li>
           <li><strong>EUROCAE WG-114</strong><span>ED-324 was listed as draft when checked on 12 October 2026. ARP6983 / ED-324 is referenced by identifier only.</span><a href="https://www.eurocae.net/working-group/wg-114/">See the working group</a></li>
+          <li><strong>FAA BVLOS / Part 108</strong><span>OIRA listed the final-rule-stage review as pending on 12 October 2026. Final rule text was not verified; a UAS card is deferred.</span><a href="https://www.reginfo.gov/public/do/eoDetails?rrid=1457213">Review listing</a></li>
           <li><strong>Maintenance release</strong><span>EASA Part-145 145.A.50 and U.S. 14 CFR §43.9 govern separate, jurisdiction-specific records and authorisations.</span><a href="https://www.easa.europa.eu/en/document-library/easy-access-rules/online-publications/easy-access-rules-continuing-airworthiness?erules-id=ERULES-1963177438-272">EASA rule</a><a href="https://www.ecfr.gov/current/title-14/chapter-I/subchapter-C/part-43/section-43.9">U.S. rule</a></li>
           <li><strong>NIST AI RMF 1.0</strong><span>Voluntary risk-management context, not aviation certification.</span><a href="https://airc.nist.gov/airmf-resources/airmf/5-sec-core/">Read the core</a></li>
         </ul>
